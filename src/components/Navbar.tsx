@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Github, LogOut, User, Settings } from 'lucide-react';
+import TokenBalance from './tokens/TokenBalance';
+import TokenRechargeModal from './tokens/TokenRechargeModal';
 
 const Navbar: React.FC = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showRecharge, setShowRecharge] = useState(false);
 
   const handleSignOut = async () => {
     try {
@@ -39,6 +42,14 @@ const Navbar: React.FC = () => {
 
             {/* Right Side */}
             <div className="flex items-center space-x-4">
+              {/* Token Balance - only show when logged in and not on home page */}
+              {user && location.pathname !== '/' && (
+                <TokenBalance 
+                  size="small" 
+                  onRechargeClick={() => setShowRecharge(true)}
+                />
+              )}
+              
               {/* GitHub Link */}
               <a
                 href="https://github.com/anuragpatki/Flowniq-AI"
@@ -98,6 +109,16 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       </header>
+      
+      {/* Token Recharge Modal */}
+      <TokenRechargeModal 
+        isOpen={showRecharge}
+        onClose={() => setShowRecharge(false)}
+        onSuccess={(tokens) => {
+          console.log(`Successfully recharged ${tokens} tokens`);
+          // You could show a success notification here
+        }}
+      />
     </>
   );
 };
