@@ -1,6 +1,7 @@
 export interface GenerateRoadmapRequest {
   prompt: string;
   category: string;
+  userId?: string;
   travelData?: {
     destination: string;
     startingLocation: string;
