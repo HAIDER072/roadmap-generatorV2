@@ -2,15 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import RoadmapCanvas from '../components/RoadmapCanvas';
 import StepsPanel from '../components/StepsPanel';
+import VideoSidebar from '../components/VideoSidebar';
 import { RoadmapNode, Category } from '../types';
 import { getCategoryTheme } from '../utils/themes';
-import { ArrowLeft, Download, Menu } from 'lucide-react';
+import { ArrowLeft, Download, Menu, Play, RefreshCw } from 'lucide-react';
 import jsPDF from 'jspdf';
+
+interface VideoRecommendation {
+  title: string;
+  url: string;
+  videoId: string;
+  thumbnail: string;
+  source?: string;
+}
 
 const RoadmapViewerPage: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [showSteps, setShowSteps] = useState(true);
+  const [showVideoSidebar, setShowVideoSidebar] = useState(false);
+  const [isLoadingVideos, setIsLoadingVideos] = useState(false);
+  const [dynamicVideoRecommendations, setDynamicVideoRecommendations] = useState<VideoRecommendation[]>([]);
+  const [canRefreshVideos, setCanRefreshVideos] = useState(false);
 
   // Get roadmap data from navigation state
   const roadmapData = location.state?.roadmap;
@@ -33,8 +46,66 @@ const RoadmapViewerPage: React.FC = () => {
     );
   }
 
-  const { title, category, phases, roadmapNodes } = roadmapData;
+  const { title, category, phases, roadmapNodes, videoRecommendations = [], originalPrompt } = roadmapData;
   const selectedCategory = category as Category;
+  
+  // Extract topic from original prompt for video sidebar
+  const extractMainTopic = (prompt: string) => {
+    if (!prompt) return 'programming';
+    return prompt
+      .toLowerCase()
+      .replace(/^(create|generate|make|build)\s+(a\s+)?(roadmap\s+)?for\s+/i, '')
+      .replace(/\s+(roadmap|plan|guide|tutorial)$/i, '')
+      .trim() || 'programming';
+  };
+  
+  const topic = extractMainTopic(originalPrompt || title);
+  
+  const fetchVideoRecommendations = async (forceRefresh = false) => {
+    if (!topic) return;
+    
+    setIsLoadingVideos(true);
+    try {
+      console.log(`🎥 ${forceRefresh ? 'Refreshing' : 'Fetching'} FILTERED videos for: ${topic}`);
+      console.log('📏 Applying filters: >= 2 hours, no YouTube Shorts, quality tutorials only');
+      
+      const response = await fetch('/api/get-video-recommendations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          userInput: originalPrompt || title,
+          minDurationMinutes: 120,  // Enforce 2+ hour minimum
+          maxVideos: 10
+        })
+      });
+      const data = await response.json();
+      
+      if (data.success && data.videos) {
+        setDynamicVideoRecommendations(data.videos);
+        console.log(`✅ ${forceRefresh ? 'Refreshed' : 'Fetched'} ${data.videos.length} FILTERED videos for: ${topic}`);
+        if (data.filter) {
+          console.log(`📏 Filter applied: ${data.filter.appliedFiltering}`);
+        }
+      } else {
+        console.warn('No filtered videos found or API error:', data.error);
+      }
+    } catch (err) {
+      console.error('Failed to fetch video recommendations:', err);
+    } finally {
+      setIsLoadingVideos(false);
+    }
+  };
+
+  // If videos weren't provided (e.g., opened from dashboard), fetch them dynamically
+  useEffect(() => {
+    const initialVideos = (roadmapData.videoRecommendations || []) as VideoRecommendation[];
+    if (!initialVideos.length && topic) {
+      fetchVideoRecommendations();
+      setCanRefreshVideos(true); // Enable refresh button for saved roadmaps
+    } else if (initialVideos.length > 0) {
+      setCanRefreshVideos(false); // Disable refresh for newly generated roadmaps
+    }
+  }, [topic, originalPrompt, title]);
 
   const handleDownloadPDF = () => {
     if (!title || phases.length === 0) return;
@@ -215,6 +286,53 @@ const RoadmapViewerPage: React.FC = () => {
             </p>
           </div>
           
+          {/* Video Button - Show if we have videos or are loading them */}
+          {(() => {
+            const allVideos = [...(videoRecommendations || []), ...dynamicVideoRecommendations];
+            const hasVideos = allVideos.length > 0;
+            
+            // Show button if we have videos, are loading, or could potentially load videos
+            const shouldShowButton = hasVideos || isLoadingVideos || (!videoRecommendations?.length && topic && selectedCategory !== 'travel_planner');
+            
+            if (shouldShowButton) {
+              return (
+                <button
+                  onClick={() => setShowVideoSidebar(true)}
+                  disabled={isLoadingVideos}
+                  className="p-2 rounded-lg hover:bg-white/50 transition-colors duration-200 relative disabled:opacity-50"
+                  style={{ color: selectedCategory ? getCategoryTheme(selectedCategory).primary : '#64748b' }}
+                  title={isLoadingVideos ? "Loading Videos..." : "Watch Learning Videos"}
+                >
+                  <Play className="w-4 h-4" />
+                  {hasVideos && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                      {allVideos.length}
+                    </span>
+                  )}
+                  {isLoadingVideos && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 rounded">
+                      <div className="w-3 h-3 border border-gray-300 border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                  )}
+                </button>
+              );
+            }
+            return null;
+          })()}
+          
+          {/* Refresh Videos Button - Only show for saved roadmaps */}
+          {canRefreshVideos && selectedCategory !== 'travel_planner' && (
+            <button
+              onClick={() => fetchVideoRecommendations(true)}
+              disabled={isLoadingVideos}
+              className="p-2 rounded-lg hover:bg-white/50 transition-colors duration-200 disabled:opacity-50"
+              style={{ color: selectedCategory ? getCategoryTheme(selectedCategory).primary : '#64748b' }}
+              title="Refresh Learning Videos"
+            >
+              <RefreshCw className={`w-4 h-4 ${isLoadingVideos ? 'animate-spin' : ''}`} />
+            </button>
+          )}
+          
           {/* Download Button */}
           <button
             onClick={handleDownloadPDF}
@@ -270,6 +388,16 @@ const RoadmapViewerPage: React.FC = () => {
           />
         </div>
       </div>
+      
+      {/* Video Sidebar */}
+      <VideoSidebar 
+        videos={[...((videoRecommendations as VideoRecommendation[]) || []), ...dynamicVideoRecommendations]}
+        isOpen={showVideoSidebar}
+        onClose={() => setShowVideoSidebar(false)}
+        topic={topic}
+        category={selectedCategory}
+        theme={getCategoryTheme(selectedCategory || 'project')}
+      />
     </div>
   );
 };

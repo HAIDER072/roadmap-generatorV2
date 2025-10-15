@@ -147,20 +147,37 @@ const TokenBalance: React.FC<TokenBalanceProps> = ({
       <button
         onClick={onRechargeClick}
         className={`
-          bg-white hover:bg-gray-50 rounded-lg border border-gray-200 ${sizeClasses.container} shadow-sm
-          transition-all duration-200 hover:shadow-md hover:border-indigo-300
-          cursor-pointer group w-full
-          ${profile.tokens <= 5 ? 'ring-2 ring-orange-200 animate-pulse' : ''}
+          bg-white hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 
+          rounded-lg border border-gray-200 ${sizeClasses.container} shadow-sm
+          transition-all duration-300 hover:shadow-lg hover:border-indigo-400
+          cursor-pointer group w-full transform hover:scale-[1.02]
+          ${profile.tokens <= 5 ? 'ring-2 ring-orange-300 border-orange-300' : ''}
         `}
-        title="Click to recharge tokens"
+        title={`${profile.tokens} tokens available • Click to add more`}
       >
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <Coins className={`${sizeClasses.icon} text-indigo-600 group-hover:text-indigo-700 transition-colors`} />
-          <div className="flex flex-col">
-            <span className={`font-semibold ${getTokenColor(profile.tokens)} ${sizeClasses.text}`}>
-              {profile.tokens} tokens
-            </span>
+        <div className="flex items-center space-x-3">
+          <div className={`
+            p-2 rounded-lg transition-all duration-300
+            ${profile.tokens <= 5 
+              ? 'bg-gradient-to-r from-orange-100 to-red-100 group-hover:from-orange-200 group-hover:to-red-200' 
+              : 'bg-gradient-to-r from-indigo-100 to-purple-100 group-hover:from-indigo-200 group-hover:to-purple-200'
+            }
+          `}>
+            <Coins className={`
+              ${sizeClasses.icon} transition-all duration-300 transform group-hover:scale-110
+              ${profile.tokens <= 5 ? 'text-orange-600' : 'text-indigo-600 group-hover:text-indigo-700'}
+            `} />
+          </div>
+          <div className="flex flex-col flex-1">
+            <div className="flex items-baseline space-x-1">
+              <span className={`font-bold ${getTokenColor(profile.tokens)} ${sizeClasses.text}`}>
+                {profile.tokens}
+              </span>
+              <span className={`text-xs text-gray-500 ${sizeClasses.text === 'text-sm' ? 'text-xs' : 'text-sm'}`}>
+                tokens
+              </span>
+            </div>
             {showStats && (
               <span className="text-xs text-gray-500">
                 {profile.total_tokens_used} used total
@@ -169,14 +186,17 @@ const TokenBalance: React.FC<TokenBalanceProps> = ({
           </div>
         </div>
 
-        {/* Always show recharge icon on hover */}
+        {/* Subtle hover indicator - only shows on hover or when tokens are very low */}
         <div className={`
-          flex items-center space-x-1 text-indigo-600 group-hover:text-indigo-700
-          transition-all duration-200 ${sizeClasses.text}
-          ${profile.tokens <= 5 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}
+          flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300
+          ${profile.tokens <= 2 
+            ? 'bg-red-100 text-red-600 opacity-100 animate-pulse' 
+            : profile.tokens <= 5
+            ? 'bg-orange-100 text-orange-600 opacity-70 group-hover:opacity-100'
+            : 'bg-indigo-100 text-indigo-600 opacity-0 group-hover:opacity-100 group-hover:bg-indigo-200'
+          }
         `}>
-          <Plus className="w-4 h-4" />
-          <span className="text-xs font-medium">Recharge</span>
+          <Plus className="w-3 h-3 transition-transform duration-300 group-hover:scale-110" />
         </div>
       </div>
     </button>
@@ -184,15 +204,24 @@ const TokenBalance: React.FC<TokenBalanceProps> = ({
       {/* Warning for low tokens - positioned below the main component */}
       <div>
         {profile.tokens <= 5 && (
-          <div className="mt-2 p-2 bg-orange-50 border border-orange-200 rounded-md">
+          <div className="mt-3 p-3 bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-lg shadow-sm">
             <div className="flex items-center space-x-2">
-              <Clock className="w-4 h-4 text-orange-500" />
-              <span className="text-xs text-orange-700">
-                {profile.tokens === 0 
-                  ? 'No tokens left! Click above to recharge.'
-                  : `Only ${profile.tokens} tokens left. Click above to recharge.`
-                }
-              </span>
+              <div className="flex-shrink-0">
+                <div className="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center">
+                  <Clock className="w-3 h-3 text-orange-600" />
+                </div>
+              </div>
+              <div className="flex-1">
+                <span className="text-xs font-medium text-orange-800">
+                  {profile.tokens === 0 
+                    ? 'No tokens remaining'
+                    : `${profile.tokens} token${profile.tokens === 1 ? '' : 's'} remaining`
+                  }
+                </span>
+                <div className="text-xs text-orange-600 mt-0.5">
+                  Click the token count above to add more
+                </div>
+              </div>
             </div>
           </div>
         )}
