@@ -5,6 +5,7 @@ import Razorpay from 'razorpay';
 import crypto from 'crypto';
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
+import { extractMainTopic, getVideoRecommendations, createModifiedPythonScripts } from './mlService.js';
 
 // Load environment variables
 dotenv.config();
@@ -1196,9 +1197,17 @@ Example format: "React Mastery" or "Python Fundamentals"`;
       console.log('🤖 Getting project name from Gemini AI...');
       const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
       
-      const nameResult = await model.generateContent(namePrompt);
-      const nameResponse = await nameResult.response;
-      projectName = cleanAIResponse(nameResponse.text()) || `${prompt} Journey`;
+      try {
+        const nameResult = await model.generateContent(namePrompt);
+        const nameResponse = await nameResult.response;
+        projectName = cleanAIResponse(nameResponse.text()) || `${prompt} Journey`;
+      } catch (error) {
+        console.error('❌ Error getting project name from Gemini AI:', error);
+        if (error.message.includes('API_KEY_SERVICE_BLOCKED')) {
+          console.error('     Please check if your Gemini API key has the correct permissions and is not blocked for the Generative Language API.');
+        }
+        projectName = `${prompt} Journey`; // Fallback project name
+      }
     }
 
     // Generate phases and steps with category-specific prompts
@@ -1343,6 +1352,22 @@ Generate the roadmap for: ${prompt}`;
 
     console.log(`📊 Generated ${phases.length} phases with ${roadmapNodes.length} total nodes`);
 
+    // Generate FILTERED video recommendations using ML pipeline for non-travel categories
+    let videoRecommendations = [];
+    if (category !== 'travel_planner') {
+      try {
+        console.log('🎥 Generating FILTERED ML video recommendations...');
+        console.log('📏 Applying consistent filters: >=2 hours, no shorts, quality tutorials');
+        await createModifiedPythonScripts();
+        const topic = extractMainTopic(prompt);
+        // Use same filtering as the standalone endpoint (2+ hours, max 5 videos)
+        videoRecommendations = await getVideoRecommendations(topic, 5, 120);
+        console.log(`✅ Generated ${videoRecommendations.length} FILTERED video recommendations for: ${topic}`);
+      } catch (error) {
+        console.error('⚠️ ML video recommendations failed, continuing without them:', error.message);
+      }
+    }
+
     // Return structured response
     res.json({
       success: true,
@@ -1351,6 +1376,7 @@ Generate the roadmap for: ${prompt}`;
       roadmapNodes,
       category,
       originalPrompt: prompt,
+      videoRecommendations, // Include ML video recommendations
       tokensUsed: TOKENS_PER_ROADMAP,
       tokensRemaining: tokensRemaining,
       timestamp: new Date().toISOString(),
@@ -1456,6 +1482,57 @@ function generateGenericFallback(prompt, category) {
   ];
 }
 
+// Video recommendation endpoint with consistent filtering
+app.post('/api/get-video-recommendations', async (req, res) => {
+  try {
+    console.log('🎥 Received FILTERED video recommendation request:', req.body);
+    
+    const { topic, userInput, minDurationMinutes = 120, maxVideos = 10 } = req.body;
+    
+    if (!topic && !userInput) {
+      return res.status(400).json({
+        success: false,
+        error: 'Either topic or userInput is required',
+        timestamp: new Date().toISOString()
+      });
+    }
+    
+    // Extract main topic if userInput is provided
+    const finalTopic = topic || extractMainTopic(userInput);
+    console.log(`🔍 Processing FILTERED video recommendations for topic: ${finalTopic}`);
+    console.log(`📏 Filter settings: Min ${minDurationMinutes}min duration, Max ${maxVideos} videos`);
+    
+    // Initialize ML scripts if not done already
+    await createModifiedPythonScripts();
+    
+    // Get FILTERED video recommendations from ML pipeline
+    const videoRecommendations = await getVideoRecommendations(finalTopic, maxVideos, minDurationMinutes);
+    
+    console.log(`✅ Generated ${videoRecommendations.length} FILTERED video recommendations`);
+    console.log('📏 All videos should be >= 2 hours and exclude YouTube Shorts');
+    
+    res.json({
+      success: true,
+      topic: finalTopic,
+      videos: videoRecommendations,
+      filter: {
+        minDurationMinutes,
+        maxVideos,
+        appliedFiltering: 'Duration >= 2h, No Shorts, Quality tutorials only'
+      },
+      timestamp: new Date().toISOString()
+    });
+    
+  } catch (error) {
+    console.error('❌ Error getting video recommendations:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to get video recommendations',
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
 // Health check endpoint - ENHANCED with AI status
 app.get('/api/health', (req, res) => {
   console.log('🏥 Health check requested');
@@ -1500,6 +1577,7 @@ app.listen(PORT, '127.0.0.1', () => {
   console.log('📡 API endpoints:');
   console.log('  - Generate Roadmap: http://localhost:' + PORT + '/api/generate-roadmap');
   console.log('  - Generate Instructions: http://localhost:' + PORT + '/api/generate-instructions');
+  console.log('  - Get Video Recommendations: http://localhost:' + PORT + '/api/get-video-recommendations');
   console.log('  - Health Check: http://localhost:' + PORT + '/api/health');
   console.log('🔑 Gemini API configured:', !!(GEMINI_API_KEY && GEMINI_API_KEY !== 'your-gemini-api-key-here'));
   console.log('🔑 Mistral API configured:', mistralConfigured);

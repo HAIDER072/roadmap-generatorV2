@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Github, LogOut, User, Settings } from 'lucide-react';
-import TokenBalance from './tokens/TokenBalance';
+import TokenBalanceEnhanced from './tokens/TokenBalanceEnhanced';
 import TokenRechargeModal from './tokens/TokenRechargeModal';
 
 const Navbar: React.FC = () => {
@@ -44,7 +44,7 @@ const Navbar: React.FC = () => {
             <div className="flex items-center space-x-4">
               {/* Token Balance - only show when logged in and not on home page */}
               {user && location.pathname !== '/' && (
-                <TokenBalance 
+                <TokenBalanceEnhanced 
                   size="small" 
                   onRechargeClick={() => setShowRecharge(true)}
                 />
