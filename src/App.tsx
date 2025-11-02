@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { ProfileProvider } from './contexts/ProfileContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import LoginForm from './components/auth/LoginForm';
@@ -9,6 +11,8 @@ import Dashboard from './components/dashboard/Dashboard';
 import CreateRoadmapPage from './pages/CreateRoadmapPage';
 import RoadmapViewerPage from './pages/RoadmapViewerPage';
 import HomePage from './pages/HomePage';
+import MockInterview from './components/interview/MockInterview';
+import ProfilePage from './pages/ProfilePage';
 
 // App routes component
 const AppRoutes: React.FC = () => {
@@ -29,10 +33,14 @@ const AppRoutes: React.FC = () => {
     <>
       <Navbar />
       <Routes>
-        {/* Public routes */}
+        {/* Public routes - HomePage accessible to all */}
         <Route 
           path="/" 
-          element={user ? <Navigate to="/dashboard" replace /> : <HomePage />} 
+          element={<HomePage />} 
+        />
+        <Route 
+          path="/home" 
+          element={<HomePage />} 
         />
         <Route 
           path="/login" 
@@ -68,6 +76,22 @@ const AppRoutes: React.FC = () => {
             </ProtectedRoute>
           } 
         />
+        <Route 
+          path="/mock-interview" 
+          element={
+            <ProtectedRoute>
+              <MockInterview />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/profile" 
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          } 
+        />
         
         {/* Catch all route */}
         <Route path="*" element={<Navigate to="/" replace />} />
@@ -79,9 +103,13 @@ const AppRoutes: React.FC = () => {
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <AppRoutes />
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <ProfileProvider>
+            <AppRoutes />
+          </ProfileProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </Router>
   );
 }
