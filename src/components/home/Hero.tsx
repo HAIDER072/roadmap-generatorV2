@@ -1,10 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Play, Sparkles, Zap, Moon, Sun, LogIn } from 'lucide-react';
+import { ArrowRight, Play, Sparkles, Zap, Moon, Sun, LogIn, Mic, LayoutDashboard, Map } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const Hero: React.FC = () => {
+  const { user } = useAuth();
+  const { darkMode, toggleDarkMode } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [darkMode, setDarkMode] = useState(false);
   const animationRef = useRef<number>();
 
   useEffect(() => {
@@ -140,7 +143,7 @@ const Hero: React.FC = () => {
 
       {/* Dark/Light Mode Toggle */}
       <button
-        onClick={() => setDarkMode(!darkMode)}
+        onClick={toggleDarkMode}
         className="absolute top-8 right-8 z-20 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 transition-all duration-300"
       >
         {darkMode ? (
@@ -201,34 +204,86 @@ const Hero: React.FC = () => {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16 animate-fade-in-up animation-delay-400">
-          <Link
-            to="/signup"
-            className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-2xl font-semibold text-lg shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-700 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="relative flex items-center space-x-2">
-              <span>Get Started Free</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-            </div>
-          </Link>
+          {user ? (
+            // Logged-in user buttons
+            <>
+              <Link
+                to="/dashboard"
+                className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-2xl font-semibold text-lg shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-700 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative flex items-center space-x-2">
+                  <LayoutDashboard className="w-5 h-5" />
+                  <span>Go to Dashboard</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                </div>
+              </Link>
 
-          {/* <button className={`group flex items-center space-x-3 px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 ${
-            darkMode 
-              ? 'bg-white/10 text-white border border-white/20 hover:bg-white/20' 
-              : 'bg-white/80 text-gray-900 border border-gray-200 hover:bg-white shadow-xl'
-          }`}>
-            <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <Play className="w-5 h-5 text-white ml-0.5" />
-            </div>
-            <span>Watch Demo</span>
-          </button> */}
-          <Link
-              to="/login"
-              className="inline-flex items-center space-x-3 px-8 py-4 bg-white text-slate-700 rounded-2xl hover:bg-slate-50 transition-all duration-200 hover:scale-105 shadow-lg border border-slate-200 text-lg font-medium group"
-            >
-              <LogIn className="w-6 h-6 group-hover:scale-110 transition-transform duration-200" />
-              <span>Sign In</span>
-            </Link>
+              <Link
+                to="/create"
+                className={`group flex items-center space-x-3 px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 ${
+                  darkMode 
+                    ? 'bg-white/10 text-white border border-white/20 hover:bg-white/20' 
+                    : 'bg-white/80 text-gray-900 border border-gray-200 hover:bg-white shadow-xl'
+                }`}
+              >
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <Map className="w-5 h-5 text-white" />
+                </div>
+                <span>Create Roadmap</span>
+              </Link>
+
+              <Link
+                to="/mock-interview"
+                className={`group flex items-center space-x-3 px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 ${
+                  darkMode 
+                    ? 'bg-white/10 text-white border border-white/20 hover:bg-white/20' 
+                    : 'bg-white/80 text-gray-900 border border-gray-200 hover:bg-white shadow-xl'
+                }`}
+              >
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <Mic className="w-5 h-5 text-white" />
+                </div>
+                <span>Mock Interview</span>
+              </Link>
+            </>
+          ) : (
+            // Not logged-in user buttons
+            <>
+              <Link
+                to="/signup"
+                className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-2xl font-semibold text-lg shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-700 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative flex items-center space-x-2">
+                  <span>Get Started Free</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                </div>
+              </Link>
+
+              <Link
+                to="/mock-interview"
+                className={`group flex items-center space-x-3 px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 ${
+                  darkMode 
+                    ? 'bg-white/10 text-white border border-white/20 hover:bg-white/20' 
+                    : 'bg-white/80 text-gray-900 border border-gray-200 hover:bg-white shadow-xl'
+                }`}
+              >
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <Mic className="w-5 h-5 text-white" />
+                </div>
+                <span>Mock Interview</span>
+              </Link>
+
+              <Link
+                to="/login"
+                className="inline-flex items-center space-x-3 px-8 py-4 bg-white text-slate-700 rounded-2xl hover:bg-slate-50 transition-all duration-200 hover:scale-105 shadow-lg border border-slate-200 text-lg font-medium group"
+              >
+                <LogIn className="w-6 h-6 group-hover:scale-110 transition-transform duration-200" />
+                <span>Sign In</span>
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Stats */}

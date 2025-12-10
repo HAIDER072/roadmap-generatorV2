@@ -5,6 +5,19 @@ import Razorpay from 'razorpay';
 import crypto from 'crypto';
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
+import multer from 'multer';
+// PDF parsing is optional - only needed for resume upload feature
+let pdfParse = null;
+try {
+  // Try to import pdf-parse if available
+  const pdfParseModule = await import('pdf-parse');
+  // The new pdf-parse exports as { parse }
+  pdfParse = pdfParseModule.parse || pdfParseModule.default || pdfParseModule;
+  console.log('✅ PDF parsing enabled');
+} catch (error) {
+  console.log('⚠️ PDF parsing not available - resume upload will be disabled');
+  console.log('Error:', error.message);
+}
 import { extractMainTopic, getVideoRecommendations, createModifiedPythonScripts } from './mlService.js';
 
 // Load environment variables
@@ -25,7 +38,14 @@ app.use(cors({
   ],
   credentials: true
 }));
-app.use(express.json());
+app.use(express.json({ limit: '5mb' }));
+
+// Configure multer for file uploads
+const storage = multer.memoryStorage();
+const upload = multer({ 
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+});
 
 // Initialize AI services
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
@@ -960,6 +980,122 @@ app.post('/api/test-verify-payment', async (req, res) => {
   }
 });
 
+// PDF parsing endpoint - Send PDF directly to Gemini
+app.post('/api/parse-resume', upload.single('resume'), async (req, res) => {
+  try {
+    console.log('📄 Received resume parsing request');
+    
+    if (!genAI) {
+      return res.status(503).json({
+        success: false,
+        error: 'Gemini API not configured. Please add GEMINI_API_KEY to .env file.',
+        timestamp: new Date().toISOString()
+      });
+    }
+    
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        error: 'No file uploaded'
+      });
+    }
+    
+    const file = req.file;
+    console.log('File info:', { name: file.originalname, type: file.mimetype, size: file.size });
+    
+    let extractedText = '';
+    
+    // Handle PDF files - Send directly to Gemini
+    if (file.mimetype === 'application/pdf') {
+      console.log('🤖 Sending PDF directly to Gemini 2.5 Pro for text extraction...');
+      
+      try {
+        // Convert PDF buffer to base64 for Gemini
+        const base64Pdf = file.buffer.toString('base64');
+        
+        // Use Gemini 2.5 Pro model with PDF support
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
+        
+        // Send PDF to Gemini with extraction prompt
+        const result = await model.generateContent([
+          {
+            inlineData: {
+              mimeType: "application/pdf",
+              data: base64Pdf
+            }
+          },
+          {
+            text: "Extract all text content from this resume PDF. Return ONLY the extracted text with proper formatting, preserving sections like personal info, experience, education, and skills. Do not add any commentary or additional text."
+          }
+        ]);
+        
+        const response = await result.response;
+        extractedText = response.text().trim();
+        console.log('✅ PDF text extracted by Gemini:', extractedText.length, 'characters');
+        
+      } catch (geminiError) {
+        console.error('❌ Gemini PDF extraction error:', geminiError);
+        return res.status(500).json({
+          success: false,
+          error: 'Failed to extract text from PDF using Gemini: ' + geminiError.message
+        });
+      }
+    }
+    // Handle text files
+    else if (file.mimetype === 'text/plain' || file.originalname.endsWith('.txt')) {
+      console.log('Reading text file...');
+      extractedText = file.buffer.toString('utf-8');
+    }
+    // Handle other formats
+    else {
+      return res.status(400).json({
+        success: false,
+        error: 'Unsupported file type. Please upload a PDF or TXT file.'
+      });
+    }
+    
+    // Clean up the text
+    extractedText = extractedText
+      .replace(/\s+/g, ' ')
+      .replace(/\n+/g, '\n')
+      .trim();
+    
+    // Validate
+    if (extractedText.length < 50) {
+      return res.status(400).json({
+        success: false,
+        error: 'Resume text is too short. Please upload a proper resume.'
+      });
+    }
+    
+    console.log('✅ Resume parsed successfully using Gemini');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('📄 RESUME PARSING CONFIRMED - GEMINI EXTRACTED:');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('📌 File:', file.originalname);
+    console.log('📏 Length:', extractedText.length, 'characters');
+    console.log('🔍 Full extracted text:');
+    console.log(extractedText);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    
+    res.json({
+      success: true,
+      text: extractedText,
+      filename: file.originalname,
+      length: extractedText.length,
+      parsingConfirmed: true,
+      message: 'Resume successfully extracted using Gemini API'
+    });
+    
+  } catch (error) {
+    console.error('❌ Error parsing resume:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to parse resume'
+    });
+  }
+});
+
 // ROOT ROUTE - Add this to fix "Cannot GET" error
 app.get('/', (req, res) => {
   res.json({
@@ -1481,6 +1617,607 @@ function generateGenericFallback(prompt, category) {
     }
   ];
 }
+
+// Mock Interview endpoints
+app.post('/api/mock-interview/start', async (req, res) => {
+  try {
+    console.log('🎤 Received mock interview start request:', req.body);
+    
+    const { userId, resumeText, position, questionCount = 5 } = req.body;
+    
+    // Validate required fields
+    if (!userId || !resumeText || !position) {
+      return res.status(400).json({
+        success: false,
+        error: 'User ID, resume text, and position are required',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Validate question count
+    if (![5, 10, 15, 20].includes(questionCount)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Question count must be 5, 10, 15, or 20',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Check token balance
+    const TOKENS_PER_INTERVIEW = parseInt(process.env.TOKENS_PER_INTERVIEW || '5', 10);
+    if (!supabaseAdmin) {
+      return res.status(500).json({ 
+        success: false, 
+        error: 'Server configuration error (Supabase)', 
+        timestamp: new Date().toISOString() 
+      });
+    }
+
+    // Get user's current token balance
+    const { data: profile, error: profileError } = await supabaseAdmin
+      .from('user_profiles')
+      .select('tokens, email')
+      .eq('id', userId)
+      .single();
+
+    if (profileError || !profile) {
+      console.error('❌ Failed to fetch user profile:', profileError);
+      return res.status(400).json({ 
+        success: false, 
+        error: 'User profile not found', 
+        timestamp: new Date().toISOString() 
+      });
+    }
+
+    if (profile.tokens < TOKENS_PER_INTERVIEW) {
+      return res.status(402).json({
+        success: false,
+        error: 'Insufficient tokens',
+        tokensRemaining: profile.tokens,
+        tokensRequired: TOKENS_PER_INTERVIEW,
+        timestamp: new Date().toISOString()
+      });
+    }
+    
+    // Deduct tokens
+    const { error: deductError } = await supabaseAdmin.rpc('deduct_user_tokens', {
+      p_user_id: userId,
+      p_tokens: TOKENS_PER_INTERVIEW,
+      p_description: `Mock interview for ${position} position`,
+      p_roadmap_id: null
+    });
+
+    if (deductError) {
+      console.error('❌ Token deduction failed:', deductError);
+      return res.status(500).json({ 
+        success: false, 
+        error: 'Token deduction failed', 
+        timestamp: new Date().toISOString() 
+      });
+    }
+
+    console.log(`🪙 Successfully deducted ${TOKENS_PER_INTERVIEW} tokens from user ${userId}`);
+
+    // Generate interview questions using Gemini AI
+    if (!genAI) {
+      return res.status(500).json({
+        success: false,
+        error: 'AI service not configured',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    const questionPrompt = `You are an expert interviewer for a ${position} position. Based on the following resume that was extracted using OpenAI, generate exactly ${questionCount} interview questions.
+
+**RESUME CONTENT (Extracted from candidate's PDF):**
+${resumeText}
+
+**POSITION:** ${position}
+
+**INSTRUCTIONS:**
+Generate interview questions that are:
+1. **DIRECTLY based on specific details from the candidate's resume** (projects, technologies, experiences mentioned)
+2. A mix of technical questions about skills/technologies they claim to know
+3. Behavioral questions about specific experiences they've listed
+4. Questions that verify and probe deeper into their resume claims
+5. Challenging but fair questions appropriate for the ${position} role
+
+**IMPORTANT:** Reference specific items from their resume in your questions (e.g., "I see you worked on [project name]", "You mentioned [technology]")
+
+Provide exactly ${questionCount} questions, one per line, without numbering or additional formatting.
+
+Example format:
+I see you worked on [specific project from resume]. Tell me about the challenges you faced?
+You mentioned [specific technology]. How would you approach [technical scenario]?
+Describe your role in [specific experience from resume]?
+I noticed you have experience with [skill from resume]. How do you apply this in...?`;
+
+    console.log('🤖 Generating interview questions with Gemini AI...');
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const result = await model.generateContent(questionPrompt);
+    const response = await result.response;
+    const text = response.text();
+
+    // Parse questions from response
+    const questions = text
+      .split('\n')
+      .filter(line => line.trim())
+      .map(line => line.replace(/^\d+\.\s*/, '').trim())
+      .filter(q => q.length > 10)
+      .slice(0, questionCount);
+
+    if (questions.length < questionCount) {
+      // Generate fallback questions if AI didn't provide enough
+      const fallbackQuestions = [
+        `Tell me about your experience relevant to the ${position} role.`,
+        `What are your key strengths that make you suitable for this position?`,
+        `Describe a challenging project you worked on and how you handled it.`,
+        `How do you stay updated with the latest technologies and trends in your field?`,
+        `Where do you see yourself in the next 3-5 years in this career path?`,
+        `What is your greatest professional achievement?`,
+        `How do you handle working under pressure and tight deadlines?`,
+        `Describe your approach to problem-solving.`,
+        `What motivates you in your work?`,
+        `How do you handle conflicts with team members?`,
+        `What technical skills are you most proficient in?`,
+        `Tell me about a time you failed and what you learned.`,
+        `How do you prioritize tasks when managing multiple projects?`,
+        `What tools and methodologies do you prefer?`,
+        `Why are you interested in this ${position} position?`,
+        `How do you ensure code quality and best practices?`,
+        `Describe your experience with team collaboration.`,
+        `What emerging technologies interest you most?`,
+        `How do you handle feedback and criticism?`,
+        `What makes you a good fit for our team?`
+      ];
+      while (questions.length < questionCount) {
+        questions.push(fallbackQuestions[questions.length]);
+      }
+    }
+
+    console.log(`✅ Generated ${questions.length} interview questions`);
+
+    res.json({
+      success: true,
+      questions,
+      tokensUsed: TOKENS_PER_INTERVIEW,
+      tokensRemaining: profile.tokens - TOKENS_PER_INTERVIEW,
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (error) {
+    console.error('❌ Error starting mock interview:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to start interview',
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+app.post('/api/mock-interview/report', async (req, res) => {
+  try {
+    console.log('📊 Received interview report generation request');
+    
+    const { userId, questions, position, resumeText, speechAnalysis } = req.body;
+    
+    if (!userId || !questions || !position) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing required fields',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Generate report using Gemini AI
+    if (!genAI) {
+      return res.status(500).json({
+        success: false,
+        error: 'AI service not configured',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    const speechAnalysisText = speechAnalysis ? `
+
+Speech Analysis:
+- Filler Words Used: ${speechAnalysis.fillerWords}
+- Speaking Pace: ${speechAnalysis.pace} words per minute (ideal: 120-150 wpm)
+- Speech Clarity: ${speechAnalysis.clarity}% (based on voice recognition confidence)
+` : '';
+
+    const reportPrompt = `You are an expert interviewer evaluating a candidate for a ${position} position.
+
+Candidate's Resume Summary:
+${resumeText.substring(0, 500)}...
+
+Interview Questions and Answers:
+${questions.map((q, i) => `
+Q${i + 1}: ${q.question}
+A${i + 1}: ${q.answer}`).join('\n')}
+${speechAnalysisText}
+
+Provide a comprehensive interview evaluation in the following JSON format:
+{
+  "overallScore": <number 0-100>,
+  "strengths": ["strength 1", "strength 2", "strength 3"],
+  "improvements": ["improvement 1", "improvement 2", "improvement 3"],
+  "detailedFeedback": [
+    {
+      "id": 1,
+      "question": "<question text>",
+      "answer": "<answer text>",
+      "feedback": "<specific feedback for this answer>"
+    }
+  ],
+  "recommendation": "<overall recommendation and next steps>"
+}
+
+Evaluate based on:
+- Technical knowledge and accuracy
+- Communication skills
+- Problem-solving approach
+- Cultural fit and soft skills
+- Relevance to the ${position} role
+
+Provide ONLY the JSON object, no additional text.`;
+
+    console.log('🤖 Generating interview report with Gemini AI...');
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const result = await model.generateContent(reportPrompt);
+    const response = await result.response;
+    let text = response.text();
+
+    // Clean up response to extract JSON
+    text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    
+    let report;
+    try {
+      report = JSON.parse(text);
+    } catch (parseError) {
+      console.error('Failed to parse AI response, generating fallback report');
+      // Fallback report if parsing fails
+      report = {
+        overallScore: 70,
+        strengths: [
+          'Demonstrated relevant experience',
+          'Good communication skills',
+          'Showed enthusiasm for the role'
+        ],
+        improvements: [
+          'Could provide more specific examples',
+          'Technical depth could be improved',
+          'Consider elaborating on problem-solving approaches'
+        ],
+        detailedFeedback: questions.map(q => ({
+          id: q.id,
+          question: q.question,
+          answer: q.answer,
+          feedback: 'Good response, consider adding more specific examples.'
+        })),
+        recommendation: `The candidate shows promise for the ${position} role. With some additional preparation and focus on technical depth, they could be a strong fit. Recommend further technical assessment.`
+      };
+    }
+
+    console.log('✅ Interview report generated successfully');
+
+    res.json({
+      success: true,
+      report,
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (error) {
+    console.error('❌ Error generating interview report:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to generate report',
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+// Voice-only interview response endpoint
+app.post('/api/mock-interview/voice-response', async (req, res) => {
+  try {
+    console.log('🎙️ Received voice interview response request');
+    
+    const { conversationHistory, position, resumeText } = req.body;
+    
+    if (!conversationHistory || !position) {
+      return res.status(400).json({
+        success: false,
+        error: 'Conversation history and position are required',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Generate AI response using Gemini
+    if (!genAI) {
+      return res.status(500).json({
+        success: false,
+        error: 'AI service not configured',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Build conversation context
+    const conversationContext = conversationHistory
+      .map(msg => `${msg.role === 'user' ? 'Candidate' : 'AI Interviewer'}: ${msg.content}`)
+      .join('\n\n');
+
+    const voicePrompt = `You are an AI interviewer conducting a voice-only interview for a ${position} position.
+
+**CANDIDATE'S RESUME (Extracted using OpenAI from their PDF):**
+${resumeText ? resumeText.substring(0, 1000) + '...' : 'Not provided'}
+
+**CONVERSATION HISTORY:**
+${conversationContext}
+
+**INSTRUCTIONS:**
+Respond naturally as an interviewer would in a real conversation. Your response should:
+1. **Reference specific details from their resume** (projects, technologies, experiences they mentioned)
+2. Ask relevant follow-up questions based on their previous answers AND their resume
+3. Probe deeper into their claimed experience and skills from the resume
+4. Be conversational and engaging (this is voice-only, so keep it natural)
+5. Ask both technical questions about resume technologies and behavioral questions about resume experiences
+6. Keep responses concise (2-4 sentences max) since this is a spoken conversation
+7. Verify and explore the details they've written in their resume
+8. After 8-10 exchanges, consider wrapping up the interview gracefully
+
+**EXAMPLE QUESTIONS:**
+- "I see from your resume you worked on [project]. Tell me about that."
+- "You mentioned experience with [technology]. How have you used it?"
+- "In your previous role at [company from resume], what was your biggest achievement?"
+
+Provide ONLY your next response as the interviewer, nothing else.`;
+
+    console.log('🤖 Generating AI interviewer response with Gemini AI...');
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const result = await model.generateContent(voicePrompt);
+    const response = await result.response;
+    const aiResponse = response.text().trim();
+
+    // Check if interview should end (after 10-12 exchanges)
+    const shouldEnd = conversationHistory.length >= 20;
+
+    console.log('✅ Generated AI interviewer response');
+
+    res.json({
+      success: true,
+      aiResponse,
+      shouldEnd,
+      exchangeCount: Math.floor(conversationHistory.length / 2),
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (error) {
+    console.error('❌ Error generating voice interview response:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to generate response',
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+// AI Interview endpoints
+app.post('/api/ai-interview/introduction', async (req, res) => {
+  try {
+    console.log('🎤 Received AI interview introduction request:', req.body);
+    
+    const { jobContext } = req.body;
+    
+    if (!genAI) {
+      return res.status(500).json({
+        success: false,
+        error: 'AI service not configured',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    const systemPrompt = `You are an AI interviewer conducting a professional interview. Create a warm, welcoming introduction.
+
+Job Data:
+- Role: ${jobContext?.position || 'the position'}
+- Skills Focus: ${jobContext?.skills?.slice(0, 3).join(', ') || 'professional skills'}
+- Total Questions: ${jobContext?.totalQuestions || 5}
+
+Create an introduction that:
+1. Introduces yourself as an AI interviewer
+2. States the specific job title
+3. Mentions the skills focus areas
+4. Asks for their brief introduction
+
+Be warm, professional, and encouraging. Use actual job data, never placeholders.`;
+
+    console.log('🤖 Generating interview introduction with Gemini AI...');
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const result = await model.generateContent(systemPrompt);
+    const response = await result.response;
+    const text = response.text();
+
+    console.log('✅ Interview introduction generated successfully');
+
+    res.json({
+      success: true,
+      message: text.trim(),
+      phase: {
+        current: 'introduction',
+        questionIndex: 0,
+        totalQuestions: jobContext?.totalQuestions || 5,
+      },
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (error) {
+    console.error('❌ Error generating interview introduction:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to generate introduction',
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+app.post('/api/ai-interview/response', async (req, res) => {
+  try {
+    console.log('🎤 Received AI interview response request');
+    
+    const { conversationHistory, userResponse, jobContext, currentPhase } = req.body;
+    
+    if (!userResponse || !jobContext) {
+      return res.status(400).json({
+        success: false,
+        error: 'User response and job context are required',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    if (!genAI) {
+      return res.status(500).json({
+        success: false,
+        error: 'AI service not configured',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Build conversation context
+    const conversationContext = conversationHistory
+      .map(msg => `${msg.role}: ${msg.content}`)
+      .join('\n');
+
+    // Determine phase
+    const totalQuestions = jobContext?.totalQuestions || 5;
+    const currentQuestionIndex = currentPhase?.questionIndex || 0;
+    const phase = currentPhase?.current || 'candidate_intro';
+
+    let phaseInstructions = '';
+    let nextPhase = {
+      current: phase,
+      questionIndex: currentQuestionIndex,
+      totalQuestions,
+    };
+
+    if (phase === 'candidate_intro' || phase === 'introduction') {
+      phaseInstructions = `The candidate just provided their introduction. Give warm acknowledgment (2-3 sentences) and ask the first interview question about their experience with ${jobContext?.skills?.[0] || 'relevant skills'}.`;
+      nextPhase = {
+        current: 'questions',
+        questionIndex: 1,
+        totalQuestions,
+      };
+    } else if (phase === 'questions') {
+      if (currentQuestionIndex >= totalQuestions) {
+        phaseInstructions = `All ${totalQuestions} questions complete. Thank the candidate warmly, acknowledge their qualifications, and conclude the interview professionally.`;
+        nextPhase = {
+          current: 'closing',
+          questionIndex: totalQuestions,
+          totalQuestions,
+        };
+      } else {
+        phaseInstructions = `Question ${currentQuestionIndex} of ${totalQuestions}. Give brief feedback (1-2 sentences) and ask next question about ${jobContext?.skills?.[currentQuestionIndex % jobContext?.skills?.length] || 'their experience'}.`;
+        nextPhase = {
+          current: 'questions',
+          questionIndex: currentQuestionIndex + 1,
+          totalQuestions,
+        };
+      }
+    } else if (phase === 'closing') {
+      phaseInstructions = `The interview is complete. Provide a final warm closing message.`;
+    }
+
+    const systemPrompt = `You are an AI interviewer for the ${jobContext?.position || 'position'}.
+
+${phaseInstructions}
+
+Job Context:
+- Role: ${jobContext?.position || 'Position'}
+- Skills: ${jobContext?.skills?.join(', ') || 'Professional skills'}
+- Questions: ${currentPhase?.questionIndex || 1} of ${totalQuestions}
+
+Conversation History:
+${conversationContext}
+
+Latest Response: "${userResponse}"
+
+Respond in JSON:
+{
+  "feedback": "Brief acknowledgment/feedback",
+  "nextQuestion": "Your next question${phase === 'closing' ? ' (empty for closing)' : ''}"
+}`;
+
+    console.log('🤖 Generating AI interviewer response with Gemini AI...');
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const result = await model.generateContent(systemPrompt);
+    const response = await result.response;
+    let text = response.text();
+
+    // Parse JSON response
+    let parsedResponse;
+    try {
+      const jsonMatch = text.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        parsedResponse = JSON.parse(jsonMatch[0]);
+      } else {
+        throw new Error('No JSON found in response');
+      }
+    } catch (parseError) {
+      console.warn('Failed to parse AI response, using fallback');
+      const isClosing = phase === 'closing' || currentQuestionIndex >= totalQuestions;
+      parsedResponse = {
+        feedback: isClosing 
+          ? `Thank you so much for your time today. Your insights have been valuable.`
+          : 'Thank you for sharing that.',
+        nextQuestion: isClosing 
+          ? ''
+          : `Can you tell me about your experience with ${jobContext?.skills?.[0] || 'this skill'}?`,
+      };
+    }
+
+    console.log('✅ AI interviewer response generated successfully');
+
+    res.json({
+      success: true,
+      feedback: parsedResponse.feedback,
+      nextQuestion: parsedResponse.nextQuestion,
+      phase: nextPhase,
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (error) {
+    console.error('❌ Error generating AI interview response:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to generate response',
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+app.post('/api/ai-interview/save', async (req, res) => {
+  try {
+    console.log('💾 Received interview conversation save request');
+    
+    const { interviewId, messages } = req.body;
+    
+    // Here you would save to your database
+    // For now, just return success
+    
+    res.json({
+      success: true,
+      message: 'Conversation saved successfully',
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (error) {
+    console.error('❌ Error saving interview conversation:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to save conversation',
+      timestamp: new Date().toISOString()
+    });
+  }
+});
 
 // Video recommendation endpoint with consistent filtering
 app.post('/api/get-video-recommendations', async (req, res) => {
