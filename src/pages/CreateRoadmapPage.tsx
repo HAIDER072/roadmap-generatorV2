@@ -6,10 +6,14 @@ import StepsPanel from '../components/StepsPanel';
 import { RoadmapNode, Category } from '../types';
 import { ApiService } from '../services/api';
 import { RoadmapService } from '../services/roadmapService';
+import { TokenService } from '../services/tokenService';
 import { getCategoryTheme } from '../utils/themes';
-import { AlertCircle, Plus, Download, ArrowLeft } from 'lucide-react';
+import { AlertCircle, Plus, Download, ArrowLeft, Play } from 'lucide-react';
 import jsPDF from 'jspdf';
 import { clearAllAIInstructions } from '../components/NodeDetail';
+import { useAuth } from '../contexts/AuthContext';
+import InsufficientTokensModal from '../components/tokens/InsufficientTokensModal';
+import TokenRechargeModal from '../components/tokens/TokenRechargeModal';
 
 interface TravelFormData {
   destination: string;
@@ -29,8 +33,17 @@ const CreateRoadmapPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showSteps, setShowSteps] = useState(true);
   const [showCompactInput, setShowCompactInput] = useState(false);
+  const [videoRecommendations, setVideoRecommendations] = useState<any[]>([]);
+  const [originalPrompt, setOriginalPrompt] = useState<string>('');
+
+  // Token-related state
+  const [showInsufficientTokens, setShowInsufficientTokens] = useState(false);
+  const [showRecharge, setShowRecharge] = useState(false);
+  const [tokensRemaining, setTokensRemaining] = useState(0);
+  const tokensRequired = 1; // 1 token per roadmap as per requirement
   
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   // Auto-save functionality
   useEffect(() => {
@@ -55,6 +68,26 @@ const CreateRoadmapPage: React.FC = () => {
   }, [projectName, selectedCategory, currentPhases, currentRoadmap]);
 
   const handleGenerateRoadmap = async (text: string, category: Category, travelData?: TravelFormData) => {
+    // Check token balance before generating
+    if (!user) {
+      setError('You must be logged in to generate roadmaps');
+      return;
+    }
+
+    try {
+      const profile = await TokenService.getUserProfile(user.id);
+      const remaining = profile?.tokens ?? 0;
+      setTokensRemaining(remaining);
+
+      if (remaining < tokensRequired) {
+        setShowInsufficientTokens(true);
+        return;
+      }
+    } catch (err) {
+      console.error('Error checking token balance:', err);
+      setError('Failed to verify token balance');
+      return;
+    }
     setSelectedCategory(category);
     setIsGenerating(true);
     setHasGenerated(true);
@@ -79,20 +112,29 @@ const CreateRoadmapPage: React.FC = () => {
       const response = await ApiService.generateRoadmap({
         prompt,
         category,
-        travelData
+        travelData,
+        userId: user.id
       });
 
       if (response.success && response.roadmapNodes) {
         setCurrentRoadmap(response.roadmapNodes);
         setCurrentPhases(response.phases || []);
         
-        if (category === 'travel_planner' && travelData) {
-          setProjectName(`Journey to ${travelData.destination}`);
-        } else {
-          setProjectName(response.projectName || 'Learning Journey');
-        }
+        const projectTitle = category === 'travel_planner' && travelData 
+          ? `Journey to ${travelData.destination}` 
+          : response.projectName || 'Learning Journey';
         
+        setProjectName(projectTitle);
         setShowCompactInput(true);
+        
+        // Store video recommendations for later use (disabled auto-navigation to allow saving)
+        // TODO: Add manual "View with Videos" button to navigate with video recommendations
+        // Store video recommendations and original prompt
+        if (response.videoRecommendations && response.videoRecommendations.length > 0) {
+          console.log(`🎥 Generated ${response.videoRecommendations.length} video recommendations`);
+          setVideoRecommendations(response.videoRecommendations);
+        }
+        setOriginalPrompt(text);
         
         if (response.note) {
           console.log('API Note:', response.note);
@@ -118,6 +160,8 @@ const CreateRoadmapPage: React.FC = () => {
     setShowSteps(true);
     setError(null);
     setIsGenerating(false);
+    setVideoRecommendations([]);
+    setOriginalPrompt('');
     
     clearAllAIInstructions();
     window.dispatchEvent(new CustomEvent('clearAIInstructions'));
@@ -292,6 +336,32 @@ const CreateRoadmapPage: React.FC = () => {
               </p>
             </div>
             
+            {/* View with Videos Button */}
+            {videoRecommendations.length > 0 && (
+              <button
+                onClick={() => navigate('/roadmap', {
+                  state: {
+                    roadmap: {
+                      title: projectName,
+                      category: selectedCategory,
+                      phases: currentPhases,
+                      roadmapNodes: currentRoadmap,
+                      videoRecommendations: videoRecommendations,
+                      originalPrompt: originalPrompt
+                    }
+                  }
+                })}
+                className="p-2 rounded-lg hover:bg-white/50 transition-colors duration-200 relative"
+                style={{ color: selectedCategory ? getCategoryTheme(selectedCategory).primary : '#64748b' }}
+                title="View with Learning Videos"
+              >
+                <Play className="w-4 h-4" />
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                  {videoRecommendations.length}
+                </span>
+              </button>
+            )}
+            
             <button
               onClick={handleDownloadPDF}
               className="p-2 rounded-lg hover:bg-white/50 transition-colors duration-200"
@@ -368,6 +438,27 @@ const CreateRoadmapPage: React.FC = () => {
           />
         )}
       </div>
+      
+      {/* Token Modals */}
+      <InsufficientTokensModal 
+        isOpen={showInsufficientTokens}
+        onClose={() => setShowInsufficientTokens(false)}
+        onRecharge={() => {
+          setShowInsufficientTokens(false);
+          setShowRecharge(true);
+        }}
+        tokensRemaining={tokensRemaining}
+        tokensRequired={tokensRequired}
+      />
+      
+      <TokenRechargeModal 
+        isOpen={showRecharge}
+        onClose={() => setShowRecharge(false)}
+        onSuccess={(tokens) => {
+          console.log(`Successfully recharged ${tokens} tokens`);
+          setTokensRemaining(prev => prev + tokens);
+        }}
+      />
     </div>
   );
 };
