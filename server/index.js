@@ -29,7 +29,7 @@ const PORT = process.env.PORT || 3001;
 // Middleware - UPDATED CORS for production
 app.use(cors({
   origin: [
-    'http://localhost:5173', 
+    'http://localhost:5173',
     'http://127.0.0.1:5173',
     'https://flowniq.netlify.app',
     'https://flowniq.onrender.com',// Your Netlify frontend
@@ -42,7 +42,7 @@ app.use(express.json({ limit: '5mb' }));
 
 // Configure multer for file uploads
 const storage = multer.memoryStorage();
-const upload = multer({ 
+const upload = multer({
   storage: storage,
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
 });
@@ -129,11 +129,35 @@ function cleanAIResponse(text) {
     .trim();
 }
 
+// Helper function for exponential backoff retries
+async function retryWithBackoff(fn, retries = 3, delay = 2000) {
+  try {
+    return await fn();
+  } catch (error) {
+    // Check for 429 or "Too Many Requests" or "Quota Exceeded"
+    const isRateLimit = error.status === 429 ||
+      (error.message && (
+        error.message.includes('429') ||
+        error.message.includes('Too Many Requests') ||
+        error.message.includes('Quota exceeded') ||
+        error.message.includes('resource exhausted')
+      ));
+
+    if (retries === 0 || !isRateLimit) {
+      throw error;
+    }
+
+    console.log(`⚠️ Rate limit hit. Retrying in ${delay / 1000}s... (Attempts left: ${retries})`);
+    await new Promise(resolve => setTimeout(resolve, delay));
+    return retryWithBackoff(fn, retries - 1, delay * 2);
+  }
+}
+
 // Helper function to parse project name from AI response
 function parseProjectName(text) {
   const cleanedText = cleanAIResponse(text);
   const lines = cleanedText.split('\n').filter(line => line.trim());
-  
+
   // Look for project name in first few lines
   for (const line of lines.slice(0, 3)) {
     if (line.toLowerCase().includes('project name') || line.toLowerCase().includes('title')) {
@@ -143,12 +167,12 @@ function parseProjectName(text) {
       }
     }
   }
-  
+
   // Fallback: use first line if it looks like a title
   if (lines[0] && lines[0].length < 50) {
     return lines[0];
   }
-  
+
   return 'Learning Journey';
 }
 
@@ -158,7 +182,7 @@ function parsePhasesFromResponse(text) {
   const lines = cleanedText.split('\n').filter(line => line.trim());
   const phases = [];
   let currentPhase = null;
-  
+
   for (const line of lines) {
     // Match phase headers (Phase 1:, Phase 2:, etc. OR Day 1:, Day 2:, etc.)
     const phaseMatch = line.match(/^(Phase|Day)\s+(\d+):\s*(.+)/i);
@@ -173,7 +197,7 @@ function parsePhasesFromResponse(text) {
       };
       continue;
     }
-    
+
     // Match steps within phases (1.1, 1.2, etc. or just numbered)
     const stepMatch = line.match(/^(\d+\.?\d*)\.\s*(.+)/) || line.match(/^-\s*(.+)/);
     if (stepMatch && currentPhase) {
@@ -184,11 +208,11 @@ function parsePhasesFromResponse(text) {
       });
     }
   }
-  
+
   if (currentPhase) {
     phases.push(currentPhase);
   }
-  
+
   return phases;
 }
 
@@ -196,10 +220,10 @@ function parsePhasesFromResponse(text) {
 function generateGoogleMapsEmbedUrl(locationName, destination) {
   // Create a search query for the location
   const searchQuery = `${locationName}, ${destination}`;
-  
+
   // Use the iframe embed URL format that doesn't require API key
   const encodedQuery = encodeURIComponent(searchQuery);
-  
+
   // Using the public embed URL format that works without API key
   return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.2061485699746!2d73.85542079999999!3d18.519584099999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c1e2226b7b11%3A0xa4bb8106175ca68b!2s${encodedQuery}!5e0!3m2!1sen!2sin!4v1750155225368!5m2!1sen!2sin`;
 }
@@ -213,7 +237,7 @@ async function getYouTubeVideoTitle(videoId) {
       'dQw4w9WgXcQ': 'Never Gonna Give You Up - Rick Astley',
       // Add more known video IDs and their titles here
     };
-    
+
     return fallbackTitles[videoId] || `Tutorial Video - ${videoId}`;
   } catch (error) {
     return `Tutorial Video - ${videoId}`;
@@ -229,7 +253,7 @@ async function generatePhaseRoadmapNodes(phases, category, projectName, travelDa
   const branchOffset = 450; // Distance from phase to steps (left/right)
   const startY = 200;
   const centerX = canvasWidth / 2;
-  
+
   // Generate all YouTube videos and maps in one batch to avoid rate limits
   const allStepsData = [];
   phases.forEach(phase => {
@@ -262,8 +286,8 @@ Activity 2: [Location name]
 
 Only provide location names, no additional text.`;
 
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-        const result = await model.generateContent(mapPrompt);
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        const result = await retryWithBackoff(() => model.generateContent(mapPrompt));
         const response = await result.response;
         const text = response.text();
 
@@ -278,7 +302,7 @@ Only provide location names, no additional text.`;
               locationName = match[1].trim();
             }
           }
-          
+
           const searchQuery = `${locationName}, ${destination}`;
           allMediaResources[`${item.phaseNumber}-${item.stepIndex}`] = [{
             title: locationName,
@@ -312,8 +336,8 @@ URL: [YouTube URL]
 
 Provide real YouTube URLs and their actual titles, not placeholder text.`;
 
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-        const result = await model.generateContent(videoPrompt);
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        const result = await retryWithBackoff(() => model.generateContent(videoPrompt));
         const response = await result.response;
         const text = response.text();
 
@@ -321,7 +345,7 @@ Provide real YouTube URLs and their actual titles, not placeholder text.`;
         const lines = text.split('\n').filter(line => line.trim());
         let currentActivityIndex = -1;
         let videosForCurrentActivity = [];
-        
+
         for (const line of lines) {
           // Check for activity header
           const activityMatch = line.match(/Activity (\d+):/);
@@ -334,33 +358,33 @@ Provide real YouTube URLs and their actual titles, not placeholder text.`;
                 const filteredVideos = videosForCurrentActivity.filter(video => {
                   const videoTitle = video.title.toLowerCase();
                   const stepTitle = stepData.step.title.toLowerCase();
-                  
+
                   // Remove videos that start with "How to" and contain the step title
                   if (videoTitle.startsWith('how to') && videoTitle.includes(stepTitle)) {
                     return false;
                   }
-                  
+
                   // Remove videos that are just "How to: [step title]"
                   if (videoTitle === `how to: ${stepTitle}` || videoTitle === `tutorial: ${stepTitle}`) {
                     return false;
                   }
-                  
+
                   return true;
                 });
-                
+
                 allMediaResources[`${stepData.phaseNumber}-${stepData.stepIndex}`] = filteredVideos;
               }
             }
-            
+
             currentActivityIndex = parseInt(activityMatch[1]) - 1;
             videosForCurrentActivity = [];
             continue;
           }
-          
+
           // Parse title and URL pairs
           const titleMatch = line.match(/Title:\s*(.+)/);
           const urlMatch = line.match(/URL:\s*(https:\/\/(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11}))/);
-          
+
           if (titleMatch && currentActivityIndex >= 0) {
             const title = titleMatch[1].trim();
             // Look for URL in next few lines
@@ -389,7 +413,7 @@ Provide real YouTube URLs and their actual titles, not placeholder text.`;
             });
           }
         }
-        
+
         // Save last activity's videos with filtering
         if (currentActivityIndex >= 0 && videosForCurrentActivity.length > 0) {
           const stepData = allStepsData[currentActivityIndex];
@@ -398,20 +422,20 @@ Provide real YouTube URLs and their actual titles, not placeholder text.`;
             const filteredVideos = videosForCurrentActivity.filter(video => {
               const videoTitle = video.title.toLowerCase();
               const stepTitle = stepData.step.title.toLowerCase();
-              
+
               // Remove videos that start with "How to" and contain the step title
               if (videoTitle.startsWith('how to') && videoTitle.includes(stepTitle)) {
                 return false;
               }
-              
+
               // Remove videos that are just "How to: [step title]"
               if (videoTitle === `how to: ${stepTitle}` || videoTitle === `tutorial: ${stepTitle}`) {
                 return false;
               }
-              
+
               return true;
             });
-            
+
             allMediaResources[`${stepData.phaseNumber}-${stepData.stepIndex}`] = filteredVideos;
           }
         }
@@ -459,30 +483,30 @@ Provide real YouTube URLs and their actual titles, not placeholder text.`;
       }
     });
   }
-  
+
   phases.forEach((phase, phaseIndex) => {
     const phaseY = startY + (phaseIndex * phaseSpacing);
-    
+
     // Ensure exactly 4 steps per phase
     let phaseSteps = [...phase.steps];
-    
+
     // If less than 4 steps, pad with generic steps
     while (phaseSteps.length < 4) {
       const isTravel = category === 'travel_planner';
       const stepLabel = isTravel ? 'activity' : 'task';
       const phaseLabel = isTravel ? 'day' : 'phase';
-      
+
       phaseSteps.push({
         title: `Additional ${stepLabel} ${phaseSteps.length + 1}`,
         description: `Complete additional ${stepLabel}s for ${phase.name.toLowerCase()} on this ${phaseLabel}`
       });
     }
-    
+
     // If more than 4 steps, take only first 4
     if (phaseSteps.length > 4) {
       phaseSteps = phaseSteps.slice(0, 4);
     }
-    
+
     // Create phase node (main trunk)
     const phaseNode = {
       id: `phase-${phase.number}`,
@@ -510,26 +534,26 @@ Provide real YouTube URLs and their actual titles, not placeholder text.`;
         }]
       }
     };
-    
+
     nodes.push(phaseNode);
-    
+
     // Create exactly 4 step nodes: 2 on left, 2 on right with BETTER SPACING
     phaseSteps.forEach((step, stepIndex) => {
       // First 2 steps on left (indices 0,1), next 2 on right (indices 2,3)
       const isLeft = stepIndex < 2;
       const sideMultiplier = isLeft ? -1 : 1;
-      
+
       // Position steps: 2 on each side with IMPROVED SPACING
       const indexOnSide = stepIndex % 2; // 0 or 1 for each side
-      
+
       // IMPROVED: Better Y positioning with more space between steps
       const stepX = centerX + (sideMultiplier * branchOffset);
       const sideStartY = phaseY - (stepSpacing * 0.75); // Start higher to create more space
       const stepY = sideStartY + (indexOnSide * stepSpacing); // More space between steps
-      
+
       // Get media resources for this step
       const mediaResources = allMediaResources[`${phase.number}-${stepIndex}`] || [];
-      
+
       const stepNode = {
         id: `step-${phase.number}-${stepIndex + 1}`,
         title: step.title,
@@ -558,11 +582,11 @@ Provide real YouTube URLs and their actual titles, not placeholder text.`;
           }]
         }
       };
-      
+
       nodes.push(stepNode);
     });
   });
-  
+
   return nodes;
 }
 
@@ -593,9 +617,9 @@ app.post('/api/create-razorpay-order', async (req, res) => {
     };
 
     const order = await razorpayInstance.orders.create(orderOptions);
-    
+
     console.log('💰 Razorpay order created:', order.id);
-    
+
     res.json({
       success: true,
       order: {
@@ -621,7 +645,7 @@ app.post('/api/verify-razorpay-payment', async (req, res) => {
       body: req.body,
       timestamp: new Date().toISOString()
     });
-    
+
     if (!razorpayInstance) {
       console.error('❌ Razorpay instance not configured');
       return res.status(500).json({
@@ -638,7 +662,7 @@ app.post('/api/verify-razorpay-payment', async (req, res) => {
       tokens_purchased,
       amount
     } = req.body;
-    
+
     // Validate required fields
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !user_id) {
       console.error('❌ Missing required fields:', {
@@ -672,14 +696,14 @@ app.post('/api/verify-razorpay-payment', async (req, res) => {
     // Razorpay test payments can have various formats, so we check for test keys
     const isTestEnvironment = RAZORPAY_KEY_ID.includes('_test_');
     const isTestPayment = isTestEnvironment || razorpay_payment_id.startsWith('pay_test') || razorpay_order_id.startsWith('order_test');
-    
+
     console.log('🔍 Payment environment check:', {
       isTestEnvironment,
       isTestPayment,
       keyId: RAZORPAY_KEY_ID.substring(0, 10) + '...',
       signatureMatch: expectedSignature === razorpay_signature
     });
-    
+
     if (!isTestPayment && expectedSignature !== razorpay_signature) {
       console.error('❌ Invalid payment signature - verification failed');
       console.error('❌ Full signature details:', {
@@ -693,13 +717,13 @@ app.post('/api/verify-razorpay-payment', async (req, res) => {
         error: 'Payment verification failed - please contact support'
       });
     }
-    
+
     if (isTestPayment) {
       console.log('🧪 TEST MODE: Bypassing signature verification for test payment');
     }
 
     console.log('✅ Payment signature verified for:', razorpay_payment_id);
-    
+
     // Implement full payment processing with database integration
     if (!supabaseAdmin) {
       return res.status(500).json({
@@ -745,7 +769,7 @@ app.post('/api/verify-razorpay-payment', async (req, res) => {
         tokensToAdd: tokens_purchased,
         paymentId: razorpay_payment_id
       });
-      
+
       const { data: tokenResult, error: tokenError } = await supabaseAdmin.rpc('add_user_tokens', {
         p_user_id: user_id,
         p_tokens: tokens_purchased,
@@ -761,7 +785,7 @@ app.post('/api/verify-razorpay-payment', async (req, res) => {
           hint: tokenError.hint,
           code: tokenError.code
         });
-        
+
         // Mark payment as failed in case of token addition failure (only if payment record exists)
         if (paymentRecord) {
           await supabaseAdmin
@@ -778,14 +802,14 @@ app.post('/api/verify-razorpay-payment', async (req, res) => {
       }
 
       console.log(`🎉 Successfully added ${tokens_purchased} tokens to user ${user_id}`);
-      
+
       res.json({
         success: true,
         payment_id: razorpay_payment_id,
         tokens_added: tokens_purchased,
         message: 'Payment verified and tokens added successfully'
       });
-      
+
     } catch (dbError) {
       console.error('❌ Database error during payment processing:', dbError);
       res.status(500).json({
@@ -806,7 +830,7 @@ app.post('/api/verify-razorpay-payment', async (req, res) => {
 app.get('/api/user-profile/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
-    
+
     if (!supabaseAdmin) {
       return res.status(500).json({
         success: false,
@@ -880,7 +904,7 @@ app.get('/api/test-supabase', async (req, res) => {
 app.post('/api/test-add-tokens', async (req, res) => {
   try {
     const { user_id, tokens } = req.body;
-    
+
     if (!supabaseAdmin) {
       return res.status(500).json({
         success: false,
@@ -889,7 +913,7 @@ app.post('/api/test-add-tokens', async (req, res) => {
     }
 
     console.log('🧪 Testing token addition for user:', user_id);
-    
+
     // Test the add_user_tokens function
     const { data, error } = await supabaseAdmin.rpc('add_user_tokens', {
       p_user_id: user_id,
@@ -926,7 +950,7 @@ app.post('/api/test-add-tokens', async (req, res) => {
 app.post('/api/test-verify-payment', async (req, res) => {
   try {
     console.log('🧪 TEST: Payment verification request received:', req.body);
-    
+
     const {
       razorpay_order_id,
       razorpay_payment_id,
@@ -934,10 +958,10 @@ app.post('/api/test-verify-payment', async (req, res) => {
       tokens_purchased,
       amount
     } = req.body;
-    
+
     // Skip signature verification entirely for testing
     console.log('🧪 TEST: Skipping signature verification');
-    
+
     if (!supabaseAdmin) {
       return res.status(500).json({
         success: false,
@@ -984,7 +1008,7 @@ app.post('/api/test-verify-payment', async (req, res) => {
 app.post('/api/parse-resume', upload.single('resume'), async (req, res) => {
   try {
     console.log('📄 Received resume parsing request');
-    
+
     if (!genAI) {
       return res.status(503).json({
         success: false,
@@ -992,30 +1016,30 @@ app.post('/api/parse-resume', upload.single('resume'), async (req, res) => {
         timestamp: new Date().toISOString()
       });
     }
-    
+
     if (!req.file) {
       return res.status(400).json({
         success: false,
         error: 'No file uploaded'
       });
     }
-    
+
     const file = req.file;
     console.log('File info:', { name: file.originalname, type: file.mimetype, size: file.size });
-    
+
     let extractedText = '';
-    
+
     // Handle PDF files - Send directly to Gemini
     if (file.mimetype === 'application/pdf') {
       console.log('🤖 Sending PDF directly to Gemini 2.5 Pro for text extraction...');
-      
+
       try {
         // Convert PDF buffer to base64 for Gemini
         const base64Pdf = file.buffer.toString('base64');
-        
+
         // Use Gemini 2.5 Pro model with PDF support
         const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
-        
+
         // Send PDF to Gemini with extraction prompt
         const result = await model.generateContent([
           {
@@ -1028,11 +1052,11 @@ app.post('/api/parse-resume', upload.single('resume'), async (req, res) => {
             text: "Extract all text content from this resume PDF. Return ONLY the extracted text with proper formatting, preserving sections like personal info, experience, education, and skills. Do not add any commentary or additional text."
           }
         ]);
-        
+
         const response = await result.response;
         extractedText = response.text().trim();
         console.log('✅ PDF text extracted by Gemini:', extractedText.length, 'characters');
-        
+
       } catch (geminiError) {
         console.error('❌ Gemini PDF extraction error:', geminiError);
         return res.status(500).json({
@@ -1053,13 +1077,13 @@ app.post('/api/parse-resume', upload.single('resume'), async (req, res) => {
         error: 'Unsupported file type. Please upload a PDF or TXT file.'
       });
     }
-    
+
     // Clean up the text
     extractedText = extractedText
       .replace(/\s+/g, ' ')
       .replace(/\n+/g, '\n')
       .trim();
-    
+
     // Validate
     if (extractedText.length < 50) {
       return res.status(400).json({
@@ -1067,7 +1091,7 @@ app.post('/api/parse-resume', upload.single('resume'), async (req, res) => {
         error: 'Resume text is too short. Please upload a proper resume.'
       });
     }
-    
+
     console.log('✅ Resume parsed successfully using Gemini');
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log('📄 RESUME PARSING CONFIRMED - GEMINI EXTRACTED:');
@@ -1077,7 +1101,7 @@ app.post('/api/parse-resume', upload.single('resume'), async (req, res) => {
     console.log('🔍 Full extracted text:');
     console.log(extractedText);
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    
+
     res.json({
       success: true,
       text: extractedText,
@@ -1086,7 +1110,7 @@ app.post('/api/parse-resume', upload.single('resume'), async (req, res) => {
       parsingConfirmed: true,
       message: 'Resume successfully extracted using Gemini API'
     });
-    
+
   } catch (error) {
     console.error('❌ Error parsing resume:', error);
     res.status(500).json({
@@ -1114,9 +1138,9 @@ app.get('/', (req, res) => {
 app.post('/api/generate-instructions', async (req, res) => {
   try {
     console.log('📝 Received instructions generation request:', req.body);
-    
+
     const { stepDescription } = req.body;
-    
+
     if (!stepDescription) {
       console.error('❌ Missing stepDescription');
       return res.status(400).json({
@@ -1129,7 +1153,7 @@ app.post('/api/generate-instructions', async (req, res) => {
     // Check if Mistral API key is configured
     if (!mistralConfigured) {
       console.log('⚠️ Mistral API key not configured, using fallback response');
-      
+
       // Fallback response when API key is not configured
       const fallbackInstructions = [
         `Start by understanding the requirements for: ${stepDescription}`,
@@ -1137,7 +1161,7 @@ app.post('/api/generate-instructions', async (req, res) => {
         `Follow best practices and established guidelines`,
         `Complete the task systematically and verify results`
       ];
-      
+
       return res.json({
         success: true,
         instructions: fallbackInstructions,
@@ -1160,7 +1184,7 @@ Provide only the instructions without numbering, as this is a single comprehensi
 Task: ${stepDescription}`;
 
     console.log('🤖 Calling Mistral AI for instructions via HTTP...');
-    
+
     const response = await callMistralAPI([
       {
         role: 'user',
@@ -1171,11 +1195,11 @@ Task: ${stepDescription}`;
     console.log('✅ Received response from Mistral AI');
 
     const content = response.choices[0]?.message?.content || '';
-    
+
     // Parse the response into instructions - IMPROVED: Better parsing
     const lines = content.split('\n').filter(line => line.trim());
     const instructions = [];
-    
+
     for (const line of lines) {
       // Remove numbering and clean up the text
       const cleanedLine = line
@@ -1183,12 +1207,12 @@ Task: ${stepDescription}`;
         .replace(/^-\s*/, '')     // Remove "- " style bullets
         .replace(/^\*\s*/, '')    // Remove "* " style bullets
         .trim();
-      
+
       if (cleanedLine && cleanedLine.length > 10) { // Only include substantial instructions
         instructions.push(cleanedLine);
       }
     }
-    
+
     // Ensure we have at least one instruction
     if (instructions.length === 0) {
       instructions.push(`Complete the task: ${stepDescription}`);
@@ -1204,7 +1228,7 @@ Task: ${stepDescription}`;
 
   } catch (error) {
     console.error('❌ Error generating instructions:', error);
-    
+
     res.status(500).json({
       success: false,
       error: error.message || 'Failed to generate instructions',
@@ -1217,9 +1241,9 @@ Task: ${stepDescription}`;
 app.post('/api/generate-roadmap', async (req, res) => {
   try {
     console.log('📝 Received roadmap generation request:', req.body);
-    
+
     const { prompt, category, travelData, userId } = req.body;
-    
+
     // Validate required fields
     if (!userId) {
       return res.status(401).json({
@@ -1257,7 +1281,7 @@ app.post('/api/generate-roadmap', async (req, res) => {
         timestamp: new Date().toISOString()
       });
     }
-    
+
     if (!prompt || !category) {
       console.error('❌ Missing required fields:', { prompt: !!prompt, category: !!category });
       return res.status(400).json({
@@ -1287,10 +1311,10 @@ app.post('/api/generate-roadmap', async (req, res) => {
     // Check if Gemini API key is configured
     if (!genAI) {
       console.log('⚠️ Gemini API key not configured, using fallback response');
-      
+
       // Enhanced fallback response for travel category
       let fallbackProjectName, fallbackPhases;
-      
+
       if (category === 'travel_planner' && travelData) {
         fallbackProjectName = `Journey to ${travelData.destination}`;
         fallbackPhases = generateTravelFallback(travelData);
@@ -1298,9 +1322,9 @@ app.post('/api/generate-roadmap', async (req, res) => {
         fallbackProjectName = `${prompt} Journey`;
         fallbackPhases = generateGenericFallback(prompt, category);
       }
-      
+
       const roadmapNodes = await generatePhaseRoadmapNodes(fallbackPhases, category, fallbackProjectName, travelData);
-      
+
       return res.json({
         success: true,
         projectName: fallbackProjectName,
@@ -1315,43 +1339,15 @@ app.post('/api/generate-roadmap', async (req, res) => {
       });
     }
 
-    // Generate project name
-    let projectName;
+
+    // Combine Project Name and Phases generation into ONE call to optimize API key usage and avoid 429 errors
+    console.log('🤖 Generating roadmap content (Project Name + Phases) from Gemini AI...');
+
+    let combinedPrompt;
+
     if (category === 'travel_planner' && travelData) {
-      projectName = `Journey to ${travelData.destination}`;
-    } else {
-      const namePrompt = `Generate a short, catchy project name (2-4 words maximum) for this learning goal: ${prompt}
-
-Requirements:
-- Keep it concise and memorable
-- Make it relevant to the topic
-- Avoid generic words like "journey" or "guide"
-- Just return the name, nothing else
-
-Example format: "React Mastery" or "Python Fundamentals"`;
-
-      console.log('🤖 Getting project name from Gemini AI...');
-      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+      combinedPrompt = `Create a detailed ${travelData.duration}-day travel itinerary for: ${prompt}
       
-      try {
-        const nameResult = await model.generateContent(namePrompt);
-        const nameResponse = await nameResult.response;
-        projectName = cleanAIResponse(nameResponse.text()) || `${prompt} Journey`;
-      } catch (error) {
-        console.error('❌ Error getting project name from Gemini AI:', error);
-        if (error.message.includes('API_KEY_SERVICE_BLOCKED')) {
-          console.error('     Please check if your Gemini API key has the correct permissions and is not blocked for the Generative Language API.');
-        }
-        projectName = `${prompt} Journey`; // Fallback project name
-      }
-    }
-
-    // Generate phases and steps with category-specific prompts
-    let phasesPrompt;
-    
-    if (category === 'travel_planner' && travelData) {
-      phasesPrompt = `Create a detailed ${travelData.duration}-day travel itinerary for: ${prompt}
-
 Travel Details:
 - Destination: ${travelData.destination}
 - Starting from: ${travelData.startingLocation}
@@ -1359,138 +1355,103 @@ Travel Details:
 - Number of travelers: ${travelData.travelers}
 - Budget: $${travelData.budget}
 
-CRITICAL REQUIREMENT: Create exactly ${travelData.duration} days, each day must have EXACTLY 4 activities, no more, no less.
+CRITICAL REQUIREMENT: Create exactly ${travelData.duration} days, each day must have EXACTLY 4 activities.
 
-Structure your response as days with activities:
-
-Day 1: [Location/Theme - 1-2 words]
-1.1 [Morning activity with specific location and time]
-1.2 [Afternoon activity with specific location and time]
-1.3 [Evening activity with specific location and time]
-1.4 [Night activity or rest with specific location]
-
-Day 2: [Location/Theme - 1-2 words]
-2.1 [Morning activity with specific location and time]
-2.2 [Afternoon activity with specific location and time]
-2.3 [Evening activity with specific location and time]
-2.4 [Night activity or rest with specific location]
-
-Continue for all ${travelData.duration} days...
+Return a JSON object with this EXACT structure:
+{
+  "projectName": "Short catchy name for the trip (e.g. 'Paris Adventure')",
+  "phases": [
+    {
+      "number": 1,
+      "name": "Location/Theme (1-2 words)",
+      "steps": [
+        { "title": "Morning Activity", "description": "Specific details with location/time" },
+        { "title": "Afternoon Activity", "description": "Specific details with location/time" },
+        { "title": "Evening Activity", "description": "Specific details with location/time" },
+        { "title": "Night Activity", "description": "Specific details with location/time" }
+      ]
+    }
+  ]
+}
 
 Requirements:
-- Each day MUST have exactly 4 activities (this is mandatory)
-- Include specific locations, attractions, restaurants, and accommodations
-- Consider travel time between locations
-- Include budget-appropriate suggestions
-- Mix of sightseeing, dining, culture, and relaxation
-- Consider local customs and best times to visit attractions
-- Include practical details like opening hours and booking requirements
-- Day names should be location-based or theme-based (e.g., "Downtown", "Museums", "Nature")
-
-Generate the complete ${travelData.duration}-day itinerary for: ${prompt}`;
-    } else if (category === 'subject') {
-      phasesPrompt = `Create a comprehensive learning roadmap for studying: ${prompt}
-
-CRITICAL REQUIREMENT: Each phase must have EXACTLY 4 steps, no more, no less.
-
-Structure your response as phases with steps:
-
-Phase 1: [Phase Name - 1-2 words]
-1.1 [Step description]
-1.2 [Step description]
-1.3 [Step description]
-1.4 [Step description]
-
-Phase 2: [Phase Name - 1-2 words]
-2.1 [Step description]
-2.2 [Step description]
-2.3 [Step description]
-2.4 [Step description]
-
-Phase 3: [Phase Name - 1-2 words]
-3.1 [Step description]
-3.2 [Step description]
-3.3 [Step description]
-3.4 [Step description]
-
-Requirements for Subject Learning:
-- Create phases that focus on academic learning and mastery
-- Each phase MUST have exactly 4 steps (this is mandatory)
-- Phase names should be 1-2 words only (e.g., "Basics", "Practice", "Mastery", "Advanced")
-- Steps should focus on study techniques, understanding concepts, practice, and application
-- Include activities like reading, note-taking, problem-solving, testing, and teaching
-- Make it suitable for learning any subject (math, science, history, languages, etc.)
-- Focus on educational methodology and learning techniques
-- Do not use markdown formatting
-- Keep language clear and educational
-
-IMPORTANT: Do not create more or fewer than 4 steps per phase. This is a strict requirement.
-
-Generate the subject learning roadmap for: ${prompt}`;
+- JSON must be valid
+- "projectName": 2-4 words maximum
+- "phases": Array of days
+- Each day MUST have exactly 4 steps (activities)
+- Day names should be 1-2 words
+`;
     } else {
-      phasesPrompt = `Create a comprehensive learning roadmap for: ${prompt}
+      combinedPrompt = `Create a comprehensive learning roadmap for: ${prompt}
 
-CRITICAL REQUIREMENT: Each phase must have EXACTLY 4 steps, no more, no less.
+CRITICAL REQUIREMENT: Each phase must have EXACTLY 4 steps.
 
-Structure your response as phases with steps:
-
-Phase 1: [Phase Name - 1-2 words]
-1.1 [Step description]
-1.2 [Step description]
-1.3 [Step description]
-1.4 [Step description]
-
-Phase 2: [Phase Name - 1-2 words]
-2.1 [Step description]
-2.2 [Step description]
-2.3 [Step description]
-2.4 [Step description]
-
-Phase 3: [Phase Name - 1-2 words]
-3.1 [Step description]
-3.2 [Step description]
-3.3 [Step description]
-3.4 [Step description]
+Return a JSON object with this EXACT structure:
+{
+  "projectName": "Short catchy name for the roadmap (e.g. 'React Mastery')",
+  "phases": [
+    {
+      "number": 1,
+      "name": "Phase Name (1-2 words)",
+      "steps": [
+        { "title": "Step Title", "description": "Specific and actionable instruction" },
+        { "title": "Step Title", "description": "Specific and actionable instruction" },
+        { "title": "Step Title", "description": "Specific and actionable instruction" },
+        { "title": "Step Title", "description": "Specific and actionable instruction" }
+      ]
+    }
+  ]
+}
 
 Requirements:
-- Create required number of phases
-- Each phase MUST have exactly 4 steps (this is mandatory)
-- Phase names should be 1-2 words only (e.g., "Foundation", "Practice", "Mastery")
-- Steps should be specific and actionable
-- Focus on practical, real-world implementation
-- Make it appropriate for the category: ${category.replace('_', ' ')}
-- Do not use markdown formatting
-- Keep language clear and professional
-
-IMPORTANT: Do not create more or fewer than 4 steps per phase. This is a strict requirement.
-
-Generate the roadmap for: ${prompt}`;
+- JSON must be valid
+- "projectName": 2-4 words maximum
+- "phases": Array of phases
+- Each phase MUST have exactly 4 steps
+- Phase names should be 1-2 words (e.g., "Foundation", "Practice")
+- Make it appropriate for category: ${category.replace('_', ' ')}
+`;
     }
 
-    console.log('🤖 Getting phases and steps from Gemini AI...');
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    
-    const phasesResult = await model.generateContent(phasesPrompt);
-    const phasesResponse = await phasesResult.response;
-    const phasesText = phasesResponse.text();
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-    console.log('✅ Received response from Gemini AI');
+    const result = await retryWithBackoff(() => model.generateContent(combinedPrompt));
+    const response = await result.response;
+    const text = response.text();
 
-    // Parse the response into structured phases
-    const phases = parsePhasesFromResponse(phasesText);
-    
+    console.log('✅ Received combined response from Gemini AI');
+
+    let parsedData;
+    try {
+      parsedData = JSON.parse(text);
+    } catch (e) {
+      console.error('Failed to parse JSON response:', text.substring(0, 200));
+      // Fallback to text parsing if JSON fails (unlikely with responseMimeType)
+      const cleaned = cleanAIResponse(text);
+      const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        parsedData = JSON.parse(jsonMatch[0]);
+      } else {
+        throw new Error('Invalid JSON response from AI');
+      }
+    }
+
+    const projectName = parsedData.projectName || `${prompt} Journey`;
+    const phases = parsedData.phases || [];
+
     if (phases.length === 0) {
-      throw new Error('Failed to parse phases from AI response');
+      throw new Error('No phases found in AI response');
     }
 
     // Generate roadmap nodes from phases (will ensure exactly 4 steps per phase and include media)
     const roadmapNodes = await generatePhaseRoadmapNodes(phases, category, projectName, travelData);
 
+
     console.log(`📊 Generated ${phases.length} phases with ${roadmapNodes.length} total nodes`);
 
     // Generate FILTERED video recommendations using ML pipeline for non-travel categories
     let videoRecommendations = [];
-    if (category !== 'travel_planner') {
+    if (category === 'subject') {
       try {
         console.log('🎥 Generating FILTERED ML video recommendations...');
         console.log('📏 Applying consistent filters: >=2 hours, no shorts, quality tutorials');
@@ -1516,12 +1477,12 @@ Generate the roadmap for: ${prompt}`;
       tokensUsed: TOKENS_PER_ROADMAP,
       tokensRemaining: tokensRemaining,
       timestamp: new Date().toISOString(),
-      aiResponse: cleanAIResponse(phasesText)
+      aiResponse: cleanAIResponse(text)
     });
 
   } catch (error) {
     console.error('❌ Error generating roadmap:', error);
-    
+
     res.status(500).json({
       success: false,
       error: error.message || 'Failed to generate roadmap',
@@ -1583,7 +1544,7 @@ function generateGenericFallback(prompt, category) {
       }
     ];
   }
-  
+
   return [
     {
       number: 1,
@@ -1622,9 +1583,9 @@ function generateGenericFallback(prompt, category) {
 app.post('/api/mock-interview/start', async (req, res) => {
   try {
     console.log('🎤 Received mock interview start request:', req.body);
-    
+
     const { userId, resumeText, position, questionCount = 5 } = req.body;
-    
+
     // Validate required fields
     if (!userId || !resumeText || !position) {
       return res.status(400).json({
@@ -1646,10 +1607,10 @@ app.post('/api/mock-interview/start', async (req, res) => {
     // Check token balance
     const TOKENS_PER_INTERVIEW = parseInt(process.env.TOKENS_PER_INTERVIEW || '5', 10);
     if (!supabaseAdmin) {
-      return res.status(500).json({ 
-        success: false, 
-        error: 'Server configuration error (Supabase)', 
-        timestamp: new Date().toISOString() 
+      return res.status(500).json({
+        success: false,
+        error: 'Server configuration error (Supabase)',
+        timestamp: new Date().toISOString()
       });
     }
 
@@ -1662,10 +1623,10 @@ app.post('/api/mock-interview/start', async (req, res) => {
 
     if (profileError || !profile) {
       console.error('❌ Failed to fetch user profile:', profileError);
-      return res.status(400).json({ 
-        success: false, 
-        error: 'User profile not found', 
-        timestamp: new Date().toISOString() 
+      return res.status(400).json({
+        success: false,
+        error: 'User profile not found',
+        timestamp: new Date().toISOString()
       });
     }
 
@@ -1678,7 +1639,7 @@ app.post('/api/mock-interview/start', async (req, res) => {
         timestamp: new Date().toISOString()
       });
     }
-    
+
     // Deduct tokens
     const { error: deductError } = await supabaseAdmin.rpc('deduct_user_tokens', {
       p_user_id: userId,
@@ -1689,10 +1650,10 @@ app.post('/api/mock-interview/start', async (req, res) => {
 
     if (deductError) {
       console.error('❌ Token deduction failed:', deductError);
-      return res.status(500).json({ 
-        success: false, 
-        error: 'Token deduction failed', 
-        timestamp: new Date().toISOString() 
+      return res.status(500).json({
+        success: false,
+        error: 'Token deduction failed',
+        timestamp: new Date().toISOString()
       });
     }
 
@@ -1733,7 +1694,7 @@ Describe your role in [specific experience from resume]?
 I noticed you have experience with [skill from resume]. How do you apply this in...?`;
 
     console.log('🤖 Generating interview questions with Gemini AI...');
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     const result = await model.generateContent(questionPrompt);
     const response = await result.response;
     const text = response.text();
@@ -1798,9 +1759,9 @@ I noticed you have experience with [skill from resume]. How do you apply this in
 app.post('/api/mock-interview/report', async (req, res) => {
   try {
     console.log('📊 Received interview report generation request');
-    
+
     const { userId, questions, position, resumeText, speechAnalysis } = req.body;
-    
+
     if (!userId || !questions || !position) {
       return res.status(400).json({
         success: false,
@@ -1863,14 +1824,16 @@ Evaluate based on:
 Provide ONLY the JSON object, no additional text.`;
 
     console.log('🤖 Generating interview report with Gemini AI...');
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    const result = await model.generateContent(reportPrompt);
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const result = await retryWithBackoff(() => model.generateContent(reportPrompt));
     const response = await result.response;
+
+
     let text = response.text();
 
     // Clean up response to extract JSON
     text = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-    
+
     let report;
     try {
       report = JSON.parse(text);
@@ -1921,9 +1884,9 @@ Provide ONLY the JSON object, no additional text.`;
 app.post('/api/mock-interview/voice-response', async (req, res) => {
   try {
     console.log('🎙️ Received voice interview response request');
-    
+
     const { conversationHistory, position, resumeText } = req.body;
-    
+
     if (!conversationHistory || !position) {
       return res.status(400).json({
         success: false,
@@ -1973,7 +1936,7 @@ Respond naturally as an interviewer would in a real conversation. Your response 
 Provide ONLY your next response as the interviewer, nothing else.`;
 
     console.log('🤖 Generating AI interviewer response with Gemini AI...');
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     const result = await model.generateContent(voicePrompt);
     const response = await result.response;
     const aiResponse = response.text().trim();
@@ -2005,9 +1968,9 @@ Provide ONLY your next response as the interviewer, nothing else.`;
 app.post('/api/ai-interview/introduction', async (req, res) => {
   try {
     console.log('🎤 Received AI interview introduction request:', req.body);
-    
+
     const { jobContext } = req.body;
-    
+
     if (!genAI) {
       return res.status(500).json({
         success: false,
@@ -2032,7 +1995,7 @@ Create an introduction that:
 Be warm, professional, and encouraging. Use actual job data, never placeholders.`;
 
     console.log('🤖 Generating interview introduction with Gemini AI...');
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     const result = await model.generateContent(systemPrompt);
     const response = await result.response;
     const text = response.text();
@@ -2063,9 +2026,9 @@ Be warm, professional, and encouraging. Use actual job data, never placeholders.
 app.post('/api/ai-interview/response', async (req, res) => {
   try {
     console.log('🎤 Received AI interview response request');
-    
+
     const { conversationHistory, userResponse, jobContext, currentPhase } = req.body;
-    
+
     if (!userResponse || !jobContext) {
       return res.status(400).json({
         success: false,
@@ -2147,7 +2110,7 @@ Respond in JSON:
 }`;
 
     console.log('🤖 Generating AI interviewer response with Gemini AI...');
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     const result = await model.generateContent(systemPrompt);
     const response = await result.response;
     let text = response.text();
@@ -2165,10 +2128,10 @@ Respond in JSON:
       console.warn('Failed to parse AI response, using fallback');
       const isClosing = phase === 'closing' || currentQuestionIndex >= totalQuestions;
       parsedResponse = {
-        feedback: isClosing 
+        feedback: isClosing
           ? `Thank you so much for your time today. Your insights have been valuable.`
           : 'Thank you for sharing that.',
-        nextQuestion: isClosing 
+        nextQuestion: isClosing
           ? ''
           : `Can you tell me about your experience with ${jobContext?.skills?.[0] || 'this skill'}?`,
       };
@@ -2197,12 +2160,12 @@ Respond in JSON:
 app.post('/api/ai-interview/save', async (req, res) => {
   try {
     console.log('💾 Received interview conversation save request');
-    
+
     const { interviewId, messages } = req.body;
-    
+
     // Here you would save to your database
     // For now, just return success
-    
+
     res.json({
       success: true,
       message: 'Conversation saved successfully',
@@ -2223,9 +2186,9 @@ app.post('/api/ai-interview/save', async (req, res) => {
 app.post('/api/get-video-recommendations', async (req, res) => {
   try {
     console.log('🎥 Received FILTERED video recommendation request:', req.body);
-    
+
     const { topic, userInput, minDurationMinutes = 120, maxVideos = 10 } = req.body;
-    
+
     if (!topic && !userInput) {
       return res.status(400).json({
         success: false,
@@ -2233,21 +2196,21 @@ app.post('/api/get-video-recommendations', async (req, res) => {
         timestamp: new Date().toISOString()
       });
     }
-    
+
     // Extract main topic if userInput is provided
     const finalTopic = topic || extractMainTopic(userInput);
     console.log(`🔍 Processing FILTERED video recommendations for topic: ${finalTopic}`);
     console.log(`📏 Filter settings: Min ${minDurationMinutes}min duration, Max ${maxVideos} videos`);
-    
+
     // Initialize ML scripts if not done already
     await createModifiedPythonScripts();
-    
+
     // Get FILTERED video recommendations from ML pipeline
     const videoRecommendations = await getVideoRecommendations(finalTopic, maxVideos, minDurationMinutes);
-    
+
     console.log(`✅ Generated ${videoRecommendations.length} FILTERED video recommendations`);
     console.log('📏 All videos should be >= 2 hours and exclude YouTube Shorts');
-    
+
     res.json({
       success: true,
       topic: finalTopic,
@@ -2259,7 +2222,7 @@ app.post('/api/get-video-recommendations', async (req, res) => {
       },
       timestamp: new Date().toISOString()
     });
-    
+
   } catch (error) {
     console.error('❌ Error getting video recommendations:', error);
     res.status(500).json({
@@ -2273,7 +2236,7 @@ app.post('/api/get-video-recommendations', async (req, res) => {
 // Health check endpoint - ENHANCED with AI status
 app.get('/api/health', (req, res) => {
   console.log('🏥 Health check requested');
-  
+
   const healthData = {
     status: 'healthy',
     timestamp: new Date().toISOString(),
@@ -2292,9 +2255,9 @@ app.get('/api/health', (req, res) => {
       }
     }
   };
-  
+
   console.log('🏥 Health check response:', healthData);
-  
+
   res.json(healthData);
 });
 

@@ -4,6 +4,8 @@ import sys
 import os
 import pandas as pd
 
+import time
+
 def run_ml_pipeline(topic, max_videos=10):
     try:
         # Step 1: Collect data
@@ -24,9 +26,18 @@ def run_ml_pipeline(topic, max_videos=10):
             if "video_id" in df.columns:
                 top_videos = df.nlargest(5, "target_score") if "target_score" in df.columns else df.head(5)
                 print("Top 5 ranked video links:")
-                for _, row in top_videos.iterrows():
-                    video_link = f"https://www.youtube.com/watch?v={row['video_id']}"
+                for i, (_, row) in enumerate(top_videos.iterrows()):
+                    video_link = f"{i+1}. https://www.youtube.com/watch?v={row['video_id']}"
                     print(video_link)
+                    print(f"   - Title: {row.get('title', 'Unknown Title')}")
+                    # Try to get duration from numeric minutes or string
+                    duration = row.get('duration_minutes', 0)
+                    if isinstance(duration, (int, float)):
+                         print(f"   - Duration: {duration:.1f} minutes")
+                    else:
+                         print(f"   - Duration: {row.get('duration', '0')} minutes")
+                         
+                    print(f"   - ML Score: {row.get('target_score', 0):.3f}")
                 return True
         
         print("No results generated")
