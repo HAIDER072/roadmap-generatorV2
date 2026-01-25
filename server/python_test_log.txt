@@ -1,0 +1,14 @@
+Starting Python Test...
+Testing Python environment from Node.js...
+Scanning command: python
+Scanning command: py
+Scanning command: c:\python\python312\python.exe
+[python] STDOUT: Exec: C:\Python\Python312\python.exe
+SUCCESS: pdfplumber imported
+[c:\python\python312\python.exe] STDOUT: Exec: c:\python\python312\python.exe
+SUCCESS: pdfplumber imported
+[py] STDOUT: Exec: C:\Python\Python312\python.exe
+SUCCESS: pdfplumber imported
+[c:\python\python312\python.exe] Exited with code: 0
+[python] Exited with code: 0
+[py] Exited with code: 0

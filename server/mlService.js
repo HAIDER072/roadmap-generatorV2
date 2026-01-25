@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const ML_MODEL_DIR = path.join(process.cwd(), 'ml_model');
+export const ML_MODEL_DIR = path.join(process.cwd(), 'ml_model');
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 
 // Function to extract main topic from roadmap input
@@ -48,7 +48,7 @@ export function extractMainTopic(userInput) {
 }
 
 // Function to run Python script and capture output
-function runPythonScript(scriptPath, args = []) {
+export function runPythonScript(scriptPath, args = []) {
   return new Promise((resolve, reject) => {
     const pythonProcess = spawn('python', [scriptPath, ...args], {
       cwd: ML_MODEL_DIR,

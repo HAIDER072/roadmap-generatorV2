@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import path from 'path';
+import fs from 'fs/promises';
 import Razorpay from 'razorpay';
 import crypto from 'crypto';
 import { createClient } from '@supabase/supabase-js';
@@ -18,7 +20,7 @@ try {
   console.log('⚠️ PDF parsing not available - resume upload will be disabled');
   console.log('Error:', error.message);
 }
-import { extractMainTopic, getVideoRecommendations, createModifiedPythonScripts } from './mlService.js';
+import { extractMainTopic, getVideoRecommendations, createModifiedPythonScripts, runPythonScript, ML_MODEL_DIR } from './mlService.js';
 
 // In-memory cache for video recommendations (topic -> {videos, timestamp})
 const videoCache = new Map();
@@ -639,9 +641,11 @@ app.post('/api/create-razorpay-order', async (req, res) => {
     });
   } catch (error) {
     console.error('❌ Error creating Razorpay order:', error);
+    // Return the actual error message for debugging
     res.status(500).json({
       success: false,
-      error: 'Failed to create payment order'
+      error: error.error?.description || error.message || 'Failed to create payment order',
+      details: error
     });
   }
 });
@@ -1012,120 +1016,7 @@ app.post('/api/test-verify-payment', async (req, res) => {
 });
 
 // PDF parsing endpoint - Send PDF directly to Gemini
-app.post('/api/parse-resume', upload.single('resume'), async (req, res) => {
-  try {
-    console.log('📄 Received resume parsing request');
-
-    if (!genAI) {
-      return res.status(503).json({
-        success: false,
-        error: 'Gemini API not configured. Please add GEMINI_API_KEY to .env file.',
-        timestamp: new Date().toISOString()
-      });
-    }
-
-    if (!req.file) {
-      return res.status(400).json({
-        success: false,
-        error: 'No file uploaded'
-      });
-    }
-
-    const file = req.file;
-    console.log('File info:', { name: file.originalname, type: file.mimetype, size: file.size });
-
-    let extractedText = '';
-
-    // Handle PDF files - Send directly to Gemini
-    if (file.mimetype === 'application/pdf') {
-      console.log('🤖 Sending PDF directly to Gemini 2.5 Pro for text extraction...');
-
-      try {
-        // Convert PDF buffer to base64 for Gemini
-        const base64Pdf = file.buffer.toString('base64');
-
-        // Use Gemini 2.5 Pro model with PDF support
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
-
-        // Send PDF to Gemini with extraction prompt
-        const result = await model.generateContent([
-          {
-            inlineData: {
-              mimeType: "application/pdf",
-              data: base64Pdf
-            }
-          },
-          {
-            text: "Extract all text content from this resume PDF. Return ONLY the extracted text with proper formatting, preserving sections like personal info, experience, education, and skills. Do not add any commentary or additional text."
-          }
-        ]);
-
-        const response = await result.response;
-        extractedText = response.text().trim();
-        console.log('✅ PDF text extracted by Gemini:', extractedText.length, 'characters');
-
-      } catch (geminiError) {
-        console.error('❌ Gemini PDF extraction error:', geminiError);
-        return res.status(500).json({
-          success: false,
-          error: 'Failed to extract text from PDF using Gemini: ' + geminiError.message
-        });
-      }
-    }
-    // Handle text files
-    else if (file.mimetype === 'text/plain' || file.originalname.endsWith('.txt')) {
-      console.log('Reading text file...');
-      extractedText = file.buffer.toString('utf-8');
-    }
-    // Handle other formats
-    else {
-      return res.status(400).json({
-        success: false,
-        error: 'Unsupported file type. Please upload a PDF or TXT file.'
-      });
-    }
-
-    // Clean up the text
-    extractedText = extractedText
-      .replace(/\s+/g, ' ')
-      .replace(/\n+/g, '\n')
-      .trim();
-
-    // Validate
-    if (extractedText.length < 50) {
-      return res.status(400).json({
-        success: false,
-        error: 'Resume text is too short. Please upload a proper resume.'
-      });
-    }
-
-    console.log('✅ Resume parsed successfully using Gemini');
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    console.log('📄 RESUME PARSING CONFIRMED - GEMINI EXTRACTED:');
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    console.log('📌 File:', file.originalname);
-    console.log('📏 Length:', extractedText.length, 'characters');
-    console.log('🔍 Full extracted text:');
-    console.log(extractedText);
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-
-    res.json({
-      success: true,
-      text: extractedText,
-      filename: file.originalname,
-      length: extractedText.length,
-      parsingConfirmed: true,
-      message: 'Resume successfully extracted using Gemini API'
-    });
-
-  } catch (error) {
-    console.error('❌ Error parsing resume:', error);
-    res.status(500).json({
-      success: false,
-      error: error.message || 'Failed to parse resume'
-    });
-  }
-});
+// [Legacy /api/parse-resume removed]
 
 // ROOT ROUTE - Add this to fix "Cannot GET" error
 app.get('/', (req, res) => {
@@ -2328,6 +2219,199 @@ app.use((error, req, res, next) => {
   });
 });
 
+// --- Mock Interview Endpoints ---
+
+// 1. Parse Resume Endpoint
+app.post('/api/parse-resume', upload.single('resume'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ success: false, error: 'No file uploaded' });
+    }
+
+    const tempPath = path.join(ML_MODEL_DIR, `temp_resume_${Date.now()}.pdf`);
+    await fs.writeFile(tempPath, req.file.buffer);
+
+    // Call Python CLI to parse
+    console.log('📄 Parsing resume via Python CLI...');
+    const output = await runPythonScript('mock_interview_cli.py', ['parse_resume', '--file', tempPath]);
+
+    // Cleanup temp file
+    await fs.unlink(tempPath).catch(err => console.error('Failed to delete temp resume:', err));
+
+    try {
+      const result = JSON.parse(output);
+      if (result.error) {
+        throw new Error(result.error);
+      }
+      res.json(result);
+    } catch (parseErr) {
+      console.error('Python output parse error:', output);
+      res.status(500).json({ success: false, error: 'Failed to parse resume content' });
+    }
+
+  } catch (error) {
+    console.error('❌ Resume parsing failed:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// 2. Start Interview (Generate Questions)
+app.post('/api/mock-interview/start', async (req, res) => {
+  try {
+    const { resumeText, position, questionCount = 5 } = req.body;
+
+    if (!resumeText || !position) {
+      return res.status(400).json({ error: 'Missing resume text or position' });
+    }
+
+    console.log(`🎤 Generating ${questionCount} questions for ${position}...`);
+
+    // Call Python CLI
+    // Pass text as argument (be careful with length/escaping in real CLI, sending via file or stdin is safer for large text)
+    // For simplicity here, we'll try passing as arg but truncating if too massive, or better: use a temp file for the text input
+
+    const tempTextPath = path.join(ML_MODEL_DIR, `temp_text_${Date.now()}.txt`);
+    await fs.writeFile(tempTextPath, resumeText);
+
+    // Modified to read from file in CLI if we updated it, but current CLI takes arg. 
+    // Let's rely on standard 'features.py' pattern or just pass limited text.
+    // Actually, passing huge text in args is risky. 
+    // Optimization: Let's assume the CLI can read the text from the temp file if we implement it.
+    // simpler for now: Pass truncated text in args (CLI supports --text)
+
+    const output = await runPythonScript('mock_interview_cli.py', [
+      'generate_questions',
+      '--text', resumeText.substring(0, 5000), // Safety truncation
+      '--position', position,
+      '--count', questionCount.toString()
+    ]);
+
+    try {
+      const result = JSON.parse(output);
+      if (result.error) {
+        throw new Error(result.error);
+      }
+      res.json({ success: true, questions: result.questions, skills: result.skills });
+    } catch (parseErr) {
+      console.error('Python output parse error:', output);
+      res.status(500).json({ error: 'Failed to generate questions' });
+    }
+
+  } catch (error) {
+    console.error('❌ Interview start failed:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 3. Voice Response (Chat) - Uses Node SDK directly for speed
+app.post('/api/mock-interview/voice-response', async (req, res) => {
+  try {
+    const { conversationHistory, position, resumeText } = req.body;
+
+    if (!genAI) {
+      return res.status(500).json({ error: 'Gemini API not configured' });
+    }
+
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+    // Construct chat history
+    // content needs to be string parts
+    const history = conversationHistory.map(msg => ({
+      role: msg.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: msg.content }]
+    }));
+
+    // Add context if it's the start (handled in frontend usually, but we can enforce system instruction via history or fresh prompt)
+    // Gemini Pro doesn't support 'system' role in chat history directly in all versions, 
+    // so we usually prepend it to the first user message or use system_instruction if supported.
+    // For now we assume the conversationHistory is sufficient context-wise or we wrap the last message.
+
+    const lastMsg = history.pop(); // Remove last user message to send as prompt
+    const chat = model.startChat({
+      history: history
+    });
+
+    const result = await chat.sendMessage(lastMsg.parts[0].text);
+    const response = await result.response;
+    const text = response.text();
+
+    // Heuristic Check for Interview End
+    const shouldEnd = conversationHistory.length > 15 || text.toLowerCase().includes("interview is over") || text.toLowerCase().includes("thank you for your time");
+
+    res.json({
+      success: true,
+      aiResponse: text,
+      shouldEnd: shouldEnd
+    });
+
+  } catch (error) {
+    console.error('❌ Voice response failed:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 4. Generate Report
+app.post('/api/mock-interview/report', async (req, res) => {
+  try {
+    const { questions, position, speechAnalysis } = req.body;
+
+    if (!genAI) {
+      return res.status(500).json({ error: 'Gemini API not configured' });
+    }
+
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+    const prompt = `
+    Generate a detailed interview feedback report for a ${position} candidate.
+    
+    **Interview Data:**
+    ${JSON.stringify(questions, null, 2)}
+    
+    **Speech Analysis (Voice Mode):**
+    ${JSON.stringify(speechAnalysis)}
+    
+    **Task:**
+    Evaluate the candidate's performance based strictly on their provided answers to the interview questions.
+    
+    **Instructions:**
+    1.  **Analyze each Answer**: Compare the candidate's response against the technical requirements of the question.
+    2.  **Scoring**: Assign an overall score (0-100) reflecting the accuracy, depth, and clarity of their answers.
+        -   90-100: Exceptional, deep understanding, perfect technical accuracy.
+        -   70-89: Good, solid understanding, minor missing details.
+        -   50-69: Average, some correct points but lacks depth or has errors.
+        -   <50: Poor, incorrect or irrelevant answers.
+    3.  **Feedback**: Provide specific, constructive feedback for *each* question explaining what was good and what was missing.
+    4.  **Strengths/Improvements**: distinct patterns observed in their answers.
+    
+    Analyze the following:
+    
+    **Output (Strict JSON)**:
+    {
+       "overallScore": 85,
+       "strengths": ["...", "...", "..."],
+       "improvements": ["...", "...", "..."],
+       "detailedFeedback": [
+          { "id": 1, "question": "...", "feedback": "..." }
+       ],
+       "recommendation": "Hire / No Hire / Strong Hire"
+    }
+    `;
+
+    const result = await model.generateContent(prompt);
+    const text = result.response.text();
+
+    // Clean JSON
+    const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    const reportData = JSON.parse(cleanText);
+
+    res.json({ success: true, report: reportData });
+
+  } catch (error) {
+    console.error('❌ Report generation failed:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Start server
 app.listen(PORT, '127.0.0.1', () => {
   console.log('🚀 SmartLearn.io Backend Server running on port', PORT);
@@ -2336,6 +2420,10 @@ app.listen(PORT, '127.0.0.1', () => {
   console.log('  - Generate Instructions: http://localhost:' + PORT + '/api/generate-instructions');
   console.log('  - Get Video Recommendations: http://localhost:' + PORT + '/api/get-video-recommendations');
   console.log('  - Health Check: http://localhost:' + PORT + '/api/health');
+  console.log('  - Parse Resume: http://localhost:' + PORT + '/api/parse-resume');
+  console.log('  - Start Mock Interview: http://localhost:' + PORT + '/api/mock-interview/start');
+  console.log('  - Mock Interview Voice Response: http://localhost:' + PORT + '/api/mock-interview/voice-response');
+  console.log('  - Generate Mock Interview Report: http://localhost:' + PORT + '/api/mock-interview/report');
   console.log('🔑 Gemini API configured:', !!(GEMINI_API_KEY && GEMINI_API_KEY !== 'your-gemini-api-key-here'));
   console.log('🔑 Mistral API configured:', mistralConfigured);
   console.log('🌐 CORS enabled for production');

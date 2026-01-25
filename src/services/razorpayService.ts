@@ -46,9 +46,28 @@ declare global {
 
 export class RazorpayService {
   private static razorpayKeyId = import.meta.env.VITE_RAZORPAY_KEY_ID;
-  
+
+  static {
+    console.log('🔍 RazorpayService Initialized');
+    console.log('Checking Environment Variable: VITE_RAZORPAY_KEY_ID');
+    console.log('Value exists:', !!this.razorpayKeyId);
+    console.log('Value length:', this.razorpayKeyId ? this.razorpayKeyId.length : 0);
+    if (!this.razorpayKeyId) {
+      console.error('❌ VITE_RAZORPAY_KEY_ID is missing! The button is disabled because of this.');
+    } else if (this.razorpayKeyId === 'your_razorpay_key_id_here') {
+      console.error('❌ VITE_RAZORPAY_KEY_ID is still set to the placeholder!');
+    } else {
+      console.log('✅ Razorpay Configured Correctly');
+    }
+  }
+
   // Load Razorpay script dynamically
   static loadRazorpayScript(): Promise<boolean> {
+    console.log('🔍 Debugging Razorpay Config:');
+    console.log('Environment:', import.meta.env);
+    console.log('Key ID exists:', !!import.meta.env.VITE_RAZORPAY_KEY_ID);
+    console.log('Key ID length:', import.meta.env.VITE_RAZORPAY_KEY_ID?.length);
+
     return new Promise((resolve) => {
       // Check if Razorpay is already loaded
       if (typeof window.Razorpay !== 'undefined') {
@@ -67,10 +86,10 @@ export class RazorpayService {
   // Create Razorpay order via backend
   static async createOrder(orderData: CreateOrderRequest): Promise<CreateOrderResponse | null> {
     try {
-      const API_BASE_URL = process.env.NODE_ENV === 'production' 
+      const API_BASE_URL = process.env.NODE_ENV === 'production'
         ? 'https://flowniq.onrender.com'
         : 'http://localhost:3001';
-        
+
       const response = await fetch(`${API_BASE_URL}/api/create-razorpay-order`, {
         method: 'POST',
         headers: {
@@ -104,7 +123,7 @@ export class RazorpayService {
       console.error('❌ Missing razorpay_signature in payment data:', paymentData);
       return false;
     }
-    
+
     if (!paymentData.razorpay_order_id || !paymentData.razorpay_payment_id) {
       console.error('❌ Missing required payment fields:', paymentData);
       return false;
@@ -114,11 +133,11 @@ export class RazorpayService {
         ...paymentData,
         razorpay_signature: paymentData.razorpay_signature ? paymentData.razorpay_signature.substring(0, 10) + '...' : 'undefined' // Don't log full signature
       });
-      
-      const API_BASE_URL = process.env.NODE_ENV === 'production' 
+
+      const API_BASE_URL = process.env.NODE_ENV === 'production'
         ? 'https://flowniq.onrender.com'
         : 'http://localhost:3001';
-        
+
       const response = await fetch(`${API_BASE_URL}/api/verify-razorpay-payment`, {
         method: 'POST',
         headers: {
@@ -128,18 +147,18 @@ export class RazorpayService {
       });
 
       const result = await response.json();
-      
+
       console.log('📝 Payment verification response:', {
         status: response.status,
         success: result.success,
         error: result.error,
         tokens_added: result.tokens_added
       });
-      
+
       if (!result.success) {
         console.error('❌ Payment verification failed:', result.error);
       }
-      
+
       return result.success === true;
     } catch (error) {
       console.error('Error verifying payment:', error);
