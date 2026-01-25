@@ -41,7 +41,7 @@ const CreateRoadmapPage: React.FC = () => {
   const [showRecharge, setShowRecharge] = useState(false);
   const [tokensRemaining, setTokensRemaining] = useState(0);
   const tokensRequired = 1; // 1 token per roadmap as per requirement
-  
+
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -92,19 +92,19 @@ const CreateRoadmapPage: React.FC = () => {
     setIsGenerating(true);
     setHasGenerated(true);
     setError(null);
-    
+
     setCurrentPhases([]);
     setCurrentRoadmap([]);
     setProjectName('');
     setShowCompactInput(false);
-    
+
     clearAllAIInstructions();
     window.dispatchEvent(new CustomEvent('clearAIInstructions'));
     window.dispatchEvent(new CustomEvent('clearCanvas'));
 
     try {
       let prompt = text;
-      
+
       if (category === 'travel_planner' && travelData) {
         prompt = `Plan a ${text} trip from ${travelData.startingLocation} to ${travelData.destination} for ${travelData.duration} ${travelData.duration === 1 ? 'day' : 'days'} with ${travelData.travelers} ${travelData.travelers === 1 ? 'traveler' : 'travelers'} and a budget of $${travelData.budget}`;
       }
@@ -119,14 +119,14 @@ const CreateRoadmapPage: React.FC = () => {
       if (response.success && response.roadmapNodes) {
         setCurrentRoadmap(response.roadmapNodes);
         setCurrentPhases(response.phases || []);
-        
-        const projectTitle = category === 'travel_planner' && travelData 
-          ? `Journey to ${travelData.destination}` 
+
+        const projectTitle = category === 'travel_planner' && travelData
+          ? `Journey to ${travelData.destination}`
           : response.projectName || 'Learning Journey';
-        
+
         setProjectName(projectTitle);
         setShowCompactInput(true);
-        
+
         // Store video recommendations for later use (disabled auto-navigation to allow saving)
         // TODO: Add manual "View with Videos" button to navigate with video recommendations
         // Store video recommendations and original prompt
@@ -135,7 +135,7 @@ const CreateRoadmapPage: React.FC = () => {
           setVideoRecommendations(response.videoRecommendations);
         }
         setOriginalPrompt(text);
-        
+
         if (response.note) {
           console.log('API Note:', response.note);
         }
@@ -162,7 +162,7 @@ const CreateRoadmapPage: React.FC = () => {
     setIsGenerating(false);
     setVideoRecommendations([]);
     setOriginalPrompt('');
-    
+
     clearAllAIInstructions();
     window.dispatchEvent(new CustomEvent('clearAIInstructions'));
     window.dispatchEvent(new CustomEvent('clearCanvas'));
@@ -198,16 +198,16 @@ const CreateRoadmapPage: React.FC = () => {
 
     pdf.setFillColor(primaryRgb.r, primaryRgb.g, primaryRgb.b);
     pdf.rect(0, 0, pageWidth, 40, 'F');
-    
+
     pdf.setTextColor(255, 255, 255);
     pdf.setFontSize(24);
     pdf.setFont('helvetica', 'bold');
     pdf.text('SmartLearn.io', margin, 25);
-    
+
     pdf.setFontSize(12);
     pdf.setFont('helvetica', 'normal');
     pdf.text('AI-Powered Roadmap Generator', margin, 35);
-    
+
     yPosition = 60;
 
     pdf.setTextColor(0, 0, 0);
@@ -219,21 +219,21 @@ const CreateRoadmapPage: React.FC = () => {
 
     pdf.setFillColor(240, 240, 240);
     pdf.rect(margin, yPosition, pageWidth - 2 * margin, 25, 'F');
-    
+
     pdf.setFontSize(11);
     pdf.setFont('helvetica', 'normal');
     const categoryLabel = selectedCategory?.replace('_', ' ').toUpperCase() || 'ROADMAP';
-    const timestamp = new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    const timestamp = new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     });
-    
+
     pdf.text(`Category: ${categoryLabel}`, margin + 10, yPosition + 10);
     pdf.text(`Generated: ${timestamp}`, margin + 10, yPosition + 20);
     pdf.text(`Total ${selectedCategory === 'travel_planner' ? 'Days' : 'Phases'}: ${currentPhases.length}`, pageWidth - margin - 10, yPosition + 10, { align: 'right' });
     pdf.text(`Total ${selectedCategory === 'travel_planner' ? 'Activities' : 'Steps'}: ${currentPhases.reduce((total, phase) => total + phase.steps.length, 0)}`, pageWidth - margin - 10, yPosition + 20, { align: 'right' });
-    
+
     yPosition += 40;
 
     currentPhases.forEach((phase, phaseIndex) => {
@@ -244,7 +244,7 @@ const CreateRoadmapPage: React.FC = () => {
 
       pdf.setFillColor(primaryRgb.r, primaryRgb.g, primaryRgb.b);
       pdf.rect(margin, yPosition, pageWidth - 2 * margin, 20, 'F');
-      
+
       pdf.setTextColor(255, 255, 255);
       pdf.setFontSize(16);
       pdf.setFont('helvetica', 'bold');
@@ -256,7 +256,7 @@ const CreateRoadmapPage: React.FC = () => {
       pdf.setTextColor(0, 0, 0);
       pdf.setFontSize(11);
       pdf.setFont('helvetica', 'normal');
-      
+
       phase.steps.forEach((step: any, stepIndex: number) => {
         if (yPosition > pageHeight - 50) {
           pdf.addPage();
@@ -265,17 +265,17 @@ const CreateRoadmapPage: React.FC = () => {
 
         pdf.setFillColor(secondaryRgb.r, secondaryRgb.g, secondaryRgb.b);
         pdf.circle(margin + 15, yPosition + 3, 2, 'F');
-        
+
         const stepText = step.description;
         const maxWidth = pageWidth - 2 * margin - 25;
         const lines = pdf.splitTextToSize(stepText, maxWidth);
-        
+
         const linesHeight = lines.length * 6;
         if (yPosition + linesHeight > pageHeight - margin) {
           pdf.addPage();
           yPosition = margin;
         }
-        
+
         pdf.text(lines, margin + 25, yPosition + 5);
         yPosition += linesHeight + 8;
       });
@@ -288,7 +288,7 @@ const CreateRoadmapPage: React.FC = () => {
       pdf.setPage(i);
       pdf.setFillColor(primaryRgb.r, primaryRgb.g, primaryRgb.b);
       pdf.rect(0, pageHeight - 15, pageWidth, 15, 'F');
-      
+
       pdf.setTextColor(255, 255, 255);
       pdf.setFontSize(8);
       pdf.setFont('helvetica', 'normal');
@@ -305,9 +305,9 @@ const CreateRoadmapPage: React.FC = () => {
       {/* Compact Project Title Bar with Download and Back Button */}
       {projectName && selectedCategory && (
         <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-40">
-          <div 
+          <div
             className="bg-white/95 backdrop-blur-md rounded-lg shadow-lg border px-4 py-2 text-center flex items-center space-x-3"
-            style={{ 
+            style={{
               borderColor: selectedCategory ? getCategoryTheme(selectedCategory).primary + '30' : '#e2e8f0',
               background: `linear-gradient(135deg, white 0%, ${selectedCategory ? getCategoryTheme(selectedCategory).background : '#f8fafc'}40 100%)`,
               minWidth: '320px',
@@ -323,9 +323,9 @@ const CreateRoadmapPage: React.FC = () => {
             >
               <ArrowLeft className="w-4 h-4" />
             </button>
-            
+
             <div className="flex-1">
-              <h2 
+              <h2
                 className="text-base font-bold mb-0.5"
                 style={{ color: selectedCategory ? getCategoryTheme(selectedCategory).primary : '#64748b' }}
               >
@@ -335,33 +335,33 @@ const CreateRoadmapPage: React.FC = () => {
                 {selectedCategory?.replace('_', ' ')} • {currentPhases.length} {selectedCategory === 'travel_planner' ? 'Days' : 'Phases'}
               </p>
             </div>
-            
-            {/* View with Videos Button */}
-            {videoRecommendations.length > 0 && (
-              <button
-                onClick={() => navigate('/roadmap', {
-                  state: {
-                    roadmap: {
-                      title: projectName,
-                      category: selectedCategory,
-                      phases: currentPhases,
-                      roadmapNodes: currentRoadmap,
-                      videoRecommendations: videoRecommendations,
-                      originalPrompt: originalPrompt
-                    }
+
+            {/* View Roadmap Button - Always show after generation */}
+            <button
+              onClick={() => navigate('/roadmap', {
+                state: {
+                  roadmap: {
+                    title: projectName,
+                    category: selectedCategory,
+                    phases: currentPhases,
+                    roadmapNodes: currentRoadmap,
+                    videoRecommendations: [], // Videos will be loaded dynamically in background
+                    originalPrompt: originalPrompt
                   }
-                })}
-                className="p-2 rounded-lg hover:bg-white/50 transition-colors duration-200 relative"
-                style={{ color: selectedCategory ? getCategoryTheme(selectedCategory).primary : '#64748b' }}
-                title="View with Learning Videos"
-              >
-                <Play className="w-4 h-4" />
+                }
+              })}
+              className="p-2 rounded-lg hover:bg-white/50 transition-colors duration-200 relative"
+              style={{ color: selectedCategory ? getCategoryTheme(selectedCategory).primary : '#64748b' }}
+              title={videoRecommendations.length > 0 ? "View with Learning Videos" : "View Roadmap (Videos loading in background)"}
+            >
+              <Play className="w-4 h-4" />
+              {videoRecommendations.length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                   {videoRecommendations.length}
                 </span>
-              </button>
-            )}
-            
+              )}
+            </button>
+
             <button
               onClick={handleDownloadPDF}
               className="p-2 rounded-lg hover:bg-white/50 transition-colors duration-200"
@@ -398,9 +398,9 @@ const CreateRoadmapPage: React.FC = () => {
         {/* Steps Panel */}
         {showSteps && currentPhases.length > 0 && (
           <div className="fixed top-20 left-0 bottom-0 w-80 bg-white/95 backdrop-blur-md border-r border-slate-200 z-30 shadow-xl">
-            <StepsPanel 
-              phases={currentPhases} 
-              category={selectedCategory} 
+            <StepsPanel
+              phases={currentPhases}
+              category={selectedCategory}
               showSteps={showSteps}
               setShowSteps={setShowSteps}
               isTravel={selectedCategory === 'travel_planner'}
@@ -438,9 +438,9 @@ const CreateRoadmapPage: React.FC = () => {
           />
         )}
       </div>
-      
+
       {/* Token Modals */}
-      <InsufficientTokensModal 
+      <InsufficientTokensModal
         isOpen={showInsufficientTokens}
         onClose={() => setShowInsufficientTokens(false)}
         onRecharge={() => {
@@ -450,8 +450,8 @@ const CreateRoadmapPage: React.FC = () => {
         tokensRemaining={tokensRemaining}
         tokensRequired={tokensRequired}
       />
-      
-      <TokenRechargeModal 
+
+      <TokenRechargeModal
         isOpen={showRecharge}
         onClose={() => setShowRecharge(false)}
         onSuccess={(tokens) => {

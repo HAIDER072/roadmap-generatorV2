@@ -20,6 +20,10 @@ try {
 }
 import { extractMainTopic, getVideoRecommendations, createModifiedPythonScripts } from './mlService.js';
 
+// In-memory cache for video recommendations (topic -> {videos, timestamp})
+const videoCache = new Map();
+const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
+
 // Load environment variables
 dotenv.config();
 
@@ -269,7 +273,10 @@ async function generatePhaseRoadmapNodes(phases, category, projectName, travelDa
 
   // Generate all media resources in one AI call
   let allMediaResources = {};
-  if (genAI && allStepsData.length > 0) {
+  // OPTIMIZATION: Skipped secondary AI call for speed. Using smart search links instead.
+  const SKIP_SECONDARY_AI = true;
+
+  if (!SKIP_SECONDARY_AI && genAI && allStepsData.length > 0) {
     try {
       if (category === 'travel_planner') {
         // Generate all map locations in one call
@@ -1423,16 +1430,35 @@ Requirements:
 
     let parsedData;
     try {
+      // First try to parse the text directly
       parsedData = JSON.parse(text);
     } catch (e) {
-      console.error('Failed to parse JSON response:', text.substring(0, 200));
-      // Fallback to text parsing if JSON fails (unlikely with responseMimeType)
-      const cleaned = cleanAIResponse(text);
-      const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        parsedData = JSON.parse(jsonMatch[0]);
+      console.log('⚠️ Direct JSON parse failed, attempting to clean markdown...');
+
+      // Robust cleaning for markdown code blocks
+      let cleanJson = text;
+
+      // Remove ```json and ``` wrap if present
+      const markdownMatch = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+      if (markdownMatch) {
+        cleanJson = markdownMatch[1];
       } else {
-        throw new Error('Invalid JSON response from AI');
+        // Fallback cleanup
+        cleanJson = cleanAIResponse(text);
+      }
+
+      // Try parsing again
+      try {
+        parsedData = JSON.parse(cleanJson);
+      } catch (e2) {
+        // Final attempt: find the first { and last }
+        const jsonMatch = cleanJson.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          parsedData = JSON.parse(jsonMatch[0]);
+        } else {
+          console.error('Failed to parse JSON response:', text.substring(0, 200));
+          throw new Error('Invalid JSON response from AI');
+        }
       }
     }
 
@@ -1449,23 +1475,32 @@ Requirements:
 
     console.log(`📊 Generated ${phases.length} phases with ${roadmapNodes.length} total nodes`);
 
-    // Generate FILTERED video recommendations using ML pipeline for non-travel categories
-    let videoRecommendations = [];
+    // Start ML pipeline asynchronously for non-travel categories (don't wait for it)
     if (category === 'subject') {
-      try {
-        console.log('🎥 Generating FILTERED ML video recommendations...');
-        console.log('📏 Applying consistent filters: >=2 hours, no shorts, quality tutorials');
-        await createModifiedPythonScripts();
-        const topic = extractMainTopic(prompt);
-        // Use same filtering as the standalone endpoint (2+ hours, max 5 videos)
-        videoRecommendations = await getVideoRecommendations(topic, 5, 120);
-        console.log(`✅ Generated ${videoRecommendations.length} FILTERED video recommendations for: ${topic}`);
-      } catch (error) {
-        console.error('⚠️ ML video recommendations failed, continuing without them:', error.message);
-      }
+      setImmediate(async () => {
+        try {
+          console.log('🎥 Starting background ML video recommendations generation...');
+          console.log('📏 Applying consistent filters: >=2 hours, no shorts, quality tutorials');
+          await createModifiedPythonScripts();
+          const topic = extractMainTopic(prompt);
+          const videoRecommendations = await getVideoRecommendations(topic, 5, 120);
+          console.log(`✅ Background ML pipeline completed: ${videoRecommendations.length} FILTERED video recommendations for: ${topic}`);
+
+          // Cache the results for real-time UI updates
+          videoCache.set(topic.toLowerCase(), {
+            videos: videoRecommendations,
+            timestamp: Date.now(),
+            topic: topic
+          });
+          console.log(`💾 Cached ${videoRecommendations.length} videos for topic: ${topic}`);
+
+        } catch (error) {
+          console.error('⚠️ Background ML video recommendations failed:', error.message);
+        }
+      });
     }
 
-    // Return structured response
+    // Return structured response immediately (without waiting for ML pipeline)
     res.json({
       success: true,
       projectName: projectName.replace(/['"]/g, ''), // Clean quotes
@@ -1473,7 +1508,7 @@ Requirements:
       roadmapNodes,
       category,
       originalPrompt: prompt,
-      videoRecommendations, // Include ML video recommendations
+      videoRecommendations: [], // Empty initially - will be fetched separately
       tokensUsed: TOKENS_PER_ROADMAP,
       tokensRemaining: tokensRemaining,
       timestamp: new Date().toISOString(),
@@ -2199,8 +2234,29 @@ app.post('/api/get-video-recommendations', async (req, res) => {
 
     // Extract main topic if userInput is provided
     const finalTopic = topic || extractMainTopic(userInput);
+    const cacheKey = finalTopic.toLowerCase();
+
     console.log(`🔍 Processing FILTERED video recommendations for topic: ${finalTopic}`);
     console.log(`📏 Filter settings: Min ${minDurationMinutes}min duration, Max ${maxVideos} videos`);
+
+    // Check cache first for real-time updates
+    const cached = videoCache.get(cacheKey);
+    if (cached && (Date.now() - cached.timestamp) < CACHE_DURATION) {
+      console.log(`⚡ Returning ${cached.videos.length} cached video recommendations for: ${finalTopic}`);
+      return res.json({
+        success: true,
+        topic: finalTopic,
+        videos: cached.videos,
+        cached: true,
+        cacheAge: Math.round((Date.now() - cached.timestamp) / 1000),
+        filter: {
+          minDurationMinutes,
+          maxVideos,
+          appliedFiltering: 'Duration >= 2h, No Shorts, Quality tutorials only'
+        },
+        timestamp: new Date().toISOString()
+      });
+    }
 
     // Initialize ML scripts if not done already
     await createModifiedPythonScripts();
@@ -2215,10 +2271,11 @@ app.post('/api/get-video-recommendations', async (req, res) => {
       success: true,
       topic: finalTopic,
       videos: videoRecommendations,
+      cached: false,
       filter: {
         minDurationMinutes,
         maxVideos,
-        appliedFiltering: 'Duration >= 2h, No Shorts, Quality tutorials only'
+        appliedFiltering: 'Duration >= 2 hours, No Shorts, Quality tutorials only'
       },
       timestamp: new Date().toISOString()
     });

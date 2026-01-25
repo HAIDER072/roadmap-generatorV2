@@ -29,9 +29,10 @@ export interface GenerateRoadmapResponse {
   error?: string;
   note?: string;
   aiResponse?: string;
+  videoRecommendations?: any[];
 }
 
-const API_BASE_URL = process.env.NODE_ENV === 'production' 
+const API_BASE_URL = process.env.NODE_ENV === 'production'
   ? 'https://flowniq.onrender.com'
   : 'http://localhost:3001';
 
@@ -40,7 +41,7 @@ export class ApiService {
     try {
       const apiUrl = `${API_BASE_URL}/api/generate-roadmap`;
       console.log('Making API request to:', apiUrl);
-      
+
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -70,11 +71,11 @@ export class ApiService {
       return data;
     } catch (error) {
       console.error('API Error:', error);
-      
+
       if (error instanceof TypeError && error.message.includes('fetch')) {
         throw new Error('Cannot connect to server. Please ensure the backend is running on port 3001.');
       }
-      
+
       throw new Error(error instanceof Error ? error.message : 'Failed to generate roadmap');
     }
   }
@@ -83,7 +84,7 @@ export class ApiService {
     try {
       const apiUrl = `${API_BASE_URL}/api/generate-instructions`;
       console.log('Making instructions API request to:', apiUrl);
-      
+
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -109,7 +110,7 @@ export class ApiService {
 
       const data = await response.json();
       console.log('Instructions API Response data:', data);
-      
+
       if (data.success && data.instructions) {
         return data.instructions;
       } else {
@@ -117,11 +118,11 @@ export class ApiService {
       }
     } catch (error) {
       console.error('Instructions API Error:', error);
-      
+
       if (error instanceof TypeError && error.message.includes('fetch')) {
         throw new Error('Cannot connect to server. Please ensure the backend is running on port 3001.');
       }
-      
+
       throw new Error(error instanceof Error ? error.message : 'Failed to generate instructions');
     }
   }

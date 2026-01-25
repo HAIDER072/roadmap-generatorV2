@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import RoadmapCanvas from '../components/RoadmapCanvas';
 import StepsPanel from '../components/StepsPanel';
@@ -48,7 +48,7 @@ const RoadmapViewerPage: React.FC = () => {
 
   const { title, category, phases, roadmapNodes, videoRecommendations = [], originalPrompt } = roadmapData;
   const selectedCategory = category as Category;
-  
+
   // Extract topic from original prompt for video sidebar
   const extractMainTopic = (prompt: string) => {
     if (!prompt) return 'programming';
@@ -58,28 +58,28 @@ const RoadmapViewerPage: React.FC = () => {
       .replace(/\s+(roadmap|plan|guide|tutorial)$/i, '')
       .trim() || 'programming';
   };
-  
+
   const topic = extractMainTopic(originalPrompt || title);
-  
+
   const fetchVideoRecommendations = async (forceRefresh = false) => {
     if (!topic) return;
-    
+
     setIsLoadingVideos(true);
     try {
       console.log(`🎥 ${forceRefresh ? 'Refreshing' : 'Fetching'} FILTERED videos for: ${topic}`);
       console.log('📏 Applying filters: >= 2 hours, no YouTube Shorts, quality tutorials only');
-      
+
       const response = await fetch('/api/get-video-recommendations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           userInput: originalPrompt || title,
           minDurationMinutes: 120,  // Enforce 2+ hour minimum
           maxVideos: 10
         })
       });
       const data = await response.json();
-      
+
       if (data.success && data.videos) {
         setDynamicVideoRecommendations(data.videos);
         console.log(`✅ ${forceRefresh ? 'Refreshed' : 'Fetched'} ${data.videos.length} FILTERED videos for: ${topic}`);
@@ -96,16 +96,80 @@ const RoadmapViewerPage: React.FC = () => {
     }
   };
 
-  // If videos weren't provided (e.g., opened from dashboard), fetch them dynamically
+  // If videos weren't provided or we want to check for updates, fetch them dynamically
+  // Ref to track if we found videos (to stop polling immediately)
+  const foundVideosRef = useRef(false);
+
+  // If videos weren't provided or we want to check for updates, fetch them dynamically
   useEffect(() => {
-    const initialVideos = (roadmapData.videoRecommendations || []) as VideoRecommendation[];
-    if (!initialVideos.length && topic) {
-      fetchVideoRecommendations();
-      setCanRefreshVideos(true); // Enable refresh button for saved roadmaps
-    } else if (initialVideos.length > 0) {
-      setCanRefreshVideos(false); // Disable refresh for newly generated roadmaps
+    // If we already have dynamic videos, don't start polling
+    if (dynamicVideoRecommendations.length > 0) {
+      foundVideosRef.current = true;
+      return;
     }
-  }, [topic, originalPrompt, title]);
+
+    if (topic && !foundVideosRef.current) {
+      setCanRefreshVideos(true);
+      let timeoutId: NodeJS.Timeout;
+      let isMounted = true;
+
+      const pollForVideos = async () => {
+        if (!isMounted || foundVideosRef.current) return;
+
+        try {
+          console.log('🔄 Polling for background ML video results...');
+          const response = await fetch('/api/get-video-recommendations', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              userInput: originalPrompt || title,
+              minDurationMinutes: 120,
+              maxVideos: 10
+            })
+          });
+          const data = await response.json();
+
+          if (!isMounted) return;
+
+          console.log('📦 Video API Response:', { success: data.success, count: data.videos?.length });
+
+          if (data.success && data.videos && data.videos.length > 0) {
+            console.log(`🎉 Background ML update! Found ${data.videos.length} videos. Stopping polling.`);
+
+            // Mark as found ref IMMEDIATELY so next poll stops
+            foundVideosRef.current = true;
+
+            setDynamicVideoRecommendations(data.videos);
+            setIsLoadingVideos(false);
+            // Do NOT schedule next poll
+            return;
+          }
+        } catch (err) {
+          console.error('Polling error:', err);
+        }
+
+        // Schedule next poll only if not found and still mounted
+        if (isMounted && !foundVideosRef.current) {
+          timeoutId = setTimeout(pollForVideos, 3000);
+        }
+      };
+
+      // Initial call
+      pollForVideos();
+
+      // Stop polling safety timeout after 5 minutes
+      const safetyTimeoutId = setTimeout(() => {
+        foundVideosRef.current = true; // Force stop
+        console.log('⏰ Stopped polling for videos after 5 minutes (safety timeout)');
+      }, 5 * 60 * 1000);
+
+      return () => {
+        isMounted = false;
+        clearTimeout(timeoutId);
+        clearTimeout(safetyTimeoutId);
+      };
+    }
+  }, [topic, originalPrompt, title]); // Removed dynamicVideoRecommendations.length to prevent loops
 
   const handleDownloadPDF = () => {
     if (!title || phases.length === 0) return;
@@ -135,18 +199,18 @@ const RoadmapViewerPage: React.FC = () => {
     // Header with app name and logo placeholder
     pdf.setFillColor(primaryRgb.r, primaryRgb.g, primaryRgb.b);
     pdf.rect(0, 0, pageWidth, 40, 'F');
-    
+
     // App name
     pdf.setTextColor(255, 255, 255);
     pdf.setFontSize(24);
     pdf.setFont('helvetica', 'bold');
     pdf.text('Flowniq', margin, 25);
-    
+
     // Subtitle
     pdf.setFontSize(12);
     pdf.setFont('helvetica', 'normal');
     pdf.text('AI-Powered Roadmap Generator', margin, 35);
-    
+
     yPosition = 60;
 
     // Project title with styling
@@ -160,21 +224,21 @@ const RoadmapViewerPage: React.FC = () => {
     // Category and timestamp info box
     pdf.setFillColor(240, 240, 240);
     pdf.rect(margin, yPosition, pageWidth - 2 * margin, 25, 'F');
-    
+
     pdf.setFontSize(11);
     pdf.setFont('helvetica', 'normal');
     const categoryLabel = selectedCategory?.replace('_', ' ').toUpperCase() || 'ROADMAP';
-    const timestamp = new Date().toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    const timestamp = new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     });
-    
+
     pdf.text(`Category: ${categoryLabel}`, margin + 10, yPosition + 10);
     pdf.text(`Generated: ${timestamp}`, margin + 10, yPosition + 20);
     pdf.text(`Total ${selectedCategory === 'travel_planner' ? 'Days' : 'Phases'}: ${phases.length}`, pageWidth - margin - 10, yPosition + 10, { align: 'right' });
     pdf.text(`Total ${selectedCategory === 'travel_planner' ? 'Activities' : 'Steps'}: ${phases.reduce((total: any, phase: any) => total + phase.steps.length, 0)}`, pageWidth - margin - 10, yPosition + 20, { align: 'right' });
-    
+
     yPosition += 40;
 
     // Phases with better styling
@@ -188,7 +252,7 @@ const RoadmapViewerPage: React.FC = () => {
       // Phase header with colored background
       pdf.setFillColor(primaryRgb.r, primaryRgb.g, primaryRgb.b);
       pdf.rect(margin, yPosition, pageWidth - 2 * margin, 20, 'F');
-      
+
       pdf.setTextColor(255, 255, 255);
       pdf.setFontSize(16);
       pdf.setFont('helvetica', 'bold');
@@ -201,7 +265,7 @@ const RoadmapViewerPage: React.FC = () => {
       pdf.setTextColor(0, 0, 0);
       pdf.setFontSize(11);
       pdf.setFont('helvetica', 'normal');
-      
+
       phase.steps.forEach((step: any, stepIndex: number) => {
         // Check if we need a new page for this step
         if (yPosition > pageHeight - 50) {
@@ -212,19 +276,19 @@ const RoadmapViewerPage: React.FC = () => {
         // Step with colored bullet and better spacing
         pdf.setFillColor(secondaryRgb.r, secondaryRgb.g, secondaryRgb.b);
         pdf.circle(margin + 15, yPosition + 3, 2, 'F');
-        
+
         // Use only description, properly wrapped with better formatting
         const stepText = step.description;
         const maxWidth = pageWidth - 2 * margin - 25;
         const lines = pdf.splitTextToSize(stepText, maxWidth);
-        
+
         // Check if lines will fit on current page
         const linesHeight = lines.length * 6;
         if (yPosition + linesHeight > pageHeight - margin) {
           pdf.addPage();
           yPosition = margin;
         }
-        
+
         pdf.text(lines, margin + 25, yPosition + 5);
         yPosition += linesHeight + 8;
       });
@@ -238,7 +302,7 @@ const RoadmapViewerPage: React.FC = () => {
       pdf.setPage(i);
       pdf.setFillColor(primaryRgb.r, primaryRgb.g, primaryRgb.b);
       pdf.rect(0, pageHeight - 15, pageWidth, 15, 'F');
-      
+
       pdf.setTextColor(255, 255, 255);
       pdf.setFontSize(8);
       pdf.setFont('helvetica', 'normal');
@@ -255,9 +319,9 @@ const RoadmapViewerPage: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 relative">
       {/* Header Bar */}
       <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-40">
-        <div 
+        <div
           className="bg-white/95 backdrop-blur-md rounded-lg shadow-lg border px-4 py-2 text-center flex items-center space-x-3"
-          style={{ 
+          style={{
             borderColor: selectedCategory ? getCategoryTheme(selectedCategory).primary + '30' : '#e2e8f0',
             background: `linear-gradient(135deg, white 0%, ${selectedCategory ? getCategoryTheme(selectedCategory).background : '#f8fafc'}40 100%)`,
             minWidth: '320px',
@@ -273,9 +337,9 @@ const RoadmapViewerPage: React.FC = () => {
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
-          
+
           <div className="flex-1">
-            <h2 
+            <h2
               className="text-base font-bold mb-0.5"
               style={{ color: selectedCategory ? getCategoryTheme(selectedCategory).primary : '#64748b' }}
             >
@@ -285,15 +349,15 @@ const RoadmapViewerPage: React.FC = () => {
               {selectedCategory?.replace('_', ' ')} • {phases.length} {selectedCategory === 'travel_planner' ? 'Days' : 'Phases'}
             </p>
           </div>
-          
+
           {/* Video Button - Show if we have videos or are loading them */}
           {(() => {
             const allVideos = [...(videoRecommendations || []), ...dynamicVideoRecommendations];
             const hasVideos = allVideos.length > 0;
-            
+
             // Show button if we have videos, are loading, or could potentially load videos
             const shouldShowButton = hasVideos || isLoadingVideos || (!videoRecommendations?.length && topic && selectedCategory !== 'travel_planner');
-            
+
             if (shouldShowButton) {
               return (
                 <button
@@ -319,7 +383,7 @@ const RoadmapViewerPage: React.FC = () => {
             }
             return null;
           })()}
-          
+
           {/* Refresh Videos Button - Only show for saved roadmaps */}
           {canRefreshVideos && selectedCategory !== 'travel_planner' && (
             <button
@@ -332,7 +396,7 @@ const RoadmapViewerPage: React.FC = () => {
               <RefreshCw className={`w-4 h-4 ${isLoadingVideos ? 'animate-spin' : ''}`} />
             </button>
           )}
-          
+
           {/* Download Button */}
           <button
             onClick={handleDownloadPDF}
@@ -351,11 +415,11 @@ const RoadmapViewerPage: React.FC = () => {
           <button
             onClick={() => setShowSteps(true)}
             className="p-3 bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-slate-200 hover:bg-white hover:shadow-xl transition-all duration-200"
-            style={{ 
+            style={{
               borderColor: selectedCategory ? getCategoryTheme(selectedCategory).primary + '40' : '#e2e8f0'
             }}
           >
-            <Menu className="w-6 h-6" style={{ 
+            <Menu className="w-6 h-6" style={{
               color: selectedCategory ? getCategoryTheme(selectedCategory).primary : '#64748b'
             }} />
           </button>
@@ -367,9 +431,9 @@ const RoadmapViewerPage: React.FC = () => {
         {/* Steps Panel */}
         {showSteps && phases.length > 0 && (
           <div className="fixed top-20 left-0 bottom-0 w-80 bg-white/95 backdrop-blur-md border-r border-slate-200 z-30 shadow-xl">
-            <StepsPanel 
-              phases={phases} 
-              category={selectedCategory} 
+            <StepsPanel
+              phases={phases}
+              category={selectedCategory}
               showSteps={showSteps}
               setShowSteps={setShowSteps}
               isTravel={selectedCategory === 'travel_planner'}
@@ -388,9 +452,9 @@ const RoadmapViewerPage: React.FC = () => {
           />
         </div>
       </div>
-      
+
       {/* Video Sidebar */}
-      <VideoSidebar 
+      <VideoSidebar
         videos={[...((videoRecommendations as VideoRecommendation[]) || []), ...dynamicVideoRecommendations]}
         isOpen={showVideoSidebar}
         onClose={() => setShowVideoSidebar(false)}

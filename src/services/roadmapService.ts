@@ -10,7 +10,7 @@ export class RoadmapService {
   ): Promise<{ data: RoadmapRow | null; error: any }> {
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       if (!user) {
         return { data: null, error: { message: 'User not authenticated' } };
       }
@@ -46,7 +46,7 @@ export class RoadmapService {
   static async getUserRoadmaps(): Promise<{ data: RoadmapRow[] | null; error: any }> {
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       if (!user) {
         console.error('No authenticated user found');
         return { data: null, error: { message: 'User not authenticated' } };
@@ -77,7 +77,7 @@ export class RoadmapService {
   static async getRoadmapById(id: string): Promise<{ data: RoadmapRow | null; error: any }> {
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       if (!user) {
         return { data: null, error: { message: 'User not authenticated' } };
       }
@@ -103,7 +103,7 @@ export class RoadmapService {
   ): Promise<{ data: RoadmapRow | null; error: any }> {
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       if (!user) {
         return { data: null, error: { message: 'User not authenticated' } };
       }
@@ -127,7 +127,7 @@ export class RoadmapService {
   static async deleteRoadmap(id: string): Promise<{ error: any }> {
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       if (!user) {
         return { error: { message: 'User not authenticated' } };
       }
