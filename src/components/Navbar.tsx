@@ -146,12 +146,6 @@ const Navbar: React.FC = () => {
                           </div>
                         </Link>
 
-                        <div className="px-3 py-2 border-t border-slate-200 dark:border-slate-700 mt-2">
-                          <p className={`text-xs font-semibold uppercase tracking-wide mb-2 ${darkMode ? 'text-slate-400' : 'text-slate-500'
-                            }`}>
-                            Resume Builder
-                          </p>
-                        </div>
 
                         <Link
                           to="/resume-update"

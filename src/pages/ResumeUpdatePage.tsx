@@ -22,7 +22,7 @@ const ResumeBuilderContent = () => {
                     {/* Left side: Editor */}
                     <div className="w-full md:w-1/2 flex flex-col bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
                         <div className="p-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
-                            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">Resume Builder</h1>
+                            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">Resume Update</h1>
                             <p className="text-xs text-slate-500 font-medium">Auto-saving locally</p>
                         </div>
                         <div className="flex-1 overflow-hidden">
