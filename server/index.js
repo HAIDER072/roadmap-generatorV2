@@ -8,6 +8,8 @@ import crypto from 'crypto';
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
 import multer from 'multer';
+import mammoth from 'mammoth';
+import * as xlsx from 'xlsx';
 // PDF parsing is optional - only needed for resume upload feature
 let pdfParse = null;
 try {
@@ -599,6 +601,137 @@ Provide real YouTube URLs and their actual titles, not placeholder text.`;
   return nodes;
 }
 
+// Quiz Generation Endpoint
+app.post('/api/generate-quiz', upload.single('file'), async (req, res) => {
+  try {
+    const { questionsCount, topic } = req.body;
+    const file = req.file;
+
+    if (!file && !topic) {
+      return res.status(400).json({ error: 'Please provide either a topic or upload a file' });
+    }
+
+    if (!genAI) {
+      return res.status(500).json({ error: 'Gemini API not configured' });
+    }
+
+    const count = parseInt(questionsCount, 10) || 5;
+    let extractedText = '';
+    let prompt = '';
+
+    if (file) {
+      // Extract text based on file type
+      const mimeType = file.mimetype;
+      const originalName = file.originalname.toLowerCase();
+
+      try {
+        if (mimeType === 'application/pdf' || originalName.endsWith('.pdf')) {
+          if (!pdfParse) {
+            return res.status(500).json({ error: 'PDF parsing is not available on the server' });
+          }
+          const pdfData = await pdfParse(file.buffer);
+          extractedText = pdfData.text;
+        } else if (mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || originalName.endsWith('.docx')) {
+          const result = await mammoth.extractRawText({ buffer: file.buffer });
+          extractedText = result.value;
+        } else if (mimeType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || mimeType === 'application/vnd.ms-excel' || originalName.endsWith('.xlsx') || originalName.endsWith('.xls')) {
+          const workbook = xlsx.read(file.buffer, { type: 'buffer' });
+          extractedText = workbook.SheetNames.map(sheetName => {
+            const sheet = workbook.Sheets[sheetName];
+            return xlsx.utils.sheet_to_txt(sheet);
+          }).join('\\n\\n');
+        } else if (mimeType === 'text/plain' || originalName.endsWith('.txt')) {
+          extractedText = file.buffer.toString('utf-8');
+        } else {
+          return res.status(400).json({ error: 'Unsupported file type. Please upload a PDF, DOCX, XLSX, or TXT file.' });
+        }
+      } catch (parseError) {
+        console.error('Error parsing file:', parseError);
+        return res.status(500).json({ error: 'Failed to extract text from the document.' });
+      }
+
+      if (!extractedText || extractedText.trim().length === 0) {
+        return res.status(400).json({ error: 'The uploaded document appears to be empty or text could not be extracted.' });
+      }
+
+      // Limit text length to avoid token limit issues (approx ~15k-20k chars depending on the model)
+      const MAX_CHARS = 30000;
+      const textToProcess = extractedText.substring(0, MAX_CHARS);
+
+      prompt = `You are an expert quiz generator. Based on the following extracted text from a document, generate exactly ${count} multiple-choice questions.
+
+Rules:
+1. Each question must have exactly 4 options.
+2. Only one option can be correct.
+3. Your output MUST be a valid JSON array of objects. NO markdown formatting, NO extra conversational text.
+4. Use this exact JSON structure:
+[
+  {
+    "question": "What is the capital of France?",
+    "options": ["London", "Berlin", "Paris", "Madrid"],
+    "correctAnswer": "Paris",
+    "explanation": "Paris is the capital and most populous city of France."
+  }
+]
+
+Text to analyze:
+${textToProcess}`;
+    } else if (topic) {
+      prompt = `You are an expert quiz generator. Create exactly ${count} multiple-choice questions on the following topic: "${topic}".
+
+Rules:
+1. Each question must have exactly 4 options.
+2. Only one option can be correct.
+3. Your output MUST be a valid JSON array of objects. NO markdown formatting, NO extra conversational text.
+4. Ensure the questions directly evaluate knowledge regarding the subject.
+5. Use this exact JSON structure:
+[
+  {
+    "question": "What is the capital of France?",
+    "options": ["London", "Berlin", "Paris", "Madrid"],
+    "correctAnswer": "Paris",
+    "explanation": "Paris is the capital and most populous city of France."
+  }
+]`;
+    }
+
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const result = await retryWithBackoff(() => model.generateContent(prompt));
+    const response = await result.response;
+    const aiText = response.text();
+
+    // Parse the JSON array
+    let quizData = [];
+    try {
+      // Clean up markdown markers if any exist
+      let cleanedText = aiText.trim();
+      if (cleanedText.startsWith('\`\`\`json')) {
+        cleanedText = cleanedText.substring(7);
+      }
+      if (cleanedText.startsWith('\`\`\`')) {
+        cleanedText = cleanedText.substring(3);
+      }
+      if (cleanedText.endsWith('\`\`\`')) {
+        cleanedText = cleanedText.substring(0, cleanedText.length - 3);
+      }
+      quizData = JSON.parse(cleanedText);
+    } catch (jsonError) {
+      console.error('Failed to parse Gemini output as JSON:', aiText);
+      return res.status(500).json({ error: 'Failed to generate a nicely formatted quiz. Please try again.' });
+    }
+
+    res.json({
+      success: true,
+      questions: quizData,
+      message: `Successfully generated ${quizData.length} questions.`
+    });
+
+  } catch (error) {
+    console.error('Error in /api/generate-quiz:', error);
+    res.status(500).json({ error: 'An unexpected error occurred while generating the quiz.' });
+  }
+});
+
 // Razorpay payment endpoints
 app.post('/api/create-razorpay-order', async (req, res) => {
   try {
@@ -1054,7 +1187,7 @@ app.post('/api/generate-instructions', async (req, res) => {
 
       // Fallback response when API key is not configured
       const fallbackInstructions = [
-        `Start by understanding the requirements for: ${stepDescription}`,
+        `Start by understanding the requirements for: ${stepDescription} `,
         `Gather all necessary resources and tools needed`,
         `Follow best practices and established guidelines`,
         `Complete the task systematically and verify results`
@@ -1071,15 +1204,15 @@ app.post('/api/generate-instructions', async (req, res) => {
     // Generate instructions using Mistral AI via HTTP
     const prompt = `Provide clear, actionable instructions for: ${stepDescription}
 
-Please provide specific steps to accomplish this task. Each instruction should be:
-- Clear and actionable
-- Easy to understand
-- Practical to implement
-- Building upon the previous step
+Please provide specific steps to accomplish this task.Each instruction should be:
+    - Clear and actionable
+      - Easy to understand
+        - Practical to implement
+          - Building upon the previous step
 
 Provide only the instructions without numbering, as this is a single comprehensive instruction set.
 
-Task: ${stepDescription}`;
+      Task: ${stepDescription} `;
 
     console.log('🤖 Calling Mistral AI for instructions via HTTP...');
 
@@ -1113,7 +1246,7 @@ Task: ${stepDescription}`;
 
     // Ensure we have at least one instruction
     if (instructions.length === 0) {
-      instructions.push(`Complete the task: ${stepDescription}`);
+      instructions.push(`Complete the task: ${stepDescription} `);
     }
 
     console.log(`📊 Generated ${instructions.length} instructions`);
@@ -1244,13 +1377,13 @@ app.post('/api/generate-roadmap', async (req, res) => {
     let combinedPrompt;
 
     if (category === 'travel_planner' && travelData) {
-      combinedPrompt = `Create a detailed ${travelData.duration}-day travel itinerary for: ${prompt}
+      combinedPrompt = `Create a detailed ${travelData.duration} - day travel itinerary for: ${prompt}
       
 Travel Details:
 - Destination: ${travelData.destination}
 - Starting from: ${travelData.startingLocation}
 - Duration: ${travelData.duration} days
-- Number of travelers: ${travelData.travelers}
+  - Number of travelers: ${travelData.travelers}
 - Budget: $${travelData.budget}
 
 CRITICAL REQUIREMENT: Create exactly ${travelData.duration} days, each day must have EXACTLY 4 activities.
@@ -1258,26 +1391,26 @@ CRITICAL REQUIREMENT: Create exactly ${travelData.duration} days, each day must 
 Return a JSON object with this EXACT structure:
 {
   "projectName": "Short catchy name for the trip (e.g. 'Paris Adventure')",
-  "phases": [
-    {
-      "number": 1,
-      "name": "Location/Theme (1-2 words)",
-      "steps": [
-        { "title": "Morning Activity", "description": "Specific details with location/time" },
-        { "title": "Afternoon Activity", "description": "Specific details with location/time" },
-        { "title": "Evening Activity", "description": "Specific details with location/time" },
-        { "title": "Night Activity", "description": "Specific details with location/time" }
-      ]
-    }
-  ]
+    "phases": [
+      {
+        "number": 1,
+        "name": "Location/Theme (1-2 words)",
+        "steps": [
+          { "title": "Morning Activity", "description": "Specific details with location/time" },
+          { "title": "Afternoon Activity", "description": "Specific details with location/time" },
+          { "title": "Evening Activity", "description": "Specific details with location/time" },
+          { "title": "Night Activity", "description": "Specific details with location/time" }
+        ]
+      }
+    ]
 }
 
 Requirements:
 - JSON must be valid
-- "projectName": 2-4 words maximum
-- "phases": Array of days
-- Each day MUST have exactly 4 steps (activities)
-- Day names should be 1-2 words
+  - "projectName": 2 - 4 words maximum
+    - "phases": Array of days
+      - Each day MUST have exactly 4 steps(activities)
+        - Day names should be 1 - 2 words
 `;
     } else {
       combinedPrompt = `Create a comprehensive learning roadmap for: ${prompt}
@@ -1287,27 +1420,27 @@ CRITICAL REQUIREMENT: Each phase must have EXACTLY 4 steps.
 Return a JSON object with this EXACT structure:
 {
   "projectName": "Short catchy name for the roadmap (e.g. 'React Mastery')",
-  "phases": [
-    {
-      "number": 1,
-      "name": "Phase Name (1-2 words)",
-      "steps": [
-        { "title": "Step Title", "description": "Specific and actionable instruction" },
-        { "title": "Step Title", "description": "Specific and actionable instruction" },
-        { "title": "Step Title", "description": "Specific and actionable instruction" },
-        { "title": "Step Title", "description": "Specific and actionable instruction" }
-      ]
-    }
-  ]
+    "phases": [
+      {
+        "number": 1,
+        "name": "Phase Name (1-2 words)",
+        "steps": [
+          { "title": "Step Title", "description": "Specific and actionable instruction" },
+          { "title": "Step Title", "description": "Specific and actionable instruction" },
+          { "title": "Step Title", "description": "Specific and actionable instruction" },
+          { "title": "Step Title", "description": "Specific and actionable instruction" }
+        ]
+      }
+    ]
 }
 
 Requirements:
 - JSON must be valid
-- "projectName": 2-4 words maximum
-- "phases": Array of phases
-- Each phase MUST have exactly 4 steps
-- Phase names should be 1-2 words (e.g., "Foundation", "Practice")
-- Make it appropriate for category: ${category.replace('_', ' ')}
+  - "projectName": 2 - 4 words maximum
+    - "phases": Array of phases
+      - Each phase MUST have exactly 4 steps
+        - Phase names should be 1 - 2 words(e.g., "Foundation", "Practice")
+          - Make it appropriate for category: ${category.replace('_', ' ')}
 `;
     }
 
@@ -1329,8 +1462,8 @@ Requirements:
       // Robust cleaning for markdown code blocks
       let cleanJson = text;
 
-      // Remove ```json and ``` wrap if present
-      const markdownMatch = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+      // Remove ```json and``` wrap if present
+      const markdownMatch = text.match(/```(?: json) ?\s * ([\s\S] *?) \s * ```/);
       if (markdownMatch) {
         cleanJson = markdownMatch[1];
       } else {
@@ -1375,7 +1508,7 @@ Requirements:
           await createModifiedPythonScripts();
           const topic = extractMainTopic(prompt);
           const videoRecommendations = await getVideoRecommendations(topic, 5, 120);
-          console.log(`✅ Background ML pipeline completed: ${videoRecommendations.length} FILTERED video recommendations for: ${topic}`);
+          console.log(`✅ Background ML pipeline completed: ${videoRecommendations.length} FILTERED video recommendations for: ${topic} `);
 
           // Cache the results for real-time UI updates
           videoCache.set(topic.toLowerCase(), {
@@ -1383,7 +1516,7 @@ Requirements:
             timestamp: Date.now(),
             topic: topic
           });
-          console.log(`💾 Cached ${videoRecommendations.length} videos for topic: ${topic}`);
+          console.log(`💾 Cached ${videoRecommendations.length} videos for topic: ${topic} `);
 
         } catch (error) {
           console.error('⚠️ Background ML video recommendations failed:', error.message);
@@ -1425,8 +1558,8 @@ function generateTravelFallback(travelData) {
       number: day,
       name: day === 1 ? 'Arrival' : day === travelData.duration ? 'Departure' : `Explore`,
       steps: [
-        { title: 'Morning Activity', description: `Start your day ${day} with a morning activity in ${travelData.destination}` },
-        { title: 'Afternoon Sightseeing', description: `Explore key attractions and landmarks in ${travelData.destination}` },
+        { title: 'Morning Activity', description: `Start your day ${day} with a morning activity in ${travelData.destination} ` },
+        { title: 'Afternoon Sightseeing', description: `Explore key attractions and landmarks in ${travelData.destination} ` },
         { title: 'Evening Dining', description: `Experience local cuisine and dining culture` },
         { title: 'Night Rest', description: `Rest and prepare for the next day's adventures` }
       ]
