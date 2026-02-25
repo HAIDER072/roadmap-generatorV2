@@ -13,6 +13,7 @@ import RoadmapViewerPage from './pages/RoadmapViewerPage';
 import HomePage from './pages/HomePage';
 import MockInterview from './components/interview/MockInterview';
 import ProfilePage from './pages/ProfilePage';
+import ResumeUpdatePage from './pages/ResumeUpdatePage';
 
 // App routes component
 const AppRoutes: React.FC = () => {
@@ -34,65 +35,73 @@ const AppRoutes: React.FC = () => {
       <Navbar />
       <Routes>
         {/* Public routes - HomePage accessible to all */}
-        <Route 
-          path="/" 
-          element={<HomePage />} 
+        <Route
+          path="/"
+          element={<HomePage />}
         />
-        <Route 
-          path="/home" 
-          element={<HomePage />} 
+        <Route
+          path="/home"
+          element={<HomePage />}
         />
-        <Route 
-          path="/login" 
-          element={user ? <Navigate to="/dashboard" replace /> : <LoginForm />} 
+        <Route
+          path="/login"
+          element={user ? <Navigate to="/dashboard" replace /> : <LoginForm />}
         />
-        <Route 
-          path="/signup" 
-          element={user ? <Navigate to="/dashboard" replace /> : <SignupForm />} 
+        <Route
+          path="/signup"
+          element={user ? <Navigate to="/dashboard" replace /> : <SignupForm />}
         />
-        
+
         {/* Protected routes */}
-        <Route 
-          path="/dashboard" 
+        <Route
+          path="/dashboard"
           element={
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>
-          } 
+          }
         />
-        <Route 
-          path="/create" 
+        <Route
+          path="/create"
           element={
             <ProtectedRoute>
               <CreateRoadmapPage />
             </ProtectedRoute>
-          } 
+          }
         />
-        <Route 
-          path="/roadmap" 
+        <Route
+          path="/roadmap"
           element={
             <ProtectedRoute>
               <RoadmapViewerPage />
             </ProtectedRoute>
-          } 
+          }
         />
-        <Route 
-          path="/mock-interview" 
+        <Route
+          path="/mock-interview"
           element={
             <ProtectedRoute>
               <MockInterview />
             </ProtectedRoute>
-          } 
+          }
         />
-        <Route 
-          path="/profile" 
+        <Route
+          path="/resume-update"
+          element={
+            <ProtectedRoute>
+              <ResumeUpdatePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
           element={
             <ProtectedRoute>
               <ProfilePage />
             </ProtectedRoute>
-          } 
+          }
         />
-        
+
         {/* Catch all route */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

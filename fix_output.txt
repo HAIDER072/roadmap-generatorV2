@@ -1,0 +1,19 @@
+
+> smartlearn-io@0.0.0 build
+> vite build
+
+[36mvite v7.3.1 [32mbuilding client environment for production...[36m[39m
+transforming...
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m✓[39m 2019 modules transformed.
+[31m✗[39m Build failed in 5.68s
+[31merror during build:
+[31m[vite:load-fallback] Could not load C:\Users\abbas\OneDrive\Desktop\FinalYearproject22_2026\roadmap-generatorV2\src\lib/redux/settingsSlice (imported by src/components/resume/ResumePDF/common/index.tsx): ENOENT: no such file or directory, open 'C:\Users\abbas\OneDrive\Desktop\FinalYearproject22_2026\roadmap-generatorV2\src\lib\redux\settingsSlice'[31m
+    at async open (node:internal/fs/promises:638:25)
+    at async Object.readFile (node:internal/fs/promises:1242:14)
+    at async Object.handler (file:///C:/Users/abbas/OneDrive/Desktop/FinalYearproject22_2026/roadmap-generatorV2/node_modules/vite/dist/node/chunks/config.js:33169:21)
+    at async PluginDriver.hookFirstAndGetPlugin (file:///C:/Users/abbas/OneDrive/Desktop/FinalYearproject22_2026/roadmap-generatorV2/node_modules/rollup/dist/es/shared/node-entry.js:22453:28)
+    at async file:///C:/Users/abbas/OneDrive/Desktop/FinalYearproject22_2026/roadmap-generatorV2/node_modules/rollup/dist/es/shared/node-entry.js:21445:33
+    at async Queue.work (file:///C:/Users/abbas/OneDrive/Desktop/FinalYearproject22_2026/roadmap-generatorV2/node_modules/rollup/dist/es/shared/node-entry.js:22681:32)[39m
