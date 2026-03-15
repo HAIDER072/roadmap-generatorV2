@@ -1,1347 +1,2059 @@
 video_id,title,description,publishedAt,duration,view_count,like_count,comment_count
-OxHdViPJLkE,JLPT N5 COURSE GUIDE FOR SELF STUDY | HOW TO COVER ALL JLPT N5 LEVEL SYLLABUS IN LESS TIME IN HINDI,"👉👉Latest Video: https://youtu.be/GRdDjjW5Kmo
+FNj8jMTOfnA,Complete Networking Tutorial for Beginners to Advanced 2026 | Deep dive for Cyber security,"Welcome to Sheryians Cyber School!
 
-Hey, In this video I'll show the secret for completing All JLPT N5 Syllabus in minimum time and what to cover in the learning or not. You will get a broad idea about how you should prepare for JLPT exam and learning Japanese with fun. You can Pass this exam if you done this in your preparation 
-
-✅ JAPAN V-logs playlist:
-https://youtube.com/playlist?list=PLGO-PB6BdVZvZ5dc9f_d3YVvX09DFWAGy&si=abxHVypEmVOL_MO1 
-
-✅ VISA Guide playlist:
-https://youtube.com/playlist?list=PLGO-PB6BdVZv_0vWz2T_IJBRo_P0igHnh 
-
-✅ FULL JAPANESE VERBS Playlist:
-https://youtube.com/playlist?list=PLGO-PB6BdVZsGkFgU6CSXBpSCx37hyL8M
-
-✅ FULL KANJI Playlist:
-https://youtube.com/playlist?list=PLGO-PB6BdVZvLYfLb8R-78Ue9tXZ_DS5Y
-
-E-MAIL:  
-nihongovishal@gmail.com  
+This is the Complete Networking Tutorial 2026, designed for absolute beginners to advanced learners who want to master real-world computer networks.
  
-FOLLOW ME ON INSTAGRAM ▶︎ 
- https://www.instagram.com/japanesewithvishal/
+In this video, we cover everything: what networking is, how data travels, the OSI & TCP/IP models, IP addressing, subnetting, ports & protocols, routing & switching, DNS, DHCP, NAT, firewalls, packets, and hands-on analysis tools like Wireshark. 
 
-Join Telegram channel ▶︎ https://t.me/Japanesewithvishal
+Whether you’re preparing for cybersecurity, ethical hacking, cloud, or IT roles, this tutorial gives you the full foundation you need to understand how the internet works at a deep level. Learn step-by-step and become network-ready for your cybersecurity journey.
+
+⏱️ Timestamps
+00:00 - Introduction & Roadmap
+01:30 - What is Networking?
+02:06 - Why Learn Networking? (Attack & Defense)
+04:55 - History of Networking (ARPANET)
+06:45 - Types of Networks (LAN, MAN, WAN, PAN)
+08:44 - Performance Terms (Latency, Bandwidth, Throughput, Jitter)
+09:39 - Network Topologies (Star, Bus, Ring, Mesh)
+12:16 - Client-Server vs. Peer-to-Peer Architecture
+12:53 - OSI Model
+14:40 - Encapsulation & Decapsulation
+15:23 - TCP/IP Model (4-Layer Model)
+16:35 - Types of Cables (Copper vs. Fiber vs. Aux)
+19:00 - Transceivers & Connectors (RJ45, SFP)
+20:32 - Link Speed & PoE (Power Over Ethernet)
+21:30 - Cabling Standards (Cat5 vs. Cat6)
+24:50 - Ethernet Frames (Source MAC, Destination MAC, Payload)
+26:19 - Switching Logic (CAM Tables, Learning, Flooding)
+29:09 - Spanning Tree Protocol (STP)
+29:43 - VLANs (Virtual Local Area Networks) & 802.1Q Tagging
+31:57 - Collision & Broadcast Domains
+32:38 - IP Addressing & Subnetting
+40:45 - Classes of IP Address (A, B, C, D, E)
+44:09 - IP Header Fields
+44:45 - Address Resolution Protocol (ARP) & Link Resolution
+48:11 - ARP Spoofing
+49:51 - Networking Devices (Hub, Switch, Router, Bridge, Cable Tester, Crimping tool)
+55:05 - Managed, Unmanaged Switch & Layer 2, Layer 3 Devices
+56:44 - Access vs Trunk Ports
+59:40 - Router Basics & Packet Forwarding (NAT, PAT, address translation)
+01:03:19 - Routing Fundamentals
+01:05:00 - Static & Dynamic Routing
+01:06:42 - Route Metrics & Administrative Distance
+01:09:30 - Interior Routing Protocol & Enhanced Interior Gateway Routing Protocol (EIGRP)
+01:17:00 - IS-IS (Intermediate System to Intermediate System)
+01:18:31 - BGP (Border Gateway Protocol)
+01:26:10 - Packet Delivery & Fragmentation
+01:28:14 - TTL (Time To Live), MTU (Maximum Transmission Unit), Header Fields
+01:29:33 - ICMP (Ping, Traceroute)
+01:32:19 - Firewall Traversal
+01:32:33 - Network Segmentation & Isolation
+01:33:56 - MPLS (Multiprotocol Label Switching)
+01:35:24 - Label Switching & Forwarding
+01:36:27 - Key Components (LSR, LER, PE, CE)
+01:37:45 - Segment Routing (SR-MPLS, SRv6)
+01:39:49 - Unicast, Multicast, Broadcast
+01:42:01 - Transport Layer TCP & UDP (Sequence Numbers, ACKs, Sliding Window)
+01:45:22 - Congestion Control
+01:46:21 - UDP
+01:47:35 - Port Numbers & Multiplexing
+01:49:26 - QoS (Quality of Service) Objectives (DiffServ, IntServ)
+01:52:18 - Traffic Engineering in large Networks
+01:53:36 - VPNs & IPSec
+02:05:20 - SSL, TLS
+02:07:18 - Tunneling Flow with Encryption
+02:09:03 - Data Center Networking
+02:10:28 - Spine-Leaf vs Three Tier Architecture & East-West vs North-South Traffic
+02:19:53 - Microsegmentation
+02:22:25 - Overlay in DCNs (VXLAN, EVPN)
+02:26:20 - Virtual Networking Concepts
+02:27:35 - VPC/VNet, Subnets, Route Tables
+02:29:18 - Security Groups, NACLs
+02:31:08 - Hybrid Connectivity, VPN Gateways
+02:33:05 - Network Programmability & Automation
+02:33:56 - Why Automation is Transforming Networking
+02:35:42 - APIs & Network Communication, gNMI (gRPC Network Management Interface)
+02:39:25 - Infrastructure as Code (IaC)
+02:42:08 - Summary
+02:43:12 - Outro
+
+We are creating a playlist for Cyber Security Mastery: Beginner to Advanced 
+https://www.youtube.com/playlist?list=PLiqfJrRIkP2J-nxiS9_Fk_cf1bVp8nJXj
+
+
+Notes-https://www.notion.so/Networking-for-Cyber-Security-2d91b5f74227808abe4ac72f6de530e9?source=copy_link
+
+
+
+🌐 Visit Our Website:
+https://sheryians.com/
+
+🌐 Explore Our Courses:
+https://sheryians.com/courses
+
+
+📲 Follow Us On:
+
+📷 Instagram:   https://instagram.com/sheryians.cyber
+
  
-JLPT N5 COURSE GUIDE FOR SELF STUDY | HOW TO COVER ALL JLPT N5 LEVEL SYLLABUS IN LESS TIME IN HINDI
-
-00:00 Intro
-01:25 JLPT N5 Plan
-02:56 25 Chapters
-04:48 Time Plan N5
-08:04 Sample paper Guide
-08:48 Listening Guide
-12:43 Kanji Guide
-14:40 Summarize All
-17:50 Last Tip
-GOOD LUCK
-
-Reading Playlist: https://youtube.com/playlist?list=PLG...
-
-Also Watch :-
-: LESSON - 01 - https://www.youtube.com/watch?v=Hyylc...
-
-: Listening N5 Paper Solve - https://youtu.be/lye4BLlb_1Y​​​​​​​​​​
-
-: Listening N5 Basic Tips - https://youtu.be/EO57xZ00e8k​​​​​​​​​​
-
-
-
-JLPT Videos here :-
-: Exam Guide N2 - https://youtu.be/Fg5UxsfZiCM​​​​​​​​​​
-
-
-: Exam Guide N3 - https://youtu.be/TzhwYQgPUj0​​​​​​​​​​
-
-
-: Exam Guide N4 - https://youtu.be/Fg5UxsfZiCM​​​​​​​​​​
-
-
-: Exam Guide N5 - https://youtu.be/ECwXr2L_-cs​​​​​​​​​​
-
-  
-
-------------
-
-👉 FOLLOW ME ON INSTAGRAM ▶︎ 
-https://www.instagram.com/japanesewithvishal/
-
-
-ADD ME ON: 
-
-👉 Join Our FB Group: https://www.facebook.com/groups/662063617906857/
-👉 FB Page: https://www.facebook.com/japanesewithvishal
-👉 TWITTER -  https://twitter.com/slowpolyglot?s=09
-👉 LINKDIN - https://www.linkedin.com/in/slowpolyglot
-
--------
-
-About Me:-
- THANK YOU MY SUBSCRIBERS FOR SUPPORTING ME AND I'LL DO MORE INTERESTING VIDEOS AND PROVIDE YOU THE BEST EVER LANGUAGE LEARNING KNOWLEDGE I CAN, THANK YOU SO MUCH AGAIN !!!
-
-tips & tricks regarding learning languages
-
-HOW TO START LEARNING JAPANESE FOR A BEGINNERS THAT WANT TO LEARN IN HINDI LANGUAGE, I'M GONNA SHOW YOU THE BEST EVER TECHNIQUES TO LEARN JAPANESE LANGUAGE STAY TUNE AND SUBSCRIBE 
-
-In this video I take you through my personal method for learning the most out of any language in specific pattern. ""HERE in this video i mention all The details about Japanese language exam , how much syllabus you have to read, how much time you have to give to each aspect of Japanese language, basically preparation for jlpt n5  exam held in India. 2020 December, ill gonna pass my exam this time . hope you find it valuable and try to do apply these tips in your life 
-Indian Polyglot  Hindi
-
-जी दोस्तो मै हूं आपका दोस्त विशाल और आज हम बात करेगे उन विषयों पर जब कोई बन्दा नई भाषा सीखना शुरू करता है तो उसको क्या क्या दिक्कत आती हैं, इस वीडियो में वो सब कवर के ली है और ये सब मेरी अपनी फील की हुई है। मुझे जापानी भाषा सीखते हुए 2 साल हो चुका है और मै आपको यकीन दिला सकता हूं के इस वीडियो में आपका बहुत कुछ सीखने को मिलेगा 😃
-#jlptlistening #listeningsample #N5listening
-
-♡ ABOUT ME
-
-Hi! I'm vishal #Japanesewithvishal​​​​​​​​​​ . I was born in Punjab (India) and now I'm learning different languages. Here you'll find language learning tips, my experience and progress learning languages. I hope to share my passion for languages with you in a way that inspires you to keep going and reach your goals! I'm also a follower of GOD and strive to shine His light and give credit to Him in all I do.
-
---------
-♡ FAQ
-
-Where do you live?
-→ Punjab(india)
-
-What's your job?
-→ I'm a learner.
-how to read in Japanese
-best ways to solve a dokkai problem
-how to solve dokkai 
-dokkai easy way to solve
-Japanese reading practice in Hindi
-learn Japanese in Hindi
-Japanese language in Hindi
-learn Japanese in Hindi for beginners
-
---------
-♡ PLEASE NOTE
-
-As much as I love reading your comments and messages on social media, sometimes I cannot reply to them all. Please be patient in waiting for a response but do know I read everything! love you
-
-
-Disclaimer -
-
-video is for educational purpose only. Copyright Disclaimer Under Section 107 of the Copyright Act 1976, allowance is made for ""fair use"" for purposes such as criticism, comment, news reporting, teaching, scholarship, and research. Fair use is a use permitted by copyright statute that might otherwise be infringing. Non-profit, educational or personal use tips the balance in favor of fair use.
-
-Thanks for watching 😃",2021-11-14T10:30:02Z,PT19M31S,107661,4526,500
-LmpZ1qcJRII,Kanji N5 || Learn Japanese ||#learnjapanese #learnkanji #japaneselanguage #learnjapaneselanguage,,2024-06-15T20:38:09Z,PT11S,402119,6735,41
-JJiNb5rsWhI,Day 1/5 of Learning Japanese from Scratch 🇯🇵✨ #japaneselanguage #japanese #youtube,,2024-11-12T05:57:48Z,PT37S,267307,8747,40
-BiQQ1KYSP3k,Tips to learn Japanese 🇯🇵 Must watch if you are learning japanese!,,2025-01-20T09:58:37Z,PT49S,403299,18587,158
-yyx7uVQyx5M,JLPT N5 Listening Practice with Mochi Sensei | N5聴解 | Japanese Lesson,"🌸Mochi's ONLINE store🌸
- Please get Mochi's hand written original t-shirts!
-https://suzuri.jp/mochisensei
-
-How to order:
-https://youtube.com/shorts/_YyXmeXK_-w?si=dzNvzvEZk-L2MGt4
-
-
-
-
-
-
-🌟Would you like to take Mochi sensei's class?🌟
-Online Japanese course from only $4.99 / month! https://www.patreon.com/user/membership?u=49978610
-Please join!🥰
-
-I really appreciate your support🔥
-【kofi】https://ko-fi.com/mochisensei820#linkModal
-
-
-
-
-
-
-Do you want more of daily lesson?
-【Mochi sensei instagram】https://www.instagram.com/mochi.sensei.japanese/
-
-
-★Top 10 Anime for learning Japanese!【PART1】
-https://youtu.be/lktcZc9dYSI
-
-
-★For abusolute beginners! Let's learn how to introduce yourself first😊
-https://youtu.be/2sBsUbLiUkU
-
-
-★Things I dislike about foreign guys & How to date Japanese girls?
-https://youtu.be/JOqhiu3vm0I
-
-
-#Japaneselesson #jlpt #japaneselistening #jlptn5",2024-02-19T04:00:22Z,PT17M40S,118457,5701,236
-sISIVKJh_EA,How to Start Learning Japanese from NOTHING,"My video on how to speak Japanese better:
-https://youtu.be/8s8m3WyKK_g
-
-Or my next video in this series - 'How to BEAT the language plateau':
-https://youtu.be/QqtnLgIFrpE
-
-Feeling lost on how to start studying Japanese? You’re not alone!! In this video, I break down learning Japanese into easy, ACTIONABLE steps you can take as an absolute beginner.
-
-Wanna follow my move to Japan? ✈️🇯🇵 Follow me on Insta or Twitter @TokuyuuTV!
-
-💻 Links mentioned in the video:
-
-・JapanesePod101 – Hiragana: https://www.youtube.com/watch?v=6p9Il_j0zjc&t=1474s&ab_channel=LearnJapanesewithJapanesePod101.com
-
-・JapanesePod101 – Katakana: https://www.youtube.com/watch?v=s6DKRgtVLGA&ab_channel=LearnJapanesewithJapanesePod101.com 
-
-・My tips for speaking + pronunciation: https://www.youtube.com/watch?v=8s8m3WyKK_g&t=304s&ab_channel=TokuyuuTV 
-
-・JapanesePod101 – Pronunciation: https://www.youtube.com/watch?v=ZhVlq7yDQho&t=10s&ab_channel=LearnJapanesewithJapanesePod101.com 
-
-・Nihongo Shark (N5 Vocab Deck): https://nihongoshark.com/jlpt-n5-vocabulary-list/ 
-
-・Anki website: https://apps.ankiweb.net/ (Mobile versions also available on each app store. Gotta pay schmoney for the iOS version tho)
-
-・Tae Kim’s Guide to Japanese Grammar: https://guidetojapanese.org/learn/grammar 
+💌 Telegram: https://t.me/sheryiansCommunity
+
+
+
+
+#networking 
+#computernetworking 
+#cybersecurity 
+#ethicalhacking 
+#soc 
+#networksecurity 
+#tcpip 
+#osimodel 
+#wireshark 
+#SheryiansCyberSchool",2025-12-08T14:49:09Z,PT2H43M29S,164733,5856,516
+IPvYjXCsTg8,Computer Networking Full Course - OSI Model Deep Dive with Real Life Examples,"Learn how the internet works in this complete computer networking course. Here we cover the fundamentals of networking, OSI model deep dive, networking protocols, devices, tools, and more with real-life examples.
+
+Take part in the learning in public initiative! Share your learnings on LinkedIn and Twitter with #DevOpsWithKunal & don't forget to tag us!
+
+Complete DevOps playlist: https://www.youtube.com/playlist?list=PL9gnSGHSqcnoqBXdMwUTRod4Gi3eac2Ak
+Complete Java DSA playlist: https://www.youtube.com/playlist?list=PL9gnSGHSqcnr_DxHsP7AW9ftq0AtAyYqJ
+
+➡️ Connect with me: https://www.techwithkunal.com
+
+=========================================
+Timestamps: 
+0:00 Introduction
+4:50 How it all started?
+17:38 Client-Server Architecture 
+22:00 Protocols 
+24:20 How Data is Transferred? IP Address 
+34:23 Port Numbers 
+42:25 Submarine Cables Map (Optical Fibre Cables)
+48:00 LAN, MAN, WAN
+52:20 MODEM, ROUTER
+55:47 Topologies (BUS, RING, STAR, TREE, MESH)
+1:01:34 Structure of the Network
+1:06:33 OSI Model (7 Layers)
+1:29:00 TCP/IP Model (5 Layers)
+1:30:20 Client Server Architecture
+1:38:18 Peer to Peer Architecture
+1:39:52 Networking Devices (Download PDF)
+1:43:05 Protocols
+1:50:22 Sockets
+1:51:10 Ports
+1:53:12 HTTP
+2:00:00 HTTP(GET, POST, PUT, DELETE)
+2:04:44 Error/Status Codes
+2:06:30 Cookies
+2:11:00 How Email Works?
+2:19:00 DNS (Domain Name System)
+2:32:24 TCP/IP Model (Transport Layer)
+2:47:35 Checksum
+2:49:00 Timers
+2:54:00 UDP (User Datagram Protocol)
+3:02:05 TCP (Transmission Control Protocol)
+3:09:10 3-Way handshake
+3:13:40 TCP (Network Layer)
+3:21:50 Control Plane
+3:24:30 IP (Internet Protocol)
+3:38:45 Packets
+3:41:42 IPV4 vs IPV6
+3:49:50 Middle Boxes
+3:52:32 (NAT) Network Address Translation
+3:55:40 TCP (Data Link Layer)
+
+#networking #osimodel #internet #course",2022-01-17T11:17:24Z,PT4H6M56S,2935989,61295,2737
+Q2iCBlF5x2o,Networking For Beginners 2026 | Networking Fundamentals | Computer Networking Tutorial | Simplilearn,"🔥IIIT Bangalore Advanced Executive Program In Cybersecurity (India Only): https://www.simplilearn.com/pgp-advanced-executive-program-in-cyber-security?utm_campaign=Q2iCBlF5x2o&utm_medium=DescriptionFirstFold&utm_source=Youtube              
+🔥Professional Certificate Program in Cybersecurity: https://www.simplilearn.com/ai-cybersecurity-course?utm_campaign=Q2iCBlF5x2o&utm_medium=DescriptionFirstFold&utm_source=Youtube          
+🔥Cyber Security Masters Program (Discount Code - YTBE15): https://www.simplilearn.com/cyber-security-expert-master-program-training-course?utm_campaign=Q2iCBlF5x2o&utm_medium=DescriptionFirstFold&utm_source=Youtube 
+
+The video on Computer Networking Tutorial for Beginners 2026 by Simplilearn, provides a structured, beginner-friendly journey into how computer networks actually function. It starts with the fundamentals of networking and gradually breaks down how internet requests flow behind the scenes. You’ll learn the essentials of networking devices, communication methods, and different network topologies. The course also covers IP and MAC addressing, transmission modes, and detailed insights into major network classifications. A clear explanation of the OSI and TCP/IP models helps build your conceptual foundation, followed by an overview of key networking protocols that power modern communication. The tutorial concludes with essential networking commands, giving learners both theoretical clarity and practical confidence for real-world use.
+
+Following are the topics covered in Computer Networking Tutorial for Beginners:
+
+00:00:00 Introduction to Computer Networking Tutorial For Beginners 2026
+00:07:20 How Internet Requests Work?
+00:13:39 Networking Devices and Communication Essentials
+00:18:23 Network Topologies
+00:24:57 IP Addressing and MAC Addressing 
+00:32:23 MAC Addressing
+00:37:29 Transmission Modes
+00:39:42 Networking Devices
+00:42:33 Network Classifications
+00:47:01 OSI Model and TCP/IP Model
+00:53:37 Key Networking Protocols Explained
+00:59:15 Essential Networking Commands
+
+✅ Subscribe to our Channel to learn more about the top Technologies: https://bit.ly/2VT4WtH
+
+#mac #osimodel #tcp #computernetworking #computernetwork #computernetworks #networking #networkingtutorial #localareanetwork #metropolitanarea #cybersecurity #2026 #2025 #simplilearn 
+
+➡️ About Advanced Executive Program in Cybersecurity
+
+The AI-Powered Advanced Executive Program in Cybersecurity, in collaboration with IIIT Bangalore and Simplilearn, blends cutting-edge AI applications with core cybersecurity skills. Master OS and network security, ethical hacking, malware analysis, and cloud security while learning how AI is transforming both cyberattacks and defense strategies.
+
+Key Features
+✅ Program completion certificate and transcript from IIIT Bangalore (Digital & Physical)
+✅ Validate your learning with a Transcript from IIIT Bangalore
+✅ Masterclasses from top faculty of IIIT Bangalore ,EC-Council Expert and ex NPCI expert
+✅ Learn AI-driven defense and offense to counter next-gen cyber threats
+✅ Gain hands-on skills using 30+ AI & cybersecurity tools and build 10+ real-world projects.
+✅ Learn to tackle real-world cyber challenges through 30+ case studies
+✅ Includes CEH v13 AI live training, official content, iLabs & exam voucher
+✅ Get access to the Microsoft Learn Portal and earn official badges upon completion
+✅ Simplilearn's JobAssist helps you get noticed by top hiring companies
+
+Learning Path
+✅ Preparing for Your AI-Powered Cybersecurity Executive Journey
+✅ Operating System & Scripting for Cybersecurity (IIITB)
+✅ Network Security & Cryptography Essentials (IIITB)
+✅ Enterprise Infrastructure Security
+✅ Application and Web Application Security
+✅ AI Foundations for Cybersecurity Professionals
+✅ AI-Powered Blue Team Strategies: Detection, Response & Automation
+✅ Ransomware and Malware Analysis
+✅ Ethical Hacking and VAPT
+✅ AI-Enhanced Red Team Tactics: Exploitation to Post-Exploitation
+✅ Advanced AI in Cybersecurity: LLMs, Adversarial Models & Risk Defense
+✅ Portfolio Project: Real-World Scenarios in Cyber, Red/Blue Teams & AI
+
+Skills Covered
+✅ OS and Network Security
+✅ Cryptography and PKI
+✅ Secure Coding and Application Security
+✅ Vulnerability Assessment
+✅ Ethical Hacking
+✅ Malware and Ransomware Analysis
+✅ Enterprise Security
+✅ SIEM and Threat Detection
+✅ Threat Hunting
+✅ Application Security
+✅ Artificial Intelligence
+✅ Incident Response and Forensics
+✅ Penetration Testing
+✅ Machine Learning
+✅ Security Architecture
+✅ SOC Operations
+✅ AI Augmented Recon and Exploits
+✅ AI in SIEM SOAR and Detection
+✅ Adversarial AI and Attack Simulation
+✅ Generative AI
+✅ Prompt Engineering
+
+👉 Enroll Now: https://www.simplilearn.com/pgp-advanced-executive-program-in-cyber-security?utm_campaign=Q2iCBlF5x2o&utm_medium=Description&utm_source=Youtube  
+
+🔥🔥",2025-11-22T16:15:03Z,PT1H5M26S,5487,149,7
+_IOZ8_cPgu8,"Networking Basics (2026) | What is a switch, router, gateway, subnet, gateway, firewall & DMZ","Networking basics (2023) | What is a switch, router, gateway, subnet, gateway, firewall & DMZ
+#networkingbasics #switch #router #subnet #gateway #firewall #NAT #dmz 
+
+📢📢 Subscribe to my FREE newsletter ""Normal I.T. Guy"" to know more about what I am thinking, learning and doing in my career & life !!
+CLICK THE LINK BELOW 👇👇👇
+https://anshultiwari.substack.com 
+
+*** Check out our technology and google cloud tutorials playlists***
+
+1) Latest technology tutorial (2020) -
+https://www.youtube.com/watch?v=l5UcUEt1IzM&list=PLcnJIHtHiTA2Hdgon51_-G3Kt43hcU6kI
+
+2) Google Cloud Platform Beginner Series (2020) -
+https://www.youtube.com/watch?v=OzwSBbuHY-0&list=PLcnJIHtHiTA2Jp3klIkeHiwqGrxjXBzh6
+
+Hi Friends, I am Anshul Tiwari and welcome to our youtube channel ITkFunde.
+
+About this video - 
+In this video, we will understand the networking basics. We will understand what is a 
+- Switch
+- Router
+- Gateway
+- Subnet
+- Firewall
+- NAT
+- DMZ 
+- Port forwarding
+
+We will understand computer networking fundamentals using a ""School"" analogy. This video will give you an easy understanding of these concepts which we use on a daily basis.
+
+***Social Links***
+Facebook - https://www.facebook.com/ITkFUNDE/
+Linkedin - https://www.linkedin.com/in/ansh9685
+Twitter - https://twitter.com/ansh9685
+Blog - https://blogs.itkfunde.com/
+Instagram -https://www.instagram.com/itkfunde/
+
+🚀🚀LAUNCHING MY 1st EVER ONLINE COURSE 🚀🚀
+
+""Cloud 101: AWS for Dummies - Your 1st Date with Cloud !""
+
+✨Your first steps towards a Digital Cloud Career☁️✨
+
+
+🔥🔥Enroll Now via link below - https://www.itkfunde.net/courses/Cloud-101-AWS-for-beginners---Your-1st-Date-with-Cloud-64dcc1f0e4b0b5d209ad3746 
+
+
+Highlights:
+
+✅ No Pre-requisites, No Coding needed
+✅ Course Starts on 11th September 2023
+✅ Career Boost: Unlock new career opportunities by mastering cloud basics and AWS fundamentals.
+✅ Step-by-Step Demos: Follow along with our easy-to-follow demos that walk you through key concepts.
+✅ Live QnA session and career guidance session with me
+✅ 2 years Access to the course
+✅7-Day Money-Back Guarantee: I know you'll love the course. If for any reason you're not satisfied within the first 7 days from course launch, we offer a full refund.
+✅ AWS Cloud Practioner Certification Guidance
+✅ Bonus: Invitation to join my special Telegram community for Lifetime
+✅ Bonus: After the course, stay personally connected to me for career guidance
+
+
+With a 7-day money-back guarantee, you can enroll with confidence. Don't miss out on this opportunity to learn and grow in the cloud industry.
+
+Enroll Now and take YOUR First Steps towards a Digital Cloud Career !!
+Hurry!!
+
+***About This Channel***
+Friends ITkFUNDE channel wants to bring I.T related knowledge, information, career advice, and much more to every individual regardless of whether he or she belongs to I.T or not. This channel is for everyone interested in learning something new!",2020-05-06T16:07:34Z,PT14M58S,6072616,168272,3924
+mERUdj0rDU8,Networking Full Course in Telugu with Animations | మన తెలుగు లో,"🔌 Networking Full Course - Master the Fundamentals
+
+Welcome to our comprehensive networking course where you'll learn everything you need to know to become proficient in networking concepts, protocols, and technologies. Whether you're a beginner or looking to brush up on your networking skills, this course is designed to equip you with the knowledge you need.
+
+🎓 About the Course:
+This networking course is suitable for beginners and intermediate learners alike. It covers a wide range of topics, from the basics of networking to more advanced concepts like routing protocols and network security. By the end of this course, you'll have a solid understanding of networking principles and be well-prepared to pursue further study or a career in networking.
+
+🔔 Subscribe to our channel for more tech tutorials and courses!
+--------------------------------------------------------------------------------------------------------------------
+Timestamps:
+00:00 - Intro
+00:02 - Network & Networking
+04:30 - Network Types
+10:00 - Network Topologies
+17:12 - Network Devices
+24:00 - Internet
+24:55 - Intranet
+25:30 - Extranet
+26:20 - IP Address
+36:04 - Subnet Mask
+39:21 - HTTP & WWW
+41:54 - HTTP Request Methods
+43:08 - HTTP Response Codes
+44:40 - Introduction to OSI Model
+46:15 - 7 Layers of OSI Model
+46:29 - Application Layer
+48:21 - Presentation Layer
+52:22 - Session Layer
+57:15 - Transport Layer
+01:04:03 - Network Layer
+01:08:42 - Data Link Layer
+01:13:13 - Physical Layer
+01:15:14 - TCP/IP
+
+Anisetti Chaitanya Eshwar Prasad",2024-04-04T11:05:33Z,PT1H16M34S,152910,5084,363
+fQbBPa0ADvs,Computer Networking Fundamentals Course,"This course covers the fundamental concepts, protocols, and architectures of computer networking. You will journey through the entire networking stack, exploring how data travels from physical media access control up to complex application layer protocols like HTTP and DNS. You will learn about technical mechanisms, including error detection through CRC, flow control strategies, and advanced IPv4 addressing techniques like CIDR and VLSM. By mastering topics such as TCP congestion control and routing algorithms, you will gain the deep theoretical foundation and practical problem-solving skills necessary to navigate modern internet communications.
+
+Course notes: https://drive.google.com/file/d/1H4HyyNb07e4u3wdV-vfUWJTn2ulullac/view?usp=sharing
+
+Course overview: https://drive.google.com/file/d/1d8cynMNNB0H5DoyBwAj1WTQrIe4X2PLX/view?usp=drive_link
+
+DPP practice questions: https://drive.google.com/file/d/1q3s7Yk_bVdxMosDVf-hkGYOLqgSeza4H/view?usp=sharing
+
+✏️ Course created by Kshitij Sharma.
+
+Chapters
+*Course Intro & Basics*
+- 00:00 Networking Stack & Stack Concepts
+- 00:46 Orientation & Prerequisites
+- 01:31 Instructor Intro
+- 02:05 Target Audience
+- 03:01 Methodology: Pen & Paper Style
+- 08:42 Defining Computer Networks
+- 09:55 5 Components of Data Comm
+- 11:40 Effectiveness Metrics
+- 14:14 Simplex, Half & Full Duplex
+- 19:55 Network Topologies (Mesh, Star, Bus)
+- 28:36 OSI Model & Layered Architecture
+
+*IP Addressing & Subnetting*
+- 34:37 Binary & Octet Conversion
+- 48:09 IPv4 Logical Addressing
+- 55:17 Classful vs. Classless (CIDR)
+- 1:10:56 Class A-E Addressing Deep Dive
+- 1:18:43 Loopback & Troubleshooting
+- 1:35:53 IP Conversion Practice
+- 2:15:55 Subnetting & Borrowing Bits
+- 2:52:25 Subnet Mask Design
+- 3:05:24 VLSM Strategy
+- 3:31:04 Routing Tables & CIDR Blocks
+- 4:05:50 Supernetting Blocks
+
+*Error & Flow Control*
+- 4:19:56 Single Bit vs. Burst Errors
+- 4:39:26 Hamming Distance & Correction
+- 4:49:52 Simple & 2D Parity Methods
+- 5:14:32 CRC & Polynomial Notation
+- 5:36:25 Checksum Methods
+- 5:43:07 Transmission vs. Propagation Delays
+- 6:10:25 Stop and Wait (ARQ)
+- 6:30:24 Efficiency, RTT & Throughput
+- 6:40:42 Sliding Window Concepts
+- 7:07:35 Go-Back-N (GBN) Protocol
+- 7:18:54 Selective Repeat (SR)
+
+*Headers & Advanced Protocols*
+- 8:05:57 IPv4 Header & TOS Bits
+- 8:35:39 TTL & Fragmentation
+- 8:52:02 IP Options & Source Routing
+- 9:18:10 TCP Header: Sequence & Ack
+- 9:40:48 TCP Flags & Handshake
+- 9:58:10 SYN Flooding Attacks
+- 10:02:19 Congestion Control Policy
+- 10:13:30 TCP/UDP Timers & Comparison
+- 10:30:10 Aloha & CSMA Methods
+- 11:06:07 CSMA/CD Collision Detection
+- 11:13:39 Polling & Token Passing
+- 11:25:03 Distance Vector vs. Link State
+- 11:36:16 Circuit vs. Packet Switching
+- 11:48:47 Email (SMTP, POP3, IMAP)
+- 11:57:10 DNS Hierarchy & Queries
+- 12:01:21 FTP, HTTP, ARP & ICMP
+- 12:15:06 OSI Summary & Conclusion",2026-02-18T15:00:57Z,PT12H18M40S,110532,4843,161
+oHQvWa6J8dU,Basics of Networking for Beginners | Getting Started With Networking | Computer Networks|Simplilearn,"""️️🔥Professional Certificate in AI and Machine Learning - https://www.simplilearn.com/professional-aiml-program?utm_campaign=oHQvWa6J8dU&utm_medium=DescriptionFFF&utm_source=Youtube
+️🔥IITK - Professional Certificate Course in Generative AI and Machine Learning - https://www.simplilearn.com/iitk-professional-certificate-course-ai-machine-learning?utm_campaign=oHQvWa6J8dU&utm_medium=DescriptionFFF&utm_source=Youtube
+️🔥Microsoft AI Engineer Program - https://www.simplilearn.com/ai-engineer-course?utm_campaign=oHQvWa6J8dU&utm_medium=DescriptionFFF&utm_source=Youtube
+️🔥 Michigan - Applied Generative AI Specialization - https://www.simplilearn.com/applied-ai-course?utm_campaign=oHQvWa6J8dU&utm_medium=DescriptionFFF&utm_source=Youtube""
+
+✅Subscribe to our Channel to learn more about the top Technologies: https://bit.ly/2VT4WtH
+
+⏩ Check out the Cyber Security training videos: https://bit.ly/3cMmCxj
+
+#BasicsofNetworkingforBeginners #Networking #ComputerNetworking #NetworkingProject #CyberSecurityTraining #IntroductionToNetworkSecurity #ComputerNetwork #CyberSecurity #Simplilearn
+
+The administration of network security may encompass a wide range of hardware and software security technologies. As networks get increasingly complicated and businesses rely more on their networks and data to operate, security becomes more crucial. The goal of security enforcement measures should be to avoid breaches by reducing risk on the network as networks and attack techniques develop. A mix of hardware and software network technologies is used to ensure network security. Network security's main objective is to stop unwanted access to or communication within a network. This is frequently accomplished using network segmentation. The division of networks and the allocation of resources to those divisions are known as network segmentation.
+
+🔥IIIT Bangalore Advanced Executive Program In Cybersecurity (India Only): https://www.simplilearn.com/pgp-advanced-executive-program-in-cyber-security?utm_campaign=SCE-IIITBangaloreCS&utm_medium=DescriptionFF&utm_source=youtube     
+
+➡️ About Post Graduate Program In Cyber Security
+
+This Post Graduate Program in Cyber Security will help you learn comprehensive approaches to protecting your infrastructure and securing data, including risk analysis, mitigation, and compliance. You will get foundational to advanced skills through industry-leading cyber security certification courses that are part of the program.
+
+✅ Key Features
+
+- Simplilearn Post Graduate Certificate
+- Masterclasses from MIT Faculty
+- Featuring Modules from MIT SCC and EC-Council
+- 8X higher interaction in live online classes conducted by industry experts
+- Simplilearn's JobAssist helps you get noticed by top hiring companies
+- Industry case studies in cyber security
+- Access to CEH Pro Version
+- 25+ hands-on projects
+- Capstone project in 3 domains
+- MIT CSAIL Professional Programs Community
+
+✅ Skills Covered
+
+- Advanced Hacking Concepts
+- Network Packet Analysis
+- Ethical Hacking
+- IDS Firewalls and Honeypots
+- Security and Risk Management
+- Network Security
+- Software Development Security
+- Cryptography OSI and TCPIP Models
+- Identity and Access Management 
+- Security Assessment and Testing
+- Trojans Backdoors and Countermeasures
+- Mobile and Web Technologies
+
+👉 Learn More at: https://www.simplilearn.com/ai-cybersecurity-course?utm_campaign=BasicsofNetworkingforBeginners&utm_medium=Description&utm_source=youtube
+
+🔥IIIT Bangalore Advanced Executive Program In Cybersecurity (India Only): https://www.simplilearn.com/pgp-advanced-executive-program-in-cyber-security?utm_campaign=SCE-IIITBangaloreCS&utm_medium=DescriptionFF&utm_source=youtube 
+
+🔥🔥",2022-09-24T15:30:15Z,PT12M16S,247958,3204,9
+S7MNX_UD7vY,FREE CCNA // What is a Network? // Day 0,"FREE CCNA Course 200-301 - sponsored by the Boson Summer Sale 25% off: https://ntck.co/bnexccna (affiliate)
+
+Watch the whole course: https://bit.ly/nc-ccna
+Go deeper: https://ntck.co/ncccna
+🔥🔥Join the NetworkChuck Academy!: https://ntck.co/NCAcademy
+
+
+
+🔥🔥BOSON SUMMER SALE 25% OFF EVERYTHING🔥🔥
+-CCNA Lab: https://bit.ly/bosonccna2020 (Boson NetSim) (affiliate)
+-CCNA Practice Exam: https://bit.ly/bosonexsimccna (Boson ExSim) (affiliate)
+-CCNP Lab: https://bit.ly/encornetsim (Boson NetSim) (affiliate)
+-CCNP Practice Exam: https://bit.ly/encorexsim (Boson ExSim) (affiliate)
+
+
+
+
+🔥Learn Python🔥
+Codecademy: http://bit.ly/2Me22NH
+
+🔥Learn Microsoft Azure🔥
+AZ-900: http://bit.ly/az900cbt
+AZ-104: http://bit.ly/az103cbt
+
+(GEAR I USE...STUFF I RECOMMEND)
+
+My network gear: https://geni.us/L6wyIUj
+
+Amazon Affiliate Store: https://www.amazon.com/shop/networkchuck
+
+Buy a Raspberry Pi: https://geni.us/aBeqAL
+
+#ccna #ccna200301 #freeccna",2020-07-04T01:07:42Z,PT10M30S,2490135,61874,1818
+iSOfkw_YyOU,Learn Networking in 3 Hours | Networking Fundamentals + AWS VPC Networking,"Join our 24*7 Doubts clearing group (Discord Server)
+www.youtube.com/abhishekveeramalla/join
+
+Udemy Course (End to End DevOps Project)
+https://www.udemy.com/course/ultimate-devops-project-with-resume-preparation/?referralCode=9F588E43854814744430
+
+--- --- Support my work
+https://www.buymeacoffee.com/abhishekprd
+
+Networking fundamentals are vital for DevOps engineers to understand infrastructure, facilitate communication, automate processes, ensure security, and optimize performance. They enable effective collaboration with network teams, orchestration of infrastructure components, and implementation of security measures. Additionally, networking knowledge is essential for optimizing application performance and deploying applications in cloud environments.
+
+0:58 Chapter 1 (IP Address, CIDR, Subnets, Ports)
+40:52 Chapter 2 (OSI Model)
+1:11:32 Chapter 3 (AWS Networking)
+1:40:22 Chapter 4 (AWS Security Groups & NACL)
+2:25:35 Chapter 5 ( AWS VPC Hands-on)
+
+In this video you will learn Networking concepts such as 
+- IP Addressing
+- CIDR
+- Subnets
+- Ports
+- OSI Model
+- Layer 1 to Layer 7 
+- AWS VPC
+- AWS SG and NACL 
+- AWS SG vs NACL
+- AWS Load balancer
+- AWS Internet Gateway
+- AWS Subnets
+- Public vs Private Subnet
+- AWS Routes
+- AWS Route Tables
+- AWS Route 53
+- AWS VPC Project
+- AWS VPC Workflow
+- AWS VPC Explained
+
+Here are some more very useful Zero to Hero playlists on the channel. 
+- Free DevOps Playlist: https://www.youtube.com/playlist?list=PLdpzxOOAlwvIKMhk8WhzN1pYoJ1YU8Csa
+- AWS Zero to Hero Playlist: https://www.youtube.com/playlist?list=PLdpzxOOAlwvLNOxX0RfndiYSt1Le9azze
+- Terraform Zero to Hero Playlist: https://www.youtube.com/playlist?list=PLdpzxOOAlwvI0O4PeKVV1-yJoX2AqIWuf
+- Python for DevOps Playlist: https://www.youtube.com/playlist?list=PLdpzxOOAlwvKwTyYNJCUwGPvql0TrsPgv
+
+Have any questions while learning ? Don't worry, Join our Doubts Clearing Group.
+Join our Doubts Clearing Group
+https://www.youtube.com/@AbhishekVeeramalla/join
+
+About me:
+========
+Instagram: https://www.instagram.com/abhishekveeramalla_official/
+Telegram Channel : https://t.me/abhishekveeramalla
+LinkedIn: https://www.linkedin.com/in/abhishek-veeramalla
+GitHub: https://github.com/iam-veeramalla
+Medium: https://abhishekveeramalla-av.medium.com/ .
+.
+Disclaimer: Unauthorized copying, reproduction, or distribution of this video content, in whole or in part, is strictly prohibited. Any attempt to upload, share, or use this content for commercial or non-commercial purposes without explicit permission from the owner will be subject to legal action. All rights reserved.",2024-04-10T15:30:18Z,PT3H10M49S,466659,10536,389
+CY4hn70K3r8,CompTIA Network+ N10-009 Full Certification Course,"This is the animated CompTIA Network+ N10-009 Certification Course.  
+
+🟧 Download my CompTIA Net+ (N10-009) study guide 
+http://www.powercert.com/comptianetworknew.html
+
+TIP JAR:  https://www.paypal.me/PowerCert
+
+►Get the VPN that I use (affiliate).  https://nordvpn.com/powercert
+Save 75% on a 2-year plan + 4 months free
+
+►My monitor (Purchased this on 11-9-25) that I use and recommend: https://amzn.to/4oCYS4o 
+►My keyboard https://amzn.to/3XJlSDb
+►My mouse https://amzn.to/4pqvQpj
+
+(Spanish audio track available)
+
+►Become a member: https://www.youtube.com/channel/UCJQJ4GjTiq5lmn8czf8oo0Q/join
+
+Copyrighted 2025
+
+Chapters:
+0:00 Intro
+Network Topologies and Types:  00:08
+OSI Model:  06:33
+Network Devices, Applications, & Functions:  11:34
+Proxy:  17:15
+CDN:  23:36
+Virtualization, Cloud, & Connectivity:  26:12
+VPC:  28:48
+Ports, Protocols, Services, & Traffic Types:  37:17
+Transmission Media & Transceivers:  47:18
+IPv4 Addressing & Subnet Mask:  1:03:04
+Subnet Mask 1:06:33
+Modern Network Environments:  1:23:14
+IPv6 Addressing:  1:33:37
+VLAN & Switch Technologies:  1:39:34
+Routing Technologies:  1:52:51
+Wireless Devices & Technologies:  1:59:54
+Factors of Physical Installations:  2:16:41
+Organizational Processes & Procedures:  2:23:54
+Network Monitoring Technologies:  2:33:40
+Disaster Recovery:  2:43:32
+DHCP:  2:49:00
+DNS, Records, & Protocols:  2:56:53
+VPN & Connection Methods:  3:09:22
+Spanning Tree Protocol:  3:18:03
+Network Security Concepts:  3:26:40
+Types of Attacks:  3:37:47
+Network Security & Defense:  3:45:34
+Common Performance Issues:  3:49:34
+Software / Hardware Tools & Commands:  3:56:15
+Troubleshooting Methodology:  4:10:37
+
+This video took 6 months to create. And it’s completely free to view.  If you appreciate this video and want to help support my channel, please use my Amazon affiliate link *https://www.amazon.com/?tag=powe0ae-20* every time you make a purchase on Amazon.  Save my link as a bookmark or favorite in your web browser.   I get a small percentage of every sale.  It costs you nothing.  It’s completely free.  Thank you!",2025-11-17T13:27:38Z,PT4H17M16S,192942,6231,415
+PhjHXeMNpp8,Computer Networking Tutorial - Bits and Bytes of the Networking [12 HOURS],"World of Computer Networking. Learn everything about Computer Networks: Ethernet, IP, TCP, UDP, NAT, DHCP, private and public IP addresses and subnetting.
+🔥Full-length ""World of Computer Networking"" course: https://stashchuk.com/world-of-computer-networking
+
+📚TIMESTAMPS FOR SECTIONS:
+
+00:00 About this course
+01:19 Introduction to the Computer Networking
+12:52 TCP/IP and OSI Models
+44:39 Bits and Bytes
+1:03:02 Ethernet
+1:32:44 Network Characteristics
+2:09:21 Switches and Data Link Layer
+3:20:06 Routers and Network Layer
+3:53:24 IP Addressing and IP Packets
+5:04:08 Networks
+5:15:30 Binary Math
+5:27:07 Network Masks and Subnetting
+6:23:44 ARP and ICMP
+7:03:38 Transport Layer - TCP and UDP
+8:58:21 Routing
+
+🔥 Full-length ""World of Computer Networking"" course https://stashchuk.com/world-of-computer-networking
+
+🔥 Wanna learn more? My personal website with all courses that I teach
+https://stashchuk.com/
+
+🔥 Discord community
+https://discord.gg/wGv3Vu6
+
+🔥 Udemy Profile
+https://www.udemy.com/user/bogdanstashchuk/
+
+SUBSCRIBE IN SOCIAL NETWORKS
+
+🙍 LinkedIn https://www.linkedin.com/in/bogdanstashchuk/
+📪 Twitter  https://twitter.com/BogdanStashchuk
+🎦 YouTube https://www.youtube.com/CodingTutorials?sub_confirmation=1
+
+Email 📧 in case you want to send me a notice
+bstashchuk@gmail.com",2021-01-21T03:07:45Z,PT11H36M19S,299442,7592,155
+M9Kex1ID7GY,Networking Fundamentals for DevOps Engineers | DevOps Networking,"Networking fundamentals for DevOps Engineers | Networking for DevOps
+Networking Knowledge for DevOps Engineers - In this Devops tutorial, we will learn different networking fundamentals or different networking basic concepts that you know as a DevOps Engineer. This video can also help you answer all the devops networking interview questions.
+
+Learning Resource Document: https://www.linkedin.com/posts/nasiullha-chaudhari_networking-concepts-for-devops-engineers-activity-7135646988636758016-wQzK?utm_source=share&utm_medium=member_desktop
+
+Connect with me on LinkedIn: https://www.linkedin.com/in/nasiullha-chaudhari/
+
+#networking #devops
+
+Having networking knowledge helps devops engineers in making systems, infrastructure or configurations to be secure, highly scalable and best performance. All these concepts are basics but cover everything that will help you create strong and secure cloud infrastructure.
+
+Timestamp
+Why Networking is Important for DevOps 0:00
+Networking concept - OSI Model 0:56
+Networking concept - Protocols (TCP vs UDP vs IP) 03:00
+DevOps networking basics - Ports 06:35
+Networking for Devops - IP Subnetting and CIDR range 07:49
+Devops networking knowledge - Routing 09:10
+Devops networking Knowledge - DNS and different DNS records 10:47
+Devops networking Knowledge - VPN 13:08
+Different networking tools for  Devops engineers 14:40
+DevOps Networking tool - Ping 14:54
+DevOps Networking tool - Traceroute 15:27
+DevOps Networking tool - Netstat 15:55
+DevOps Networking tool - Nmap 16:45
+DevOps Networking tool - other tools to know 16:59
+Conclusion 17:45
+
+This Networking for Devops video will help you master concepts that are really required to know.
+
+Cloud Champ is your favorite YouTube channel to learn Cloud and Devops technologies. We have tutorials and projects on tools like Linux, Git, Terraform, Kubernetes, Docker, AWS and more. Cloud Champ also has video on DevOps interview questions and how to start freelancing to help you shape your career. For more videos, please like and subscribe :)
+
+▬▬▬▬▬▬ Want to learn more? 🚀  ▬▬▬▬▬▬
+Linux For DevOps Engineers - https://youtu.be/lCq4mYQL0WY?si=lFd-lzgbdaOgP_3s
+Python for DevOps Engineer - https://youtu.be/guCFLTU-XRM?si=MSxj982P6wb2FPxk
+How I make money as a DevOps Freelancer https://youtu.be/_If1u-Qo7Vs
+DevSecOps project using Jenkins: https://youtu.be/g8X5AoqCJHc
+DevOps Interview Question and Answers: https://youtu.be/GX6fOvaS0Xs?si=r2Q1o8MNZEzodAjv
+Kubernetes Project to try with ArgoCD: https://youtu.be/pTmIoKUeU-A?si=J_XsrGfQ7BeYr73z
+Will AI replace DevOps engineer Roles: https://youtu.be/HU3g1x_ohIY
+Terraform project for Practice: https://youtu.be/wFWg0Y68Owo
+DevOps Engineer Salary: https://youtu.be/Dofv_KUik88
+How to become DevOps engineer from scratch: https://youtu.be/EAXdnPWUCcc
+Most used AWS services in DevOps: https://youtu.be/lXKTJAxYdnY
+How I use Python as a DevOps Engineer: https://youtu.be/guCFLTU-XRM
+Linux for DevOps: https://youtu.be/lCq4mYQL0WY
+
+Hope now you have a clear idea and have your networking knowledge strong after watching this video.
+
+Join this channel to get access to perks:
+https://www.youtube.com/channel/UCbg9O0JF3rVKev6wpI5_u5g/join",2023-11-29T13:12:18Z,PT18M10S,113759,3094,284
+bj-Yfakjllc,"Network Devices - Hosts, IP Addresses, Networks - Networking Fundamentals - Lesson 1a","Module 1 of the Networking Fundamentals course will illustrate the core of networking:  How data moves through the Internet. Crucial to that is understanding the various Network Devices which exist to accomplish that goal. In Lesson 1 we'll unpack the following devices and related concepts:  Hosts, IP Addresses, Networks, Repeaters, Hubs, Bridges, Switches, Routers.
+
+This is a two part lesson. In this video we'll explore Hosts, IP Addresses, and Networks. In the next lesson we'll explore Repeaters, Hubs, Bridges, Switches, and Routers.
+
+Want to learn Binary? Watch this Video:
+https://www.youtube.com/watch?v=RrJXLdv1i74
+
+
+=== Networking Fundamentals - Module 1 ===
+Lesson 1 - Network Devices
+  Part 1: https://youtu.be/bj-Yfakjllc
+  Part 2: https://youtu.be/H7-NR3Q3BeI
+
+Lesson 2 - OSI Model
+  Part 1: https://youtu.be/LkolbURrtTs
+  Part 2: https://youtu.be/0aGqGKrRE0g
+
+Lesson 3 - Everything Hosts to do speak on the Internet
+  Part 1: https://youtu.be/gYN2qN11-wE
+  Part 2: https://youtu.be/JI9Zm2tbUoE
+
+Lesson 4 - Everything Switches do to facilitate communication
+  Part 1: https://youtu.be/AhOU2eOpmX0
+  Part 2: https://youtu.be/G7GyWjJtjNs
+
+Lesson 5 - Everything Routers do to facilitate communication
+  Part 1: https://youtu.be/AzXys5kxpAM
+  Part 2: https://youtu.be/Ep-x_6kggKA
+  Part 3: https://youtu.be/zmxLg4jV0ts
+
+Lesson 6 - Networking Protocols
+  - https://youtu.be/E5bSumTAHZE
+  - ARP, FTP, SMTP, HTTP, SSL, TLS, HTTPS, DNS, DHCP
+  - Four items MUST be configured for Internet Connectivity
+
+Lesson 7 - How Data moves through the Internet
+  - https://youtu.be/YJGGYKAV4pA
+  - Interview question:  What happens when you type ""site.com"" into a web browser?
+
+---
+
+If you enjoyed this content, then please tell one other person about this series.  At the end of the day, sharing this content is the best way you can thank me and return the favor for this free content.  You can get free Internet Points (Karma, Likes, etc) by simply sharing this content across social media communities.  =)  Thank you.
+
+---
+
+🖧 Full Networking Fundamentals series (Module 1 - all FREE):
+https://www.youtube.com/playlist?list=PLIFyRwBY_4bRLmKfP1KnZA6rZbRHtxmXi
+
+📇 Details about the Full Networking Fundamentals Course:
+https://www.practicalnetworking.net/index/networking-fundamentals-how-data-moves-through-the-internet/
+
+📜 Studying for your CCNA?
+https://www.practicalnetworking.net/index/ccna/
+
+🧮 Want to learn Subnetting?
+https://SubnetIPv4.com
+
+🔐 Want to learn about SSL, TLS, and Cryptography?
+https://www.youtube.com/playlist?list=PLIFyRwBY_4bTwRX__Zn4-letrtpSj1mzY
+
+📖 Other Courses: https://classes.pracnet.net/
+
+💬 Discord: https://discord.com/invite/yrexngJ
+
+#networking #ccna #network #osi #switch #router #networkingbasics #subnet #gateway",2020-12-11T21:29:35Z,PT11M32S,1489607,33387,681
+cNwEVYkx2Kk,Introduction to Networking | Network Fundamentals Part 1,"Watch the latest version of this video here - https://youtu.be/9SIjoeE93lo 
+Network Fundamentals Part 1: Introduction to Networking
+
+Interested in learning about networking? Let Network Direction help you get started.
+
+This video is for people that are first starting out in networking. All you need to bring is interest and enthusiasm.
+
+My goal of the network Fundamental Series is to help anyone wanting to get into the IT field learn more about Networking. 
+
+We will introduce you to the terminology used in the field and help you understand what it means. For instance, have you heard of protocols? We’re going to see what these are, and use the #Ethernet protocol as an example.
+
+In Part 1 we'll also look at what a network actually is, and continue by seeing how devices are connected. Have you ever connected a device over Wi-Fi or plugged in Network Cables to a computer? Delve behind the scenes and find out how this works.
+
+
+For further study, I reccommend (affiliate):
+CCENT/CCNA ICND1 100-105 Official Cert Guide
+https://click.linksynergy.com/link?id=RL4E*8CmbSY&offerid=145238.2445867&type=2&murl=http://www.ciscopress.com/title/9781587205804
+
+
+Stay tuned for part 2 where we'll go deeper into cabling, and learn the basics of addressing.
+
+Each section includes a quiz to get you thinking. The answers to the quizzes in this video are found at:
+https://networkdirection.net/labsandquizzes/quizzes/introduction-to-networking-quiz/
+
+Thank you for watching Network Fundamentals Part 1: Introduction to Networking
+
+
+Attribution
+Thanks to hooksounds.com for the music!
+
+Disclaimer
+This video contains affiliate links. I receive a small commission at no cost to you when you purchase using my link",2018-04-19T20:00:03Z,PT11M54S,2365742,65794,1389
+PhTn8RkF0F4,Networking Concepts are Easy | Networking Explained in a simple way,"Join our 24*7 Doubts clearing group (Discord Server)
+www.youtube.com/abhishekveeramalla/join
+
+Udemy Course (End to End DevOps Project)
+https://www.udemy.com/course/ultimate-devops-project-with-resume-preparation/?referralCode=9F588E43854814744430
+
+--- --- Support my work
+https://www.buymeacoffee.com/abhishekprd
+
+Hi Everyone, My Name is Abhishek and my channel is focused on delivering Free content on DevOps and Cloud. Follow my channel for practical learning of DevOps and Cloud. Don't miss the FREE DEVOPS, AWS and TERRAFORM PLAYLISTS.
+
+In this video, We will learn about the fundamentals of networking such as IP address, Subnet, CIDR, Ports and e.t.c.,. In this networking basics are explained in a very simple way.
+
+Python For DevOps Series
+https://www.youtube.com/playlist?list=PLdpzxOOAlwvKwTyYNJCUwGPvql0TrsPgv
+
+Doubts Clearing Group
+https://www.youtube.com/@AbhishekVeeramalla/join
+
+Instagram: https://www.instagram.com/abhishekveeramalla_official/
+
+GitHub Repo for this Course
+https://github.com/iam-veeramalla/python-for-devops
+
+Public Telegram Channel For Notes and Updates
+https://t.me/abhishekveeramalla
+
+About me:
+========
+LinkedIn: https://www.linkedin.com/in/abhishek-veeramalla-77b33996/
+GitHub: https://github.com/iam-veeramalla
+Medium: https://abhishekveeramalla-av.medium.com/
+
+#networkingfundamentals 
+#ipaddress 
+#cidr
+#subnet
+#basicsofnetworking
+#ports Disclaimer: Unauthorized copying, reproduction, or distribution of this video content, in whole or in part, is strictly prohibited. Any attempt to upload, share, or use this content for commercial or non-commercial purposes without explicit permission from the owner will be subject to legal action. All rights reserved. .
+.
+Disclaimer: Unauthorized copying, reproduction, or distribution of this video content, in whole or in part, is strictly prohibited. Any attempt to upload, share, or use this content for commercial or non-commercial purposes without explicit permission from the owner will be subject to legal action. All rights reserved.",2023-12-12T17:01:27Z,PT42M4S,310715,5342,550
+xj_GjnD4uyI,Every Networking Concept Explained In 20 Minutes,"► Grab your Networking Essentials Playbook: https://bit.ly/4oNN9Q4
+► Become a DevOps Professional in 6-months: https://bit.ly/3KT4h98
+A short, but comprehensive tutorial to learn the Networking Basics.
+
+This video covers the core networking fundamentals every engineer needs to know - from basic IP addresses to advanced Kubernetes networking. We'll follow a simple approach: watch how one application grows from a single server to a complex cloud system, and learn each networking concept exactly when it becomes necessary.
+
+
+▬▬▬▬▬▬ 𝗧𝗵𝗮𝗻𝗸𝘀 𝗣𝘂𝗹𝘂𝗺𝗶 𝗳𝗼𝗿 𝗺𝗮𝗸𝗶𝗻𝗴 𝘁𝗵𝗶𝘀 𝘃𝗶𝗱𝗲𝗼 𝗽𝗼𝘀𝘀𝗶𝗯𝗹𝗲!  🙌 ▬▬▬▬▬▬ 
+👉 Create a Pulumi Open Source account: https://app.pulumi.com/signup?utm_source=nana
+🎁 Use code NANA500 to claim $500 credits and explore all premium features of Pulumi Cloud!
+
+
+▬▬▬▬▬▬ What You'll Learn ▬▬▬▬▬▬ 
+✅ IP Addresses and DNS - How devices find each other on networks
+✅ Ports - Route traffic to the right application
+✅ Subnets and Network Segmentation - Organize and secure your infrastructure
+✅ Routing - Connect different network segments
+✅ Firewalls and Security Groups - Control network access
+✅ NAT (Network Address Translation) - Share public IPs efficiently
+✅ VPC and Cloud Networking - Build secure cloud infrastructure
+✅ Docker Networking - Container networking, bridge networks, port mapping
+✅ Kubernetes Networking - Pods, Services, Ingress
+
+
+▬▬▬▬▬▬ 𝗧𝗜𝗠𝗘𝗦𝗧𝗔𝗠𝗣𝗦  ▬▬▬▬▬▬
+00:00 Intro & Overview
+00:46 Single Server (IP, DNS)
+02:29 Multiple Apps (Ports)
+04:08 Security and Segmentation (Subnets, Routing, Firewall)
+07:30 NAT
+10:11 Cloud Networking (VPC, Subnets, Gateways)
+14:10 Container Networking
+17:30 Kubernetes Networking
+21:20 Recap
+
+
+▬▬▬▬▬▬ 𝗖𝗼𝗻𝗻𝗲𝗰𝘁 𝘄𝗶𝘁𝗵 𝗺𝗲 👋   ▬▬▬▬▬▬ 
+INSTAGRAM             ►  https://bit.ly/2F3LXYJ
+TWITTER                   ►  https://bit.ly/3i54PUB
+LINKEDIN                  ►  https://bit.ly/3hWOLVT
+
+Networking Basics | Networking Fundamentals | Networking for DevOps | Networking Tutorial for Beginners | Networking 101",2025-12-10T14:57:09Z,PT23M21S,414565,17301,409
+eF8C1uyeknA,Network Protocols #coding #artificialintelligence#network #protocol#programming#working#introduction,"network protocols,protocols,protocols in computer network,network protocol,types of network protocol,protocols in networking,network protocols for network+,network protocols in computer networks,common network protocols,5g core network protocols,types of network protocols,network protocols for ccna,network protocols class 12,network protocols in hindi,what are network protocols,network layer protocols,network protocols and ports,network ports and protocols",2024-08-10T16:38:34Z,PT12S,314394,0,18
+vKDdPPa2EZI,Basic Networking Explained in 60 Seconds | CCNA Must-Know Concepts,"Learn Basic Networking Concepts in just 1 minute!
+In this video, we break down the core fundamentals every IT professional, network engineer, and CCNA aspirant must know:
+
+🔹 What is a Network?
+🔹 Switches & Routers
+🔹 VLAN (Virtual LAN)
+🔹 Trunking & EtherChannel
+🔹 STP (Spanning Tree Protocol)
+🔹 ACL (Access Control List)
+
+Whether you’re preparing for CCNA / CCNP, starting your career in Networking or Cybersecurity, or just curious about how the internet works — this quick guide will set your foundation right.
+
+💡 Don’t forget to like, share & subscribe for more networking tutorials, CCNA labs, and IT career tips!
+👉 Which networking concept do you struggle with most — VLANs, STP, or ACLs? Comment below
+
+#NetworkingBasics #CCNA #CCNP #NetworkEngineer #CyberSecurity #TechForBeginners #ITInfrastructure #ComputerNetworking #LearnNetworking #NetworkingProtocols #DataCommunication",2025-09-04T13:31:01Z,PT12S,121490,1207,4
+keeqnciDVOo,Computer Networking in 100 Seconds,"Learn the fundamentals of the OSI model for computer networking in 100 seconds. https://fireship.io
+
+#compsci #100SecondsOfCode
+
+OSI Model https://en.wikipedia.org/wiki/OSI_model
+
+Upgrade to Fireship PRO at https://fireship.io/pro
+Use code lORhwXd2 for 25% off your first payment.",2020-08-26T19:00:34Z,PT2M18S,376420,18357,260
+YLg904XPL74,Rack Setup is Ready! Live CCNP + CCIE batch launching with fully loaded Cisco Devices,,2025-05-05T04:30:19Z,PT21S,1213853,18534,257
+aiE4SqzHUNo,From CCNA to CCIE: The Ultimate Cisco Certification Roadmap (2025 Guide),"Dreaming of becoming a Cisco Expert? Here’s your step-by-step roadmap from CCNA → CCNP → CCIE in 2025
+
+In this short guide, we’ll cover:
+The Cisco certification hierarchy explained
+Skills needed at every stage
+How to build a job-ready networking career with Cisco
+
+Perfect for students, IT professionals, and networking aspirants aiming for top-level Cisco certifications.
+
+Subscribe to GuiNet Technologies for networking, cybersecurity, and cloud training insights.
+
+#CCNA #CCNP #CCIE #CiscoCertification #NetworkingCareer #TechEducation #GuiNetTechnologies",2025-07-26T13:30:02Z,PT12S,100008,1085,11
+qiQR5rTSshw,Computer Networking Course - Network Engineering [CompTIA Network+ Exam Prep],"This full college-level computer networking course will prepare you to configure, manage, and troubleshoot computer networks. It will also help you prepare for CompTIA's Network+ exam.
+
+This course was developed by Brian Ferrill, an instructor at Edmonds Community College.
+
+❤️ Support for this channel comes from our friends at Scrimba – the coding platform that's reinvented interactive learning: https://scrimba.com/freecodecamp
+
+⭐️ Course Contents ⭐️
+⌨️ (0:00:00) Intro to Network Devices (part 1)
+⌨️ (0:07:24) Intro to Network Devices (part 2)
+⌨️ (0:15:12) Networking Services and Applications (part 1)
+⌨️ (0:22:49) Networking Services and Applications (part 2)
+⌨️ (0:28:17) DHCP in the Network
+⌨️ (0:38:03) Introduction to the DNS Service
+⌨️ (0:46:01) Introducing Network Address Translation
+⌨️ (0:52:52) WAN Technologies (part 1)
+⌨️ (1:03:02) WAN Technologies (part 2)
+⌨️ (1:09:32) WAN Technologies (part 3)
+⌨️ (1:17:20) WAN Technologies (part 4)
+⌨️ (1:22:32) Network Cabling (part 1)
+⌨️ (1:31:24) Network Cabling (part 2)
+⌨️ (1:38:15) Network Cabling (part 3)
+⌨️ (1:43:28) Network Topologies
+⌨️ (1:50:29) Network Infrastructure Implementations
+⌨️ (1:56:26) Introduction to IPv4 (part 1)
+⌨️ (2:02:42) Introduction to IPv4 (part 2)
+⌨️ (2:15:58) Introduction to IPv6
+⌨️ (2:26:10) Special IP Networking Concepts
+⌨️ (2:34:06) Introduction to Routing Concepts (part 1)
+⌨️ (2:40:00) Introduction to Routing Concepts (part 2)
+⌨️ (2:49:29) Introduction to Routing Protocols
+⌨️ (2:59:01) Basic Elements of Unified Communications
+⌨️ (3:04:27) Virtualization Technologies
+⌨️ (3:09:24) Storage Area Networks
+⌨️ (3:15:33) Basic Cloud Concepts
+⌨️ (3:21:43) Implementing a Basic Network
+⌨️ (3:31:02) Analyzing Monitoring Reports
+⌨️ (3:40:03) Network Monitoring (part 1)
+⌨️ (3:48:14) Network Monitoring (part 2)
+⌨️ (3:55:10) Supporting Configuration Management (part 1)
+⌨️ (4:01:52) Supporting Configuration Management (part 2)
+⌨️ (4:07:19) The Importance of Network Segmentation
+⌨️ (4:14:18) Applying Patches and Updates
+⌨️ (4:19:52) Configuring Switches (part 1)
+⌨️ (4:26:39) Configuring Switches (part 2)
+⌨️ (4:36:27) Wireless LAN Infrastructure (part 1)
+⌨️ (4:46:42) Wireless LAN Infrastructure (part 2)
+⌨️ (4:53:17) Risk and Security Related Concepts
+⌨️ (5:00:46) Common Network Vulnerabilities
+⌨️ (5:09:49) Common Network Threats (part 1)
+⌨️ (5:17:13) Common Network Threats (part 2)
+⌨️ (5:26:33) Network Hardening Techniques (part 1)
+⌨️ (5:36:00) Network Hardening Techniques (part 2)
+⌨️ (5:44:40) Network Hardening Techniques (part 3)
+⌨️ (5:50:58) Physical Network Security Control
+⌨️ (5:57:19) Firewall Basics
+⌨️ (6:06:53) Network Access Control
+⌨️ (6:13:22) Basic Forensic Concepts
+⌨️ (6:22:42) Network Troubleshooting Methodology
+⌨️ (6:29:18) Troubleshooting Connectivity with Utilities
+⌨️ (6:36:32) Troubleshooting Connectivity with Hardware
+⌨️ (6:43:39) Troubleshooting Wireless Networks (part 1)
+⌨️ (6:50:56) Troubleshooting Wireless Networks (part 2)
+⌨️ (6:57:27) Troubleshooting Copper Wire Networks (part 1)
+⌨️ (7:03:49) Troubleshooting Copper Wire Networks (part 2)
+⌨️ (7:09:19) Troubleshooting Fiber Cable Networks
+⌨️ (7:14:43) Network Troubleshooting Common Network Issues
+⌨️ (7:24:40) Common Network Security Issues
+⌨️ (7:35:12) Common WAN Components and Issues
+⌨️ (7:43:33) The OSI Networking Reference Model
+⌨️ (7:51:50) The Transport Layer Plus ICMP
+⌨️ (7:58:35) Basic Network Concepts (part 1)
+⌨️ (8:05:33) Basic Network Concepts (part 2)
+⌨️ (8:12:29) Basic Network Concepts (part 3)
+⌨️ (8:17:42) Introduction to Wireless Network Standards
+⌨️ (8:24:26) Introduction to Wired Network Standards
+⌨️ (8:32:41) Security Policies and other Documents
+⌨️ (8:40:08) Introduction to Safety Practices (part 1)
+⌨️ (8:48:34) Introduction to Safety Practices (part 2)
+⌨️ (8:54:26) Rack and Power Management
+⌨️ (9:00:25) Cable Management
+⌨️ (9:05:56) Basics of Change Management
+⌨️ (9:12:11) Common Networking Protocols (part 1)
+⌨️ (9:18:06) Common Networking Protocols (part 2)",2020-09-17T14:08:59Z,PT9H24M49S,4831491,105716,1567
+K9aCSNVzEmQ,what is ip address classes\ip address \imp question for job interview #shorts #viral #youtubeshorts,"in this short you will see what is ip address classes. what is ip address? how many classes of ip address. @er_naaz_official 
+
+
+#shorts 
+#viral 
+#youtubeshorts 
+#shortvideo 
+
+
+Your Queries:
+what is ip address classes
+what is ip address
+ip address
+ip address classes
+classes of ip address",2023-05-08T06:44:15Z,PT7S,692357,5504,41
+xzGeiguILy8,"What is Networking, Types of Networking, IP Address, Ports - Complete Concept | Ethical Hacking 2023","In this video, We are explaining What is Networking, Types of Networking, IP Addresses, Ports - Complete Concept | Ethical Hacking 2023. Please do watch the complete video for in-depth information.
+
+Timestamp:
+0:00 | Networking Introduction
+0:38 | What is Computer Networking?
+2:18 | How it Work?
+8:22 | Types of Networks in Networking
+10:21 | What is IP Address?
+12:48 | IPv4 vs IPv6
+14:40 | Types of IP Address
+17:36 | Role of Port in Networking 
+
+JOIN: https://www.youtube.com/channel/UC0T6MVd3wQDB5ICAe45OxaQ/join
+
+Link to our ""English Youtube Channel"":  https://bit.ly/2M3oYOs
+
+WsCubeTech – Digital Marketing Agency & Institute.
+
+✔ We can help you to create a Digital Marketing plan to take your business to new heights. 
+✔ Offering Job Oriented Most Latest, Updated, and advanced Digital Marketing Courses with Practical, Hands-on Live Projects Training & Exposure.
+For More information : Call us at : +91- 92696-98122
+
+Or visit https://www.wscubetech.com/
+
+There is a complete playlist of Digital Marketing Interview Tips & Tricks available - 
+https://www.youtube.com/playlist?list=PLjVLYmrlmjGdqW94JhlxY7mFJDcuFu5
+
+There is a complete playlist of Facebook Ads available - 
+Link: https://www.youtube.com/playlist?list=PLjVLYmrlmjGfy_q8_BLTxHfFAzEId3fVn
+
+There is a complete playlist of Twitter Ads available.
+Link: https://www.youtube.com/playlist?list=PLjVLYmrlmjGdSl7Z4me044-x_KfgyRpkU
+
+Disclaimer: 
+This video is made available for educational and informational purposes only. We believe that everyone must be aware of ethical hacking and cybersecurity to avoid different types of cyberattacks on computers, websites, apps, etc. Please regard the word hacking as ethical hacking every time we use it. 
+All our videos have been made using our own systems, servers, routers, and websites. It does not contain any illegal activities. Our sole purpose is to raise awareness related to cybersecurity and help our viewers learn ways to defend themselves from any hacking activities. WsCube Tech is not responsible for any misuse of the provided information.  
+
+✅ CONNECT WITH THE FOUNDER (Mr. Kushagra Bhatia) - 
+
+👉 Instagram - https://www.instagram.com/kushagrabhatiaofficial
+👉 LinkedIn - https://www.linkedin.com/in/kushagra-bhatia
+
+Please don’t forget to Like, Share & Subscribe 
+
+►Subscribe: http://bit.ly/wscubechannel
+► Facebook: https://www.facebook.com/wsubetech.india 
+► Twitter: https://twitter.com/wscube 
+► Instagram: https://www.instagram.com/wscubetechindia/ 
+► LinkedIn : https://www.linkedin.com/company/wscube-tech/ 
+► Youtube: https://www.youtube.com/c/wscubetechjodhpur 
+► Website: http://wscubetech.com 
+
+--------------------------------------| Thanks |---------------------------
+ #EthicalHacking #Networking #Ethicalhacking2021",2021-06-13T15:00:33Z,PT23M17S,451217,10557,286
+DxBYGL6iRjg,SOC Analyst Roadmap - Key Topics #cybersecurity #networking #shorts,"SOC Analyst Roadmap - Key Topics #cybersecurity #networking #shorts
+
+Thinking of becoming a SOC Analyst?
+
+Here's your 15-step roadmap:
+
+Networking & Security Basics
+
+Cyber Threats & SOC Tools
+
+Log Analysis & Incident Response
+
+Threat Intel & Vulnerability Mgmt
+
+Malware Analysis & Forensics
+
+Policies, Threat Hunting & Soft Skills
+
+Master these, and you're on your way to defending against modern cyber threats.
+
+Which skill do you think is most critical for SOC success?
+
+soc analyst roadmap, soc analyst roadmap 2024, best soc analyst roadmap, soc analyst roadmap 2025, soc analyst beginner roadmap, roadmap to become soc analyst expert, soc analyst basics, soc analyst, cybersecurity analyst roadmap, soc analyst شرح, soc analyst training, soc analyst projects, soc analysts, soc analyst 2025, soc roadmap, how to be an soc analyst, soc analyst skills, soc analyst course, what is soc analyst, soc analyst career, soc analyst level 1, how to become soc analyst, soc analyst courses",2025-08-30T02:29:00Z,PT7S,24996,0,0
+XSN9xW4pRac,Network Basics - What is a network? // FREE CCNA 200-301 course,"Learn how networks work. What is a network? How big does it have to be? What are the various types of networks that your get?
+
+The time has arrived for me to publish a free updated CCNA course on YouTube. This is a brand new CCNA course where I focus on using real hardware and practical demonstrations.
+
+Expect regular updates - the full course will be uploaded on my new CCNA playlist: https://www.youtube.com/playlist?list=PLw6kwOJVj3MbMZ8B72ZgUryj8OSETC0ds
+
+// David's SOCIAL //
+Discord: https://discord.com/invite/usKSyzb
+Twitter: https://www.twitter.com/davidbombal 
+Instagram: https://www.instagram.com/davidbombal 
+LinkedIn: https://www.linkedin.com/in/davidbombal 
+Facebook: https://www.facebook.com/davidbombal.co 
+TikTok: http://tiktok.com/@davidbombal
+YouTube: https://www.youtube.com/davidbombal 
+
+// MY STUFF //
+https://www.amazon.com/shop/davidbombal
+
+// SPONSORS //
+Interested in sponsoring my videos? Reach out to my team here: sponsors@davidbombal.com
+
+// MENU //
+0:00 - Overview
+00:22 - Introduction
+00:44 - Understanding Networks
+03:20 - The Client-Server Model
+04:16 - Server Example
+05:33 - IP Addressing & DHCP Explained
+06:32 - DNS & MAC Addresses
+07:35 - HTTP vs HTTPS
+08:55 - Client Example in Action
+09:17 - Life Before Networks
+10:36 - The Simplest Network Setup
+11:42 - Example of a Simple Network
+12:34 - Communication Protocols Breakdown
+14:08 - More on Networks
+14:40 - What is a NIC? Examples of NICs
+16:41 - MAC Addresses and Device Identity
+18:04 - Conclusion & Outro
+
+ccna
+ccna v1.1
+ccna 200-301
+200-301
+free ccna
+free ccna course
+free ccna training
+new ccna
+cisco ccna
+ccna course
+ccna certification
+ccna training
+packet tracer
+ccna full course
+new ccna
+ccna exam
+ccna study
+ccna 200-301 full course
+cisco training
+ccna 200-301 course
+ccna 2020
+network engineer
+free lab
+ccna course for beginners
+ccna security
+free cisco
+ccna fundamentals
+ccna full course 2022
+ccna tutorial
+ccna networking
+hub
+switch
+router
+bus topology
+star topology
+
+#ccna #cisco #200301",2024-09-20T14:00:27Z,PT18M44S,188118,6111,220
+z_CU-IeOEzU,Networking For Beginners (2026)- IP Mac Subnet Switch Router DHCP DNS Gateway Firewall NAT DMZ,"🔓 Want to unlock your Cloud Career as a complete beginner? 
+🚀Go Here - https://tinyurl.com/aws-cloud-jumpstart-program
+
+
+In this video, we will understand the networking basics. We will understand what is a 
+- LAN
+- IP Address
+- MAC Address
+- Subnet
+- Switch
+- Router
+- DHCP
+ -DNS
+- WAN
+- Router Gateway
+- Firewall
+- NAT
+- DMZ 
+
+We will understand computer networking fundamentals using a ""School"" analogy. This video will give you an easy understanding of these concepts which we use on a daily basis.
+
+#networkingbasics #lan #wan #subnet #switch #router #subnet #gateway #firewall #NAT #DMZ
+
+👬Join IT k Funde membership to access exclusive guidance & content 🥰 
+https://bit.ly/46T85gX
+
+📣 Subscribe to my free my weekly tech newsletter https://anshultiwari.substack.com
+
+Lets Connect !!!
+My Socials👋👉  https://linktr.ee/itkfunde",2025-03-18T13:35:03Z,PT24M16S,446032,13895,360
+RY32wSQDekE,Computer Networking Full Course - Internet Explained Step by Step (Real-Life Examples),"In this video, we will break down how the Internet actually works, explained in the simplest way possible, using real-life examples that make everything super easy to understand.
+
+Whether you're a complete beginner or someone who always felt confused about networking, this video will clear all your doubts, step by step!
+
+✅ Understand how data travels over the Internet
+✅ Learn about the OSI Model in depth
+✅ Learn about Client-Server architecture
+✅ Learn about different types of protocols
+✅ Real-world examples to make concepts crystal clear
+
+🎯 Who should watch this video?
+→ Students preparing for college exams
+→ Aspiring developers
+→ Anyone curious about how the Internet truly works
+
+Instructor in this video: Sarthak Sharma
+
+Notes - https://drive.google.com/file/d/15GoeBdpz5vW_OgZk_T31ouzz6K4N8Z-t/view?usp=sharing
+
+Don't forget to LIKE 👍 this video, SUBSCRIBE 🔔 for more DSA tutorials, and COMMENT below if you have any questions or suggestions! 🚀
+
+Visit Our Website - https://sheryians.com/
+
+Socials:
+📷 Instagram:  https://www.instagram.com/sheryians_coding_school/
+📘 Facebook: https://www.facebook.com/sheryians.community
+💌 Telegram: https://t.me/sheryiansCommunity
+💼 LinkedIn:  https://in.linkedin.com/company/the-sheryians-coding-school
+🎮 Discord: https://discord.gg/Au3TquBarQ
+Peace out ✌
+
+#sheryianscodingschool #sheryians #code #coding #jobs #reactjs  #mernstack #mern #web #reactjscourse #tutorial  #creativewebdevelopment #webdevelopment #functionalwebdevelopment #thebasics #mernstack #jslogic #javascriptlogics #computer #computernetworking #computernetwork 
+
+00:00 - 01:28  Introduction
+01:28 - 05:23  Syllabus Overview
+05:24 - 10:32 — How the Internet Works
+10:32 - 22:42 — History of the Internet
+22:42 - 41:32 — How Data is Transferred Over the Internet
+41:32 - 56:51 — IP Address and Port Number Explained
+56:51 - 01:07:37 — Types of Networks (6 Types)
+01:07:37 - 01:24:58 — Network Topology Explained
+01:24:58 - 02:04:05 — OSI Model and Its Layers
+02:04:05 - 02:16:19 — Client-Server Architecture
+02:16:19 - 02:36:59 — Internet Protocols Explained
+02:36:59 - 02:37:25 — Outro",2025-04-14T14:00:36Z,PT2H37M30S,253783,9878,899
+vGjH9leVXaM,Computer Networking Full Course in One Video |Full Course For Beginner To Expert In Hindi 100% Labs,"Computer Networking Full Course in One Video |Full Course For Beginner To Expert In Hindi /100% Labs
+
+About Video: Dear all learner in this video you will learn complete course about computer networking with 100 % Labs. If you are a beginner or working professionals watch this entire video i am sure you will enhance your skill with practical knowledge. i am sharing here my 10+ years of experience in this video.
+
+
+✅↪INSTANT DISCOUNT | HURRY UP!!
+WhatsApp for Admission: https://wa.me/+919453333643
+
+✅Visit Our Website
+----------------------------------------------------
+🌐Website:  https://sikholive.com
+
+✅Follow Me On: 
+==============
+🌐𝗜𝗻𝘀𝘁𝗮𝗴𝗿𝗮𝗺: https://www.instagram.com/infotechshesh
+🌐Linkedin: https://www.linkedin.com/in/sikholive
+🌐𝗧𝘄𝗶𝘁𝘁𝗲𝗿: https://twitter.com/infotechshesh
+
+
+✅TOP Networking/CCNA Videos:
+1-DNS DHCP :https://www.youtube.com/watch?v=uL123RR4HVM
+2-CCNA Crash Course : https://www.youtube.com/watch?v=-LzBz5aRoMk
+3-Computer Networking Crash Course: https://www.youtube.com/watch?v=vGjH9leVXaM
+4-CCNA/ CCNP 12 Hours On demand training : https://www.youtube.com/watch?v=MGP4Wfd-_Lc
+
+
+✅TOP Server Videos :
+1-Storage 1 https://www.youtube.com/watch?v=pAqhzbyyCJ8
+2-Storage 2 https://www.youtube.com/watch?v=8rAODuRbuU0
+3-Storage 3 https://www.youtube.com/watch?v=KD-eI_nQW_w
+4-Mcsa 12 Hours Guide: https://www.youtube.com/watch?v=zFnOlNtUG0w
+
+Topic Related Faq:
+computer networking basics
+networking advance tutorial
+fundamental of computer network
+what is networking in hindi
+what is network in hindi
+networking tutorial for beginners
+computer networking tutorial
+what is computer network in hindi
+cisco networking tutorials
+networking tutorials in hindi
+networking course in hindi
+ccna course in hindi
+computer networking fundamental
+computer networking course for beginner
+computer networking full course
+networking layers
+
+
+#ComputerNetworking #networking #NetworkAdmin #NetworkEngineer #networkingTutorial",2020-12-22T04:25:30Z,PT4H27M59S,1122974,30173,1012
+jzEonXXa-rA,Everything you need to know about networking fundamentals from @TheBeardedITDad.,"#courserapartner #cybersecurity #becybersmart #learnwithoutlimits #networking 
+
+---
+
+Coursera partners with more than 275 leading universities and companies to bring flexible, affordable, job-relevant online learning to individuals and organizations worldwide. We offer a range of learning opportunities—from hands-on projects and courses to job-ready certificates and degree programs.
+
+Remember to like, subscribe, and share this video with friends and colleagues looking to create new career possibilities.
+
+Visit Coursera at: https://bit.ly/46X30CH 
+Unlock unlimited learning with a Coursera Plus subscription: https://bit.ly/48gBUHW
+
+Check out more from Coursera:  @Coursera   
+
+Connect with us:
+facebook.com/coursera  
+twitter.com/coursera
+instagram.com/coursera
+tiktok.com/@coursera 
+
+#CourseraPlus #Coursera #LearnWithoutLimits #OnlineLearning",2024-04-10T19:45:00Z,PT55S,25059,892,3
+GyRFLkOwmxQ,Network types / computer science / networks #network #computerscience,,2022-09-25T16:55:51Z,PT5S,991616,12300,47
+IOU2OXLWa8w,🔗👨‍💻The Network Engineer Roadmap!🥇 | #thillaithetechie,"✅ Foundational Knowledge: Start by building a solid foundation in networking fundamentals, including TCP/IP, OSI model, routing, and switching concepts.
+
+✅ Certification Path: Pursue industry-recognized certifications such as Cisco CCNA, CompTIA Network+, or Juniper JNCIA to validate your skills and knowledge.
+
+✅ Hands-On Experience: Gain practical experience through lab exercises, projects, internships, or entry-level positions to reinforce theoretical concepts and develop troubleshooting skills.
+
+✅ Specialization: Explore specialized areas within networking, such as security, cloud networking, wireless technologies, or network automation, based on your interests and career goals.
+
+✅ Advanced Certifications: Pursue advanced certifications like Cisco CCNP, CompTIA Security+, or AWS Certified Advanced Networking to deepen your expertise and open up new career opportunities.
+
+#professionaldevelopment  #networking #tamilshorts",2024-06-01T13:30:07Z,PT1M,90837,5628,44
+AAbsoPGM1Ic,Understanding Firewall Architecture and Types #networkengineer #networksecurity #firewall,"Firewalls are the backbone of Network Security, ensuring Data protection and smooth operations. Here's an insightful breakdown of Firewall Architecture and the Types of Firewalls:
+
+💡 Architecture Highlights:
+- Core Switches, Internal/External Firewalls, and DMZ for secure data flow.
+- Intrusion Detection Systems (IDS) and Web Servers for layered defense.
+
+🔥 Types of Firewalls:
+1️⃣ Packet Filtering Firewalls - Operate at the transport and network layers to monitor and control traffic.
+2️⃣ Application Gateways/Proxies - Work at the application protocol level, ensuring advanced security.
+
+A must-know for every Network Engineer aiming to design robust Security solutions!",2025-01-03T05:12:24Z,PT11S,113489,814,1
+E5bSumTAHZE,"Network Protocols - ARP, FTP, SMTP, HTTP, SSL, TLS, HTTPS, DNS, DHCP - Networking Fundamentals - L6","In this video we provide a formal definition for Network ""Protocols"". We then briefly describe the functionality of the 8 most common networking protocols on the Internet:  DNS, DHCP, HTTP, SSL, TLS, HTTPS, FTP, and SMTP.  We follow that with a discussion on the four items which MUST be configured to achieve any sort of Internet connectivity.
+
+This is Lesson 6 of Module 1 of a Networking Fundamentals course. The first module will be released for free on Youtube and will teach anyone the very core of networking:  How data moves through the Internet.
+
+
+=== Networking Fundamentals - Module 1 ===
+Lesson 1 - Network Devices
+  Part 1: https://youtu.be/bj-Yfakjllc
+  Part 2: https://youtu.be/H7-NR3Q3BeI
+
+Lesson 2 - OSI Model
+  Part 1: https://youtu.be/LkolbURrtTs
+  Part 2: https://youtu.be/0aGqGKrRE0g
+
+Lesson 3 - Everything Hosts to do speak on the Internet
+  Part 1: https://youtu.be/gYN2qN11-wE
+  Part 2: https://youtu.be/JI9Zm2tbUoE
+
+Lesson 4 - Everything Switches do to facilitate communication
+  Part 1: https://youtu.be/AhOU2eOpmX0
+  Part 2: https://youtu.be/G7GyWjJtjNs
+
+Lesson 5 - Everything Routers do to facilitate communication
+  Part 1: https://youtu.be/AzXys5kxpAM
+  Part 2: https://youtu.be/Ep-x_6kggKA
+  Part 3: https://youtu.be/zmxLg4jV0ts
+
+Lesson 6 - Networking Protocols
+  - https://youtu.be/E5bSumTAHZE
+  - ARP, FTP, SMTP, HTTP, SSL, TLS, HTTPS, DNS, DHCP
+  - Four items MUST be configured for Internet Connectivity
+
+Lesson 7 - How Data moves through the Internet
+  - https://youtu.be/YJGGYKAV4pA
+  - Interview question:  What happens when you type ""site.com"" into a web browser?
+
+---
+
+If you enjoyed this content, then please tell one other person about this series.  At the end of the day, sharing this content is the best way you can thank me and return the favor for this free content.  You can get free Internet Points (Karma, Likes, etc) by simply sharing this content across social media communities.  =)  Thank you.
+
+---
+
+🖧 Full Networking Fundamentals series (Module 1 - all FREE):
+https://www.youtube.com/playlist?list=PLIFyRwBY_4bRLmKfP1KnZA6rZbRHtxmXi
+
+📇 Details about the Full Networking Fundamentals Course:
+https://www.practicalnetworking.net/index/networking-fundamentals-how-data-moves-through-the-internet/
+
+📜 Studying for your CCNA?
+https://www.practicalnetworking.net/index/ccna/
+
+🧮 Want to learn Subnetting?
+https://SubnetIPv4.com
+
+🔐 Want to learn about SSL, TLS, and Cryptography?
+https://www.youtube.com/playlist?list=PLIFyRwBY_4bTwRX__Zn4-letrtpSj1mzY
+
+📖 Other Courses: https://classes.pracnet.net/
+
+💬 Discord: https://discord.com/invite/yrexngJ
+
+#networking #ccna #protocols #network #osi #switches #routers 
+
+00:00 - Intro
+00:16 - Protocols - Formal Definition & Example
+02:06 - FTP, SMTP, HTTP, SSL, TLS, HTTPS
+04:25 - Hosts - Clients and Servers
+05:04 - DNS - Domain Name System
+07:02 - Four items to configure for Internet Connectivity
+09:06 - DHCP - Dynamic Host Configuration Protocol
+10:44 - Summary
+11:34 - Outro",2021-08-30T13:15:01Z,PT12M27S,2244265,55707,1238
+SoHpOC7YyTU,Roadmap to becoming a Cloud Engineer | SevenMentor | #cloudengineering #engineering #network,"Ready to take your tech career to new heights? Discover the roadmap to becoming a Cloud Engineer and unlock endless opportunities in the world of cloud computing. Dive into essential skills, certifications, and career tips to set yourself up for success.
+
+Contact: 020-71173071
+
+Visit our Website: https://www.sevenmentor.com/ccna-course-in-pune-area.php
+
+Follow us for More Updates : 
+✅Facebook - www.facebook.com/sevenmentor
+✅Instagram -  www.instagram.com/sevenmentor/
+✅Twitter -  twitter.com/SevenMentor
+✅Youtube - www.youtube.com/@SevenMentor
+
+Google Business Profile - https://maps.app.goo.gl/htRMN6xt86c7K65E6
+
+#ccna #ccnacertification #linux #linuxnetwork #coding #cloudengineering #networksecurity #tcp #osimodel #database #cloudcomputing #cloudsecurity #filesystem #roadmap #networking #networksecurity",2024-08-17T04:13:04Z,PT11S,262430,2877,18
+0akMyLijNVg,How to Become a Network Engineer in 2025!,"Want to become a Network Engineer in 2025? This step-by-step guide covers everything you need to know—from learning the basics and getting certified to gaining hands-on experience and landing your first networking job
+
+💬 Join the Unified IT Discord!! https://discord.gg/t8PknN7bjV
+🧑🏻‍💻 Hire Us: https://www.unifiedit.tech
+
+📚 Learning the Basics
+Cisco Networking Academy (Free CCNA-Level Courses) – https://www.netacad.com
+Professor Messer’s Network+ Training (Free) – https://www.professormesser.com/network-plus/
+Cisco Packet Tracer (Network Simulation Tool - Free) – https://www.netacad.com/courses/packet-tracer
+Subnetting Practice Site – https://www.subnettingpractice.com
+
+📜 Certifications & Study Materials
+Cisco CCNA – https://www.cisco.com/site/us/en/learn/training-certifications/certifications/enterprise/ccna/index.html
+Neil Anderson’s CCNA Udemy Course – https://www.udemy.com/course/ccna-complete/
+CompTIA Network+ – https://www.comptia.org/certifications/network
+
+🖥 Virtual Labs & Home Labs
+GNS3 (Network Simulation Tool - Free) – https://www.gns3.com
+EVE-NG (Advanced Network Simulation) – https://www.eve-ng.net
+Packet Tracer (Free Cisco Network Simulator) – https://www.netacad.com/courses/packet-tracer
+Used Cisco Lab Gear (eBay Listings) – https://www.ebay.com/sch/i.html?_nkw=cisco+lab+equipment
+
+**MUSIC**
+- Technology & Synthwave (Royalty Free Music) - ODYSSEY by Jiglr https://soundcloud.com/jiglrmusic
+- ARTLIST IO: 2025 - 2025 License Number BTLt5
 
 Timestamps:
-0:00 So I got this comment…
-0:39 I’m finna solve all your problems
-1:03 Hiragana + Katakana
-1:25 Best way to test yourself
-2:02 Japanese Pronunciation
-2:13 N5 – What it takes
-2:37 How to learn words goodly
-2:59 Anki setup
-3:32 Kanji! Ahhhh!! +apps
-3:54 How to learn kanji
-4:25 Japanese grammar is ezpz
-4:53 What you can expect
-5:31 Hot update!! 🔥",2022-03-18T01:56:19Z,PT6M3S,1338322,84194,1762
-2nHRgKpnsUs,How to Pass JLPT N5 & N4 (Ultimate Guide!) 🇯🇵✨,"The JLPT is just around the corner so here are some study tips that can help you pass and ace the test. 
-
-がんばりましょう！ ଘ(੭ˊ꒳ˋ)੭✧
-Let’s do our best! 
-
-=====================================
-
-🍡𝙇𝙞𝙣𝙠𝙨:
-About the MochiKanji App
-🍙 Download link for iOS: https://apps.apple.com/us/app/mochikanji-learn-japanese/id1463353686
-🍙 Download link for Android: https://play.google.com/store/apps/details?id=com.mochimochi.android.an&hl=en_US
-🍙 Join MochiMochi - Learn Japanese Facebook Group: https://www.facebook.com/groups/mochimochi.learnkanji
-
-JLPT Official Website: https://www.jlpt.jp/e/samples/forlearners.html?mode=pc
-
-===================================== 
-
-🍡𝙏𝙞𝙢𝙚𝙨𝙩𝙖𝙢𝙥:
+---------------------------------------------------  
 0:00 Intro
-0:51 Understand the Test Format
-2:05 Set a Study Schedule 
-3:05 Gather Resources
-7:36 Take Mock Tests
-7:56 Stay Positive and Healthy
-8:14 Tips for Pre-Test and Test Day
-11:14 Outro
+0:36 Step 1: Learn the Basics
+5:11 Step 2: Hands-on Skills
+8:04 Step 3: Entry Level Job
+11:56 Step 4: Real World Experience
+13:50 Outro
 
-Hope you enjoy watching this video! (๑ᴖ◡ᴖ๑)
+#Networking #UniFi #ubiquiti #technology #tech #networkengineer",2025-03-03T15:00:01Z,PT15M48S,236263,10558,328
+8Yd02OSWUbc,Networking Full Course in Hindi | Basic to Advanced | Live Training by ICNT GYAN |  2025,"Networking Full Course in Hindi | Basic to Advanced | Live Training by ICNT GYAN | Computer Networking 2025
+#icntgyan #NetworkingCourse #NetworkingInHindi #ComputerNetworking #CCNA #NetworkEngineer #LiveTraining #ITCourse #CareerInNetworking #TechTraining #NetworkingBasics #CCNA2025 #OnlineTraining #NetworkingTutorial #NetworkingHindiCourse
 
-=====================================
+Welcome to ICNT GYAN – Your trusted platform for IT & Networking training! 🚀
+In this video, we cover the Complete Networking Full Course in Hindi, from Basic to Advanced — perfect for beginners and IT professionals who want to build a strong foundation in computer networking.
 
-🍡 𝘼𝙗𝙤𝙪𝙩 𝙢𝙚:
-こんにちは。ミージーです。 
-Hi! I’m Miejie. I love studying foreign languages. My dream is to become a polyglot. (◍•ᴗ•◍)
+✅ What You’ll Learn:
 
-🗣️: 🇵🇭🇺🇸 & a bit of 🇯🇵
-📚: 🇯🇵🇰🇷🇨🇳🇪🇸 
-💭: 🇫🇷🇷🇺🇩🇪🇮🇹 & many more languages 
+What is Networking?
 
-=====================================
+Types of Networks (LAN, WAN, MAN)
 
-🍡𝙔𝙤𝙪𝙏𝙪𝙗𝙚 𝙈𝙞𝙡𝙚𝙨𝙩𝙤𝙣𝙚𝙨:
-Started: 05/31/22
-100 Subs: 06/05/22
-1k Subs: 08/17/22
-10k Subs: 02/17/24
+IP Addressing & Subnetting
 
-➡️ Next Goal: 100k Subs. Let’s go! (｡-ᴗ•)✧
-Total Sub Count as of 05/24/24 5:44PM: 13,913
-Happy 13k subs! (*ˊᗜˋ*)/ᵗᑋᵃᐢᵏ ᵞᵒᵘ♡✧*。
+Switches, Routers & Firewalls
 
-Thanks for supporting small content creators like me. Hope you like & subscribe! ଘ(੭*ˊᵕˋ)੭* ੈ♡‧₊˚
+Network Topologies & Protocols
 
-To God be all the glory! 😊🤍🙏🏻
+Practical Networking Scenarios
 
-=====================================
+Interview Q&A for Networking Jobs
 
-🍡 𝘿𝙞𝙨𝙘𝙡𝙖𝙞𝙢𝙚𝙧:
-This video is sponsored by MochiKanji.
+🎓 Live Training Features:
 
-#japanese #learnjapanese #japaneselanguage",2024-05-24T11:00:04Z,PT11M47S,105703,3876,111
-GRdDjjW5Kmo,JLPT N5 Full Information guide for Japanese language learners | Roadmap Self Study Japanese language,"Instagram https://www.instagram.com/japanesewithvishal/ 
-Facebook  https://m.facebook.com/japanesewithvishal/
+100% Practical Learning
 
-JLPT N5 Full Information guide for Japanese language learners
+Real-Time Networking Labs
 
-Thank you so much for your love and support🙏🏻❤️
-Enjoy the Video 🎉🎉🎉
+1-to-1 Doubt Sessions
 
-✅ JLPT Guide videos (N5 to N1): https://www.youtube.com/playlist?list=PLGO-PB6BdVZtMJD_B3gAIkeF7UbIXhMjw
+Course Completion Certificate
 
-✅ JAPAN V-logs playlist:
-https://youtube.com/playlist?list=PLGO-PB6BdVZvZ5dc9f_d3YVvX09DFWAGy&si=abxHVypEmVOL_MO1 
+2 Years Recorded Access
 
-If you want to know how to apply for a Study Visa from India, follow the Visa guide playlist:
-✅ VISA Guide playlist:
-https://youtube.com/playlist?list=PLGO-PB6BdVZv_0vWz2T_IJBRo_P0igHnh 
+Global Certification Guidance
 
-✅ FULL JAPANESE VERBS Playlist:
-https://youtube.com/playlist?list=PLGO-PB6BdVZsGkFgU6CSXBpSCx37hyL8M
+📅 Join Our Live Batch:
+Call/WhatsApp: 8756912442
+📲 Download Our App – ICNT GYAN
 
-✅ FULL KANJI Playlist:
-https://youtube.com/playlist?list=PLGO-PB6BdVZvLYfLb8R-78Ue9tXZ_DS5Y
 
-E-MAIL:  
-nihongovishal@gmail.com  
+Stay connected with us!
+*************************** 
+ICNT GYAN believes in infusing information globally to create the foundation of a bright future for each one of you. We are a platform for the engineers, by the engineers. 
+If you made it till here, we want you to stay in touch with us. Drop us a ‘hello’ on: 
+➤ Telegram: https://t.me/icntcollege
+➤ WhatsApp : 8756912442
+➤ WhatsApp Channel Icnt IT comunity : https://whatsapp.com/channel/0029Vb7CT8tF6sn321dAaN2H
+➤ Application:  https://play.google.com/store/apps/details?id=co.rogers.zibwg&pcampaignid=web_share
+🎥 Free Live Training + Notes + Certificate
+Subscribe to ICNT Gyan for more Networking, CCNA, Linux, and Cloud Computing tutorials.
+
+📌 Follow Us:
+👉 YouTube: ICNT Gyan
+👉 Instagram: @icntgyan
+👉 Telegram: ICNT Gyan Community
+CCNA Full Course
+
+
+
+Disclaimer:
+*************
+The information contained in this video represents the views and opinions of the educators of the ICNT GYAN and does not involve any external third-party reviews. Our video content is meant for educational purposes only. The information provided is for educational guidance only. Any unauthorized stealing of the video content is prohibited under the Copyright Act 1957. ICNT GYAN hereby disclaims any and all liability to any party in case of prejudice as a sequence of the use of the video content.",2025-10-27T23:13:21Z,PT11H55M,4023,146,6
+JUO9s9VsK54,Study for the CCNA!,"Be prepared and download this study plan for Cisco CCNA: https://courses.cbt.gg/wzk
+
+*Get your IT Team trained — request a demo today:* https://training.cbt.gg/getdemo
+
+FREE IT certification study plans: https://training.cbt.gg/h08
+-----------------
+Connect with CBT Nuggets for the latest in IT training:
+• LinkedIn - https://www.linkedin.com/company/cbt-nuggets
+• X - https://twitter.com/CBTNuggets
+• Instagram - https://instagram.com/CBTNuggets
+• Facebook - https://facebook.com/CBTNuggets
+
+#ccna #cisco #networking #ittraining #itcertifications #ciscocertification #itprofessional #ittutorial #studytips #adept #cbtnuggets",2025-02-11T19:00:22Z,PT29S,91190,2157,29
+Xh95gTAOhFM,Computer Networking For Beginners @ Computer Networking kya hota hai @JogendraGyan .,"Namaste Dosto
+
+Aaj is video me aap sab ko batata hu ki computer networking kya hota hai aur kaise kaam karta hai is video ko dekhene ke baad aap ko basic information mil jayega l@JogendraGyan 
+
+#computernetworking",2022-03-04T14:51:52Z,PT7M58S,108884,1553,39
+tSodBEAJz9Y,Computer Networking Explained | Cisco CCNA 200-301,"Join the Discord Server!
+https://discord.com/invite/QZ2B9GA3BH
+---------------------
+MY FULL CCNA COURSE
+📹  CCNA - https://certbros.teachable.com/p/cisco-ccna?utm_source=youtube&utm_medium=desc&utm_campaign=CCNA&utm_content=Computer+Networking+Explained
+
+FREE CCNA FLASHCARDS
+🃏 CCNA Flashcards - https://certbros.com/ccna/flashcards
+
+HOW TO PASS THE CCNA
+📚 Get a great book - https://amzn.to/3f16QA5
+📹 Take a video course - https://certbros.teachable.com/p/cisco-ccna?utm_source=youtube&utm_medium=desc&utm_campaign=CCNA&utm_content=Computer+Networking+Explained
+✔ Use practice exams - https://www.certbros.com/ccna/Exsim
+
+SOCIAL
+🐦 Twitter - https://twitter.com/certbros
+📸 Instagram - https://www.instagram.com/certbros
+👔 LinkedIn - https://www.linkedin.com/company/certbros
+💬 Discord - https://www.certbros.com/discord
+
+Disclaimer: These are affiliate links. If you purchase using these links, I'll receive a small commission at no extra charge to you. 
+--------------------------------------------------------------------------------------------------------------- 
+
+ So what is a computer network? Well, first, what is a network? The definition of a network is ""A group or system of interconnected people or things""
+
+So, it would be fair to say, a computer network would be “A group or system of interconnected computers” right?
+
+And that’s exactly what it is. A computer network is anything where more than one computer is connected.
+
+Traditionally, a computer network would consist of desktop computers, servers, printers, etc.
+
+These days, we live in a connected world. We still have desktops, servers, and printers, but now we have a vast number of smart devices connected to our networks as well.
+
+Most of you will have a mobile phone, maybe a tablet. Security cameras and even smart lighting systems can be found on networks! And the list goes on and on!
+
+Networking has changed the world and how we live in it.
+
+It’s a topic I still get excited about and there is no shortage of new things to learn.
+
+We will go over a lot of this in more details as we go but that enough for now
+
+#ccna #cisco #networking",2020-04-07T11:00:27Z,PT5M57S,732989,13823,242
+H8W9oMNSuwo,Free CCNA | Network Devices | Day 1 | CCNA 200-301 Complete Course,"Free CCNA 200-301 flashcards/Packet Tracer labs for the course: https://jitl.jp/ccna-files
+Check out my CCNA books, ACING THE CCNA EXAM Volume 1 and Volume 2!
+🌴Amazon || Vol 1: https://jitl.jp/book1-az Vol 2: https://jitl.jp/book2-az Vol1/2 Set: https://jitl.jp/books-az
+📖 Direct from the publisher || Vol 1: https://jitl.jp/book1-yt Vol 2: https://jitl.jp/book2-yt
+📚Boson ExSim: https://jitl.jp/ccna-exsim ← the BEST practice exams for CCNA
+💻Boson NetSim: https://jitl.jp/ccna-netsim ← 100+ detailed guided labs for CCNA
+💯ExSim + NetSim: http://jitl.jp/ccna-kit ← get BOTH for a discount!
+🥇CCNA Gold Bootcamp: https://www.flackbox.com/cisco-ccna-course#jm1 ← the course I used to get my CCNA (top rated course on the Internet)
+
+Get the course ad-free with bonus quizzes and more on JITL Academy: https://courses.jeremysitlab.com
+
+How to use the flashcards: https://www.youtube.com/watch?v=g34QN5eiEYI
+
+In this video you will learn about the kinds of devices you will find in modern networks, their functions in the network, and their differences.
+
+In this FREE and COMPLETE CCNA 200-301 course you will find lecture videos covering all topics in Cisco official exam topics list, end-of-video quizzes to test your knowledge, flashcards to review, and practice labs to get hands-on experience.  
+
+SUPPORT MY CHANNEL
+
+The best way to support my channel is to like, comment, subscribe, and share my videos to help spread the word!
+If you can spare to leave a tip, here are some options:
+
+PayPal: https://paypal.me/jeremysitlabYT
+BAT (Basic Attention Token) tips in the Brave browser (https://www.jeremysitlab.com/brave-browser)
+======================
+Patreon: https://www.patreon.com/jeremysitlab
+======================
+Cryptocurrency Addresses
+
+Bitcoin: bc1qxjpza7nx46e8a2rtz6vkcrvxx9mfjnufdrk0jv
+Ethereum: 0x08B4325b1B99B05d850A3bfCd4A6620D770cfB64
+======================
+
+0:00 Introduction
+1:01 Who is this course for?
+2:54 What is a network?
+5:05 Building a network
+6:03 Clients
+6:53 Servers
+8:01 Servers and Clients
+10:55 Switches
+14:07 Routers
+16:08 Firewalls
+20:45 Supplementary Materials
+22:27 Quiz 1
+24:50 Quiz 2
+26:12 Quiz 3
+27:19 Quiz 4
+28:40 Quiz 5
+
+#cisco #CCNA",2019-10-13T13:37:38Z,PT30M26S,7786757,105853,6637
+zZ02fvBXNAI,IP Addresses Explained: Networking Basics,"In this video, we simplify the concept of IP Addresses as part of our Networking Basics series. IP Addresses are fundamental in Networking and Computer Science and understanding their basics is necessary for success in a career in technology. 
+
+📌 Topics Covered:
+- What is an IP address?
+- Types of IP addresses
+- IPv4 vs IPv6
+- IPv4 & IPv6 Structures
+- Public & private IP addresses
+- Static & dynamic IP addresses
+
+Link to our video on Binary: https://youtu.be/THSh85q7ZBY
+Link to our video on Bits & Bytes: https://youtu.be/N4-E590_h04 
+
+🎓 Join our growing community of tech enthusiasts and start learning today!
+▶️ Subscribe now: https://www.youtube.com/@WhiteboardDoodles24
+
+📌 Follow us for updates:
+- Facebook: https://www.facebook.com/WhiteboardDoodles24/
+- Instagram: https://www.instagram.com/whiteboarddoodles24/
+
+Timestamps:
+0:00 - Intro
+0:25 - What is an IP Address?
+1:10 - Types of IP Addresses
+1:46 - IPv4 vs IPv6
+2:37 - IPv4 Structure
+3:17 - IPv6 Structure
+4:09 - Public vs Private IP Addresses
+4:59 - Network Address Translation
+6:23 - Static vs Dynamic IP Addresses
+7:44 - Outro
+
+#ipaddress #networkingbasics #whiteboarddoodles",2024-06-08T16:00:00Z,PT8M7S,140654,3231,48
+TMOUZ_-b8_w,"LAN Cable Rs.15,000/- யா??? | 10Gbps Network Speed | 10Gb/s Networking #tech #networking #techshorts","Join this channel to get access to perks:
+https://www.youtube.com/channel/UCvyZS6W6zMJCZBVzF-Ei6sw/join
+
+
+
+Copyright Infos:
+==============
+We don't own any music's copyright that we used in this video!!! But we used Game's Soundtracks to Explain The Story with the better feel to UnderStand. The copyright ACT 1976 Under Section 107 says The CopyRighted content can be used for purposes like criticism, comment, news reporting, teaching, scholarship, and research. We're Using these soundtracks to teach people!!! with a better experience.
+
+*******
+For Sponsorships: collab@a2dmediagroup.com
+
+A2D PC FACTORY: 
+Phone: +91 9445747768 / +91 9025380083(be patient, don't spam)
+Email: enquiries@a2dpcfactory.com
+
+Instagram Handles: 
+A2D ARMY - https://bit.ly/3HG0ww3
+PC DOC NANDA - https://bit.ly/3KcOyvl
+KK - https://bit.ly/3CmP6Mx
+PRABHU HARI(EDITOR) - https://bit.ly/3vQZMC5
+KK'S EDITOR: - INNUM INSTAGRAM INSTALL PANNALA
+
+Twitter Handles:
+A2D Army - https://bit.ly/3IPHXXr
+PC Doc - https://bit.ly/3HSFUAC
+
+Like Us: https://www.facebook.com/a2dchannel/
+
+Join Our Discord server: https://discord.gg/aBABRH2
+
+*******",2023-01-26T06:00:17Z,PT50S,1918308,137371,237
+4Yx06KFjEl0,FREE 1 HOUR Network Engineering Course 2026: How to Land a Job With No Experience,"👉 Watch how we help people break into tech with zero experience: https://tech.learnitcamp.com/main-page-3510 
+
+IG ➡️  https://www.instagram.com/itwithwali/
+Linkedin -   https://www.linkedin.com/in/wali-egal-511453203/
+
+
+Edited By: Salmaan Mustapha
+#networkengineer #cybersecurity #ccna  #cloud  #techtips #networking",2025-11-02T15:28:23Z,PT1H1M7S,24689,1299,95
+fErDcUtd8fA,Computer Networking Full Course 2026 | Networking Full Course For Beginners | Simplilearn,"""️️🔥Professional Certificate in AI and Machine Learning - https://www.simplilearn.com/professional-aiml-program?utm_campaign=fErDcUtd8fA&utm_medium=DescriptionFFF&utm_source=Youtube
+️🔥IITK - Professional Certificate Course in Generative AI and Machine Learning - https://www.simplilearn.com/iitk-professional-certificate-course-ai-machine-learning?utm_campaign=fErDcUtd8fA&utm_medium=DescriptionFFF&utm_source=Youtube
+️🔥Microsoft AI Engineer Program - https://www.simplilearn.com/ai-engineer-course?utm_campaign=fErDcUtd8fA&utm_medium=DescriptionFFF&utm_source=Youtube
+️🔥 Michigan - Applied Generative AI Specialization - https://www.simplilearn.com/applied-ai-course?utm_campaign=fErDcUtd8fA&utm_medium=DescriptionFFF&utm_source=Youtube""
+
+This Computer Networking Full Course 2026 by Simplilearn will cover all the basics of networking. The Networking Full Course For Beginners video will cover topics like Ethernet, OSI Model, and TCP/IP Protocol. We will learn about Types of Networks, Network Topology, and IPv4 vs IPv6. we'll dive into little advanced topics like Network Security, Firewalls, and IPSec Protocols. we will also cover Switch Vs Hub Vs Router, Stop And Wait Protocol, Sliding Window Protocol, Go Back N ARQ Protocol, Selective Repeat ARQ, and cover Dynamic Host Configuration Protocol.
+
+In this Computer Networking Full Course 2026, we will cover the following topics:
+
+✅00:00-Computer Networking Full Course 2026
+✅02:18-Basics of Networking for Beginners
+✅12:59-Ethernet
+✅20:22-Types of Networks
+✅29:11-What Is Network Topology?
+✅39:09-What Is An IP Address And How Does It Work?
+✅54:54-OSI Model Explained
+✅1:44:47-TCP/IP Protocol Explained
+✅1:51:59-What Is Network Security?
+✅214:19-What Is A Firewall?
+✅3:05:45-Network Routing Using Dijkstra’s Algorithm
+✅3:37:59-What Is Checksum Error Detection?
+✅4:02:53-Stop And Wait Protocol Explained
+✅4:42:39-Dynamic Host Configuration Protocol
+✅4:53:08-Top 10 Networking Interview Questions And Answers
+
+✅ Subscribe to our Channel to learn more about the top Technologies: https://bit.ly/2VT4WtH
+
+⏩ Check out the Computer Networks training videos: https://youtube.com/playlist?list=PLEiEAq2VkUUIvo-xr1mDV2r00MarxeLx1 
+
+#ComputerNetworks #ComputerNetworking #NetworkingFullCourse #Networking #Cybersecurity #CybersecurityTraining #CybersecurityCertification #CybersecurityCareer #Cyber_Security #CybersecurityCourse #Simplilearn
+
+Networking is the practice of connecting two or more computers or devices to enable communication and information sharing. This connection can be established through various means, such as wired or wireless connections. 
+
+➡️ About Post Graduate Program In Cyber Security
+
+This Post Graduate Program in Cyber Security will help you learn comprehensive approaches to protecting your infrastructure and securing data, including risk analysis, mitigation, and compliance. You will get foundational to advanced skills through industry-leading cyber security certification courses that are part of the program.
+
+✅ Key Features
+
+- Simplilearn Post Graduate Certificate
+- Masterclasses from MIT Faculty
+- Featuring Modules from MIT SCC and EC-Council
+- 8X higher interaction in live online classes conducted by industry experts
+- Simplilearn's JobAssist helps you get noticed by top hiring companies
+- Industry case studies in cyber security
+- Access to CEH Pro Version
+- 25+ hands-on projects
+- Capstone project in 3 domains
+- MIT CSAIL Professional Programs Community
+
+✅ Skills Covered
+
+- Advanced Hacking Concepts
+- Network Packet Analysis
+- Ethical Hacking
+- IDS Firewalls and Honeypots
+- Security and Risk Management
+- Network Security
+- Software Development Security
+- Cryptography OSI and TCPIP Models
+- Identity and Access Management 
+- Security Assessment and Testing
+- Trojans Backdoors and Countermeasures
+- Mobile and Web Technologies
+
+👉 Learn More at: https://www.simplilearn.com/ai-cybersecurity-course?utm_campaign=9May2023ComputerNetworkingFullCourse2023&utm_medium=Description&utm_source=youtube          
+🔥🔥 *Interested in Attending Live Classes? Call Us:* IN - 18002127688 / US - +18445327688 
+👉 Listen to what millions of users say about our courses! https://www.simplilearn.com/reviews?utm_campaign=9May2023ComputerNetworkingFullCourse2023&utm_medium=Description&utm_source=youtube",2023-05-10T14:30:14Z,PT5H18M56S,243906,3705,28
+PSX61FxgCzw,Computer Networking Full Course 2026 | Computer Networking Tutorial | Cybersecurity | Simplilearn,"🔥CISM Certification: Certified Information Security Manager  - https://www.simplilearn.com/cyber-security/cism-certification-training?utm_campaign=PSX61FxgCzw&utm_medium=DescriptionFirstFold&utm_source=Youtube        
+🔥Professional Certificate Program in Cybersecurity- Red Team (India Only)  - https://www.simplilearn.com/vapt-vulnerability-assessment-penetration-testing-certification?utm_campaign=PSX61FxgCzw&utm_medium=DescriptionFirstFold&utm_source=Youtube        
+🔥IIITB - Advanced Executive Program in Cybersecurity (India Only)  - https://www.simplilearn.com/pgp-advanced-executive-program-in-cyber-security?utm_campaign=PSX61FxgCzw&utm_medium=DescriptionFirstFold&utm_source=Youtube        
+️🔥 AI-Powered Cybersecurity Mastery - https://www.simplilearn.com/ai-cybersecurity-course?utm_campaign=PSX61FxgCzw&utm_medium=DescriptionFirstFold&utm_source=Youtube
+
+The Computer Networking Full Course 2025 by Simplilearn, provides a complete, beginner-to-advanced journey into the world of networking. It starts with networking fundamentals, Ethernet basics, and the Linux file system, before diving into core networking concepts like switching techniques, the OSI model, and routing algorithms such as Distance Vector and Dijkstra. Learners also explore protocols like UDP, CIDR, and IPsec, along with tools like Wireshark for packet analysis. The course includes detailed sessions on network types (LAN, WAN, MAN), error detection methods such as Hamming Code and Checksums, and essential security topics including phishing attacks and penetration testing. By the end, you’ll gain a strong theoretical and practical understanding of modern computer networks and cybersecurity essentials.
+
+Following are the topics discussed in the Cybersecurity Full Course 2025
+
+00:00:00 - Introduction to Computer Networking Full Course 2025
+00:02:05 - Basics of Networking for Beginners
+00:13:29 - What Is Ethernet
+00:21:52 - What Is Linux File System 
+00:34:50 - Linux File System Structure Explained 
+00:53:20 - Switching Techniques in Networking
+01:02:35 - OSI Model Explained
+01:14:31 - User Datagram Protocol
+01:22:57 - Switch vs Hib vs Router
+01:35:54 - Distance Vector Routing Algorithm
+01:50:40 - Wireshark Tutorials for Beginners 
+02:05:50 - Network Protocol Explained 
+02:25:19 - Phishing Attacks 
+02:37:10 - Types of Network LAN WAN Man Explained 
+02:46:54 - Hamming Code for Error Detection
+02:59:31 - CIDR Protocol Explained 
+03:07:26 - What Is Network Security
+03:30:43 - What Is Ipsec Protocol
+03:38:58 - Dijkstra Algorithm Explaiend 
+03:51:48 - Checksome Error Detection
+03:58:14 - Penetration Testing for Beginners
+
+✅ Subscribe to our Channel to learn more about the top Technologies: https://bit.ly/2VT4WtH   
+
+➡️ Click here to watch more Cybersecurity and Ethical Hacking tutorials From Simplilearn: https://www.youtube.com/playlist?app=desktop&list=PLEiEAq2VkUUJfPOj5nRounXvf3n17PCft
+
+#computernetworking #computernetwork #computernetworks #cybersecurity #ethicalhackingforbeginners #cybersecurityforbeginners #ethicalhacking #linux #simplilearn #2025 
+
+➡️ About Professional Certificate Program in Cybersecurity- Red Team
+
+This vulnerability assessment and penetration testing certification empower you with a skill set to analyze the threat landscape and create strategies to ensure system stability and security. Master essential cybersecurity skills through hands-on training in real-world cases.
+
+Key Features
+
+✅ Program completion certificate from IIT Kanpur and Simplilearn
+✅ Attend Masterclasses from IIT Kanpur faculty
+✅ Get hands-on experience with a capstone on industry-relevant use cases
+✅ Seamless access to integrated labs on Simplilearn’s LMS
+✅ Build skills to become job-ready and advance your career
+✅ Simplilearn's JobAssist helps you get noticed by top hiring companies
+✅ Live sessions on the latest AI trends, such as generative AI, prompt engineering, explainable AI, and more
+
+Learning Path
+✅ Orientation session for IIT Kanpur Cybersecurity Program
+✅ PCP CS: Ethical Hacking
+✅ PCP CS: Vulnerability Assessment
+✅ PCP CS: Penetration Testing
+✅ PCP CS: Cybersecurity Capstone Project
+Electives:
+✅ Cybersecurity Academic Masterclass from IIT Kanpur
+Skills Covered
+
+✅ Ethical Hacking
+✅ Cryptography Concepts
+✅ IDS Firewalls and Honeypots
+✅ Network Security
+✅ Vulnerability Assessment
+✅ Penetration Testing
+✅ Reconnaissance
+✅ Web App Threats
+✅ Generating Payload
+✅ Exploiting and Gaining Access
+✅ Anonymity Concept
+
+👉 Learn More at: https://www.simplilearn.com/ai-cybersecurity-course?utm_campaign=PSX61FxgCzw&utm_medium=Description&utm_source=Youtube
+
+🔥🔥",2025-11-03T13:30:17Z,PT4H21M40S,6033,205,8
+G2Bl_-_Wrvg,How to Become a Cloud Engineer in Just 10 Months!(Step-by-Step Guide) | Intellipaat #shorts #shorts,"How to Become a Cloud Engineer in Just 4 Months! (Step-by-Step Guide) 
+
+Want to kickstart your career in cloud computing? Wondering how to become a cloud engineer in 4 months? This step-by-step guide will walk you through the exact cloud engineer roadmap you need to follow to land a high-paying job in 2025. Whether you're a beginner or transitioning from another field, we'll break down the essential cloud engineer skills, top cloud engineer courses, and the steps to become a cloud engineer—even if you have no prior experience!
+
+What You’ll Learn:
+✅ The cloud engineer roadmap 2025—what’s trending and in-demand!
+✅ Key cloud computing engineer roadmap strategies to master cloud platforms like AWS, Azure & Google Cloud.
+✅ The best cloud engineer course to build hands-on skills.
+✅ Must-have cloud engineer skills to get hired fast.
+✅ Insider tips on cloud engineer salary and career growth.
+
+FAQs
+❓ How to become a cloud engineer in 4 months?
+To become a cloud engineer in just 4 months, follow a structured cloud engineer roadmap, learn cloud fundamentals (AWS, Azure, or GCP), master DevOps tools, and work on real-world projects. Taking an industry-recognized cloud engineer course will accelerate your journey.
+
+❓ What are the key skills needed for a cloud engineer?
+The must-have cloud engineer skills include cloud computing platforms (AWS, Azure, GCP), networking, Linux, scripting (Python, Bash), DevOps tools (Docker, Kubernetes, Terraform), and security best practices.
+
+❓ What is the average cloud engineer salary?
+The cloud engineer salary varies based on experience and location, but entry-level engineers can earn $80K–$120K per year, while experienced professionals can go beyond $150K.
+
+❓ Can I become a cloud engineer without experience?
+Yes! If you follow the right cloud computing engineer roadmap, take a structured cloud engineer course, and gain hands-on experience with projects and certifications, you can land a job even without prior experience.
+
+#HowToBecomeCloudEngineerIn4Months #CloudEngineerRoadmap #CloudEngineer #HowToBecomeACloudEngineer #CloudEngineerRoadmap2025 #CloudComputingEngineerRoadmap #StepsToBecomeACloudEngineer #CloudEngineerCourse #CloudEngineerSalary #CloudEngineerSkills #CloudComputing #HowToBecomeACloudEngineerFromScratch #HowToBecomeACloudEngineerIn2025 #HowToBecomeACloudEngineerWithNoExperience #BecomeACloudEngineer #Intellipaat #Shorts",2025-02-28T13:28:34Z,PT46S,349412,14836,58
+OYM-Wjs-Gbw,Full Computer Networking (ANIMATED) Course for Beginners | Start From Level 0 | OSI Model explained,"This is a beginner-friendly, fully animated computer networks course that covers essential topics such as Computer networking essentials, the OSI model, network devices, cryptography, the binary number system,  Mac address, Packet, IP address, Server and more. 
+If you're an aspiring ethical hacker, this course (introduction to networking) is the perfect starting point to build a strong foundation in computer networks.
+Whether you’re preparing for advanced topics like penetration testing or just starting your journey in IT or Computer networking , this course is a great first step to mastering the basics of computer networks
+Next Step - Complete Cyber Security & Bash Programming Course Link:  https://www.udemy.com/course/hands-on-cyber-security-and-ethical-hacking-from-0/?referralCode=215B6E0F86B92F10EDA4
+
+
+Join this channel to get access to perks:
+https://www.youtube.com/channel/UC0jvF7_96zBs2DycRFqxxcA/join
+
+Timestamps 
+0:00 Introduction
+2:06 What is a Computer network
+7:38 Packet
+10:46 IP address & View Own IP
+14:10 host
+15:14 Server & Types of servers
+19:10 Ethernet cable & Lan ports
+21:51 Mac address & View own MAC
+27:18 hub explained
+32:26 Switch explained
+38:36 Router
+45:05 Modem
+50:21 Wirless access point
+56:24 intro to OSI Model
+1:00:00 Application Layer
+1:04:36 Presentation Layer
+1:09:54 Session Layer
+1:15:23 Transport Layer
+1:32:48 Network Layer
+1:42:01 Data link layer
+1:52:57 Physical layer
+1:57:08 Intro to Cryptography
+2:01:17 Basic terms
+2:03:40 Symmetric encryption
+2:11:22 Asymmetric encryption
+2:19:07 Intro to hashing
+2:22:17 how hashing works
+2:32:44 Ping command
+2:37:11 Intro to Number System
+2:43:04 hexadecimal
+2:46:32 Binary to decimal conversion
+2:51:51 Decimal to binary conversion
+2:58:22 Logical operators",2024-12-10T13:02:09Z,PT3H3M20S,72717,1846,72
+k9ZigsW9il0,Computer Networking Fundamentals | Networking Tutorial for beginners Full Course,"In this course you will learn the building blocks of modern network design and function. Learn how to put the many pieces together to build a functional and secure network.
+
+⭐⭐⭐⭐🕑TIME STAMP📋⭐⭐⭐⭐⭐
+👉0:00:00 Understanding Local Area Networking
+- Understanding Local Area Networking
+- LAN Essentials
+- Topologies
+
+ 👉1:08:53 Defining Networks with the OSI Model
+ - Layer 1-2 Physical, Data Link and Switches Layer
+ - Layer 3-6 Network, Transport and Session Layer
+- Layer 6-7 Presentation and Application Layer
+
+👉1:50:05 Understanding Wired and Wireless Networks
+- Recognizing Wired Networks and Media Types
+- Comprehending Wireless Networks
+
+👉2:38:31 Understanding Internet Protocol
+- Working with iPv4
+- Working with iPv6
+
+👉3:28:04 Implementing TCP/IP in the Command Line
+ - Common TCP/IP Tools
+- Advanced TCP/IP Tools
+- Advanced TCP/IP Tools Demos
+
+👉4:10:07 Working with Networking Services
+- DHCP
+- DORA
+- Remote Desktop
+- IPSEC
+
+👉5:06:19 Understanding Wide Area Networks
+- Understanding Routing
+- Understanding Wide Area Networks
+
+👉5:47:15 Defining Network Infrastructure and Network Security
+- Understanding Networks Outside the LAN
+- Understanding Security Devices and Zones
+
+-------------------------------------------------------------------------------------------------------------------------------------
+If you realllly enjoy my content, you're welcome to support me and my channel with a small donation via PayPal 
+
+👉Link to PayPal donation https://www.paypal.me/nerdslesson
+
+♥️♥️Thanks for watching don't forget to like and Subscribe♥️♥️
+
+✨✨PLEASE IGNORE THESE TAGS✨✨
+#computernetworking
+networking 101,
+networking and cybersecurity,
+networking administrator,
+networking basics for hacking,
+networking basics for cyber security,
+networking cisco,
+networking cables,
+computer networking technology,
+computer networking and cybersecurity,
+computer networking and security,
+computer networking and data communication,
+computer networking and internet,
+a level computer science networking,
+computer networking basics,
+computer networking career path,
+computer networking course,
+computer networking for ethical hacking,
+computer networking full course,
+computer networking lectures,
+m tech in computer networking,
+computer networking printer sharing,
+networking for cyber security,
+networking it,
+networking introduction,
+it networking course,
+it networking courses for beginners,
+it networking explained,
+it networking training,
+#networkingfundamentals
+#networkingtutorialforbeginners
+#computernetworking
+introduction to networking fundamentals,
+introduction to networking,
+networking introduction,
+intro to networking,
+introduction to network,
+introduction to networking for complete beginners,
+networking fundamentals,
+introduction to networking for beginners,
+networking fundamental,
+basics of networking for beginners,
+network fundamentals,
+networking for beginners,
+networking tutorial for beginners,
+about networking,
+computer network,
+wan,
+soho,
+network direction,",2021-05-30T22:59:33Z,PT6H30M13S,336832,7594,134
+kLAk1WD6JNs,Networking For Hackers: The Only Guide You’ll Ever Need!,"Join up and get everything you *actually* need to start hacking like a pro 🎓💻✨https://cyberflow-academy.github.io/
+
+Educational Purposes Only.
+
+Networking is the backbone of ethical hacking, allowing hackers to understand IT infrastructure, uncover vulnerabilities, and exploit weaknesses. In this video, we’ll break down essential networking concepts like IP addresses, MAC spoofing, TCP/UDP protocols, the OSI model, and firewall configurations. You’ll also learn how ethical hackers use tools like Nmap, Wireshark, and Metasploit for reconnaissance, packet sniffing, and penetration testing. But if you want the raw, unfiltered side of hacking—the methods that YouTube won’t allow—you know where to find it. First link in the description.
+
+Resources:
+
+Nmap (Network Mapper): https://nmap.org/
+Wireshark (Packet Analyzer): https://www.wireshark.org/
+Netcat (Networking Utility): https://nc110.sourceforge.io/
+Metasploit Framework (Penetration Testing): https://www.metasploit.com/
+Tcpdump (Packet Analyzer): https://www.tcpdump.org/
  
-Join Telegram channel ▶︎ https://t.me/Japanesewithvishal
- 
 
-My Journey to JLPT N2:-
-https://youtu.be/HMsxp-RBVcg
-
-Reading Playlist: 
-https://youtube.com/playlist?list=PLGO-PB6BdVZtH-oirpGC2wLIi5KCctSAn
-
-Japan Interviews  Collaborations:-
-Playlist: https://youtube.com/playlist?list=PLGO-PB6BdVZue1Xds2r4UukFyEdGYcOQi
-
-Japanese Language Collaborations:
-: Learning Japanese with Noriko:-
-https://youtu.be/GX9LCG1Gygs
-
-: Improve Speaking With Nikhil - https://youtu.be/8gHYl8CLYbA
-
-others:-
-
-: Listening N5 Paper Solve - https://youtu.be/lye4BLlb_1Y​​​​​​​​​​
-
-: Listening N5 Basic Tips - https://youtu.be/EO57xZ00e8k​​​​​​​​​​
-
-
-JLPT Videos here :-
-: Exam Guide N2 - https://youtu.be/Fg5UxsfZiCM​​​​​​​​​​
-
-: Exam Guide N3 - https://youtu.be/TzhwYQgPUj0​​​​​​​​​​
-
-: Exam Guide N4 - https://youtu.be/Fg5UxsfZiCM​​​​​​​​​​
-
-: Exam Guide N5 - https://youtu.be/ECwXr2L_-cs​​​​​​​​​​
-
-------------
-
-👉 FOLLOW ME ON INSTAGRAM ▶︎
- https://www.instagram.com/japanesewithvishal/
-
-ADD ME ON: 
-
-👉 Join Our FB Group: https://m.facebook.com/groups/662063617906857/?ref=group_browse
-👉 FB Page: https://m.facebook.com/japanesewithvishal/
-👉 TWITTER -  https://twitter.com/slowpolyglot?s=09
-👉 LINKDIN - https://www.linkedin.com/in/slowpolyglot
-
--------
-インドに興味がある日本人は遠慮なく連絡くしてね。ヒンディー語勉強している人にも手伝うことがあれば嬉しいです。神戸でインド祭りとか 広島でインドの光の祭りディワリーをお祝いに行ったことがあります。すごく楽しかったです。日本に住んでいて日本のすべてを楽しみたいです。みんないつか会いましょうね。
-僕はヴィシャル（ジャパニーズウィズヴィシャル）って言います。岡山に住んで日本旅行することが好き。
-
-♡ ABOUT ME
-JLPT N1 CERTIFIED 
-
-Hi! I'm Vishal (JLPT N1 holder, Embassy-certified Japanese Language trainer). I am from Punjab (India) and am now living in Japan for my studies. On this channel, I share language learning tips, my experience, and my progress in learning a language. I hope to share my passion for languages with you in a way that inspires you to keep going and reach your goals! I also help students reach their goals in the Japanese language.
-
-♡
-
-#japanesegirl
-
---------
-♡ PLEASE NOTE
-
-As much as I love reading your comments and messages on social media, sometimes I cannot reply to them all. Please be patient while waiting for a response but know I read everything! Love you
-
-----
-
-----
-
-Disclaimer -
-
-video is for educational purposes only. Copyright Disclaimer Under Section 107 of the Copyright Act 1976, allowance is made for ""fair use"" for purposes such as criticism, comment, news reporting, teaching, scholarship, and research. Fair use is a use permitted by copyright statute that might otherwise be infringing. Non-profit, educational, or personal use tips the balance in favor of fair use.
-
-Thanks for watching 😃",2025-08-02T11:30:22Z,PT19M20S,32166,2008,392
-qiSAZuzkQUs,How to study Japanese Language  I Starting from Zero in 2026,"Visit-  https://japanwithadi.com/resources 
-For All Resources and PDF
-
-JWA Kihon N5 & N4  JLPT prep Batches Starting January 5th 
-
-Fill Interest form - https://forms.gle/busBnZBHdCVZocGp7
-
-Batch Details- https://drive.google.com/file/d/18gAHfuriYGtVB5ByGV8lxApGuQYxHlkW/view?usp=sharing
-
-Kihon WhatsApp Channel- https://whatsapp.com/channel/0029VbBqxpI9sBI1kWPBUG3k
-
-Kihon Demo Session Recording- 
-
-For Admissions, Join WhatsApp Channel, Enrolment details shared there, or contact WhatsApp text ""Kihon"" +91- 7999646857",2025-12-22T15:31:38Z,PT16M20S,45347,2676,180
-KqXH-GUh8T4,【N5】Japanese listening practice #japanese #n5 #japaneselesson,"🔥 60-Day BREAKTHROUGH Beginner Japanese Bootcamp 🇯🇵
-🗓️ Starts Jan 12th, 2026 - Mar 13th (Able to access for 120Days)
-👉 Join here
-https://nas.io/japanese-with-shun/challenges/60day-breakthrough-beginner-japanese-bootcamp-available-to-access-until-11th-of-may-2026",2025-01-24T13:14:52Z,PT32S,152060,6770,211
-mI7EozlXzYE,JLPT N5 vs JLPT N4 🇯🇵✨ #jlpt #jlptn5 #jlptn4 #japanese #japaneselanguage,,2024-11-20T15:12:16Z,PT19S,185591,3777,42
-gi2AeYO-g8E,Learn Japanese | Minna No Nihongo Lesson 1 Grammar,"Mina-san! I made all the lesson files available on my PATREON page! 👏🥳🎉
-You can get access to the PDF of the vocabulary and grammar lessons that I use in my videos, and the vocabulary flashcards too! ✨ すごいでしょう？ ✨
-
-//SUPPORT NIHONGOAL:
-You can help fund this channel by becoming my patron: https://www.patreon.com/nihongoal/
-🙇 みなさん、よろしくおねがいします！ 🙇
-
-//CONTACT:
-For business inquiries ONLY, please use this email: nihongoal.official@gmail.com
-
-//TIMESTAMP:
-0:00 Intro
-0:34 N1 wa N2 desu. [(noun1) is (noun2)]
-4:23 N1 wa N2 ja arimasen. [(noun1) is not (noun)]
-6:21 (Sentence) ka [Is (noun1) (noun2)?]
-10:25 N1 mo [(noun1) too.]
-11:23 N1 no N2 [(noun2) of (noun1)]
-12:55 ~san [Mr./Mrs./Ms.~]
-15:36 How to introduce yourself in Japanese
-
-18:46 Conversation Practice A
-A: Please introduce yourself [jikoshoukai o onegaishimasu]
-B: How do you do? [hajimemashite]
-     I’m (name) [watashi wa (name) desu]
-     I’m from (country) [watashi wa (country) kara kimashita]
-     Pleased to meet you. [douzo yoroshiku onegaishimasu]
-
-19:29 Conversation Practice B
-A: Excuse me, what’s your name? [shitsureidesuga, onamae wa?]
-B: I’m (name) [(watashi wa) (name) desu]
-A: Maria? [maria san desu ka?]
-B: No, it’s (name) [iie, (name) desu]
-    Yes, that’s right. [hai, sou desu]
-
-//CORRECTION:
-17:05  Douzo yoroshiku onegai shimasu. どうぞよろしくおねがいします。
-
-//DISCLAIMER:
-These lessons are based from the Minna No Nihongo (初級) Beginner textbooks. But even if you don’t have the textbooks, you can still follow along the lessons by just watching the video. 
-
-I'm currently living in Japan and I use Japanese at work and daily life. I’m sharing what I’ve learned from my language school and through self-study. I'm not a native Japanese speaker nor am I a licensed Japanese language teacher. I’ve passed the JLPT N3 exam and am planning to take the JLPT N2 test in the future. So if you find any mistakes, feel free to let know so that we can all learn together. Thank you!
-
-//AMAZON LINKS:
-I cannot find the links for first edition, but I found the links for the latest edition of the textbooks which are pretty much the same as the first edition:
-
-LESSON 1-25
-Minna no Nihongo 初級 1 Honsatsu (Everyone's Japanese Beginner 1 Textbook 1) 2nd Edition
-http://amzn.to/2DYOb6p
-
-LESSON 26-50
-Minna no Nihongo 初級 2 Honsatsu (Everyone's Japanese Elementary 1 Textbook 2) 2nd Edition
-http://amzn.to/2E3wy5C
-
-#Nihongo #Japanese #Language #Learning #MinnaNoNihongo #StudyJapanese #JLPT #N5 #N4",2017-10-25T06:26:24Z,PT20M18S,2514272,40644,1452
-E1xsO_hd43s,Learn Japanese At Home! (A Beginner’s Guide To Self-Studying),"These are four steps to learning Japanese at home I've picked while self-studying. Hopefully they help!!
-
-Step 1: Hiragana and Katakana
-Step 2: Start Learning Basic Grammar and Vocabulary
-Step 3: Start Learning Kanji (Continue With Grammar and Vocabulary)
-Step 4: PRACTICE, PRACTICE, PRACTICE!!!",2023-11-20T18:30:14Z,PT27S,852314,37847,182
-RGc-nKzzgxo,5 Kanji in 20 seconds🤓 #Shorts,"~For study abroad inquiries visit~
-▶︎StudyIn
-https://www.studyin.ninja/
-▶︎StudyIn Japan Youtube Channel 
-https://www.youtube.com/channel/UCT4mhMPgtTlA20p0Uf0Yz2A
-▶︎Instagram: @studyin.japan
-https://www.instagram.com/studyin.japan/
-
-~Follow us on social media for studying Japanese~
-▶︎StudyIn Daily Japanese Youtube Channel 
-https://www.youtube.com/c/StudyInDailyJapanese
-▶︎Instagram: @studyin.japanese
-https://www.instagram.com/studyin.japanese/
-▶︎TikTok: @studyin.japanese
-https://www.tiktok.com/@studyin.japanese?lang=ja-JP
-
-#Japan
-#Japanese
-#StudyJapanese",2022-05-12T11:00:13Z,PT20S,3061864,164948,1061
-8EvbOYN6MT4,N5 Kanji Practice 🇯🇵🤗🔥 #n5kanji #kanji #japanese,"kanji,jlpt n5 kanji,n5 kanji,japanese kanji,learn kanji,jlpt n5 kanji test,kanji radicals,kanji n5,#kanji,how to learn kanji,joyo kanji,joyou kanji,jouyou kanji,must know kanji,kanji tutorial,jlpt n5 kanji practice,most common kanji,kanjis,dj kanji,all n5 kanji,n5 kanji list,n5 kanji test,n5 kanji 2024,110 kanji,kanji reading practice,learn n5 kanji,kanji list,jlpt kanji,read kanji,kanji jlpt,kanji day 1,kanji apps,kanji quizkanji,jlpt n5 kanji,n5 kanji,japanese kanji,learn kanji,jlpt n5 kanji test,kanji radicals,kanji n5,#kanji,how to learn kanji,joyo kanji,joyou kanji,jouyou kanji,must know kanji,kanji tutorial,jlpt n5 kanji practice,most common kanji,kanjis,dj kanji,all n5 kanji,n5 kanji list,n5 kanji test,n5 kanji 2024,110 kanji,kanji reading practice,learn n5 kanji,kanji list,jlpt kanji,read kanji,kanji jlpt,kanji day 1,kanji apps,kanji quiz",2025-05-13T16:21:00Z,PT5S,719300,7310,76
-MI7nchXV_wY,JLPT N5  Listening Practice with Mochi Sensei | N5聴解 | Japanese  Lesson,"🌟Would you like to take Mochi sensei's class?🌟
-You can take Mochi sensei's 1:1 class (send me DM via insta @mochi.sensei.japanese) or online Japanese course from only $4.99 / month! https://www.patreon.com/user/membership?u=49978610
-Please join!🥰 
-I really appreciate your support🔥
-【kofi】https://ko-fi.com/mochisensei820#linkModal
-
-
-
-JLPT N5 listening training with Mochi sensei!
- Let's listen to it together and solve it together!
- 
-
-
-
-
-
-
-Do you want more of daily lesson?
-【Mochi sensei instagram】https://www.instagram.com/mochi.sensei.japanese/
-💡DM me on instagram for private Japanese lesson
-
-
-★Top 10 Anime for learning Japanese!【PART1】
-https://youtu.be/lktcZc9dYSI
-
-
-★For abusolute beginners! Let's learn how to introduce yourself first😊
-https://youtu.be/2sBsUbLiUkU
-
-
-★Things I dislike about foreign guys & How to date Japanese girls?
-https://youtu.be/JOqhiu3vm0I
-
-
-
-#jlpt #jlptn5 #learnjapanese #nihongo",2023-02-05T23:30:04Z,PT17M30S,266417,11184,450
-zirR05lhtYc,HOW TO PASS JLPT N5 - WHICH BOOKS TO BUY | Japanese Language Study,"Are you interested in passing the Japanese Language Proficiency Test JLPT N5? 
-And are you looking for new books to use for your studies? 
-You've come to the right place! 
-I love buying new resources for my Japanese studies and after many hours of studying, I was able to pass the JLPT N5 exam as a full time worker! 
-In this video I will share how you can organise your studies and which books I prefer using.
-
-☼ BOOKS MENTIONED IN THIS VIDEO:
-1. Genki - An Integrated Course In Elementary Japanese Vol.1 (Workbook And Textbook)
-2. Minna No Nihongo Elementary 1- Textbook (Workbook And Textbook)
-3. Speed Master N5: Reading Comprehension
-4. Speed Master N5: Listening Comprehension
-5. Drill & Drill - Nihongo Noryoku Shiken N5 
-6. JLPT Drill And Moshi N5 - Short-Term Concentration!Total Finish In 15 Days
-7. Koshiki Mondaishu N5 - Second Edition
-8. The Best Practice Tests For The Japanese-Language Proficiency Test N5
-
-☼ TAGS
-#jlpt #japanese #japaneselanguage #jlptn5 #jlptn4 #japanesegrammar #selfstudy #grammar #vocabulary #revision #japanesecourse #N5course #JLPTexam #begginers #BooksforJLPT #japanesevocabulary #languagelearning #languagetips #japaneseculture #jlptn5n4n3n2n1",2025-05-14T16:01:53Z,PT9M5S,9671,401,37
-d6OwMhnYg0s,Japanese Conversation Practice using JLPT N5 Vocab and Grammar,"🌸Mochi's ONLINE store🌸
- Please get Mochi's hand written original t-shirts!
-https://suzuri.jp/mochisensei
-
-How to order:
-https://youtube.com/shorts/_YyXmeXK_-w?si=dzNvzvEZk-L2MGt4
-
-
-
-
-
-
-🌟Would you like to take Mochi sensei's class?🌟
-Online Japanese course from only $4.99 / month! https://www.patreon.com/user/membership?u=49978610
-Please join!🥰
-
-I really appreciate your support🔥
-【kofi】https://ko-fi.com/mochisensei820#linkModal
-
-
-
-
-
-
-Do you want more of daily lesson?
-【Mochi sensei instagram】https://www.instagram.com/mochi.sensei.japanese/
-
-
-★Top 10 Anime for learning Japanese!【PART1】
-https://youtu.be/lktcZc9dYSI
-
-
-★For abusolute beginners! Let's learn how to introduce yourself first😊
-https://youtu.be/2sBsUbLiUkU
-
-
-★Things I dislike about foreign guys & How to date Japanese girls?
-https://youtu.be/JOqhiu3vm0I
-
-
-#Japaneselesson #jlpt #japaneselistening #japanesecasualconversation",2024-01-08T07:00:15Z,PT13M48S,122420,5531,177
-oExbl07K9dQ,Learn Kanji,"#shorts 
-#learnjapanese 
-#japanese 
-#jlptn5",2022-11-12T08:13:59Z,PT39S,1446774,92475,941
-i2UEIUI3XRI,Learn Japanese with Short Dramas (JLPT N5–N4 Beginner),"🤳Instagram of actors
-https://www.instagram.com/Inainagram.0626
-https://www.instagram.com/hoseki_kanon_s?
-
-This episode’s theme is “Explaining Lost Items” and learning how to use the particle 「で」 to describe means or methods!
-
-✏️ Key sentence pattern of this video
-
-0:00 Chapter 1　かさをわすれました
-3:13 Chapter 2　zoomで話しましょう
-6:53 Chapter 3　かさをわすれました (Native Speed)
-8:26 Chapter 4　zoomで話しましょう (Native Speed)
-
-🌟 Open the Door to Japanese Learning! 🌟
-
-Hello there! Welcome to our language Japanese community! We provide captivating learning materials for everyone interested in learning Japanese. 
-
-📚 At our website, we provide a Japanese learning textbook, ""NIGONGO POCKET"". This textbook is digital and offers various formats for learning Japanese, including videos such as this drama, grammar explanations, interactive quizzes, and more.
-
-💡 Explore new possibilities in Japanese learning and progress towards your goals! For more details, please visit the link below.
-
-🔗 [NIGONGO POCKET Website] - Your destination for Japanese language learning!
- https://nihongo-pocket.com/
-
-#JapaneseLearning #LanguageLearning #JapaneseEducation #OnlineLearning #JapaneseBeginners #JapaneseStudy #にほんご #にほんごべんきょう #日本語　
-
-#japanesedramas  #learnjapanese #studyjapanese",2025-10-12T02:44:43Z,PT11M13S,141351,7299,167
-s1CB1SaIxqw,Learn JLPT N5 kanji #japanese #jlpt,learn Japanese JLPT n5 kanji #learnjapanese #japanese #japan,2024-07-18T12:01:00Z,PT9S,106423,1893,8
-IC7wEWIx_ic,Duration Of N5 and N4 Course #japaneselanguageinnepali #education #japaneselanguage #youtubeshorts,"Japanese in easy way from that you can get best idea to learn Japanese Language…❤️❤️❤️❤️
-
- Facebook : https://www.facebook.com/padmaeducationdmk?mibextid=nwBsNb
-
-Instagram: https://instagram.com/padmaconsultancy?igshid=YzAwZjE1ZTI0Zg%3D%3D&utm_source=qr
-
-#japaneselanguage #education #japaneselanguageinnepali #studyinjapan 
-#japanglish #youtubevideo #youtube
-#learnjapaneseforbegginers
-#khansirpatnakhans #minnanonihong
-#sswworkingvisa #studentsvisa 
-#japaneseculture #Japanesetradition
-#japaneselanguageschool #Japaneseworking
-#jftexam #Jlpt #Nat #Japanesevocabulary
-#japaneselife #workandstudyinjapan #japaneselanguageforbegginersinnepali
-#youtubeshorts #youtubeshort #shorts
-#japaneselanguageforbegginersinnepali
-#japaneselanguagelesson 
-#minnanonihongobook
-#japanese grammar
-#japaneselanguageineasyways
-#japaneseminnanonihongo",2023-12-19T05:26:16Z,PT24S,45810,1451,34
-93UuvvCfm2k,The  trick to master Japanese particles | N5 must-know |# #JapaneseGrammarHack #N5Study,"`n5 particles, japanese particles explained, minna no nihongo particles, wa vs ga particle, japanese particle ni, japanese particle de, japanese particle wo, japanese particle he, japanese particle to, japanese particle mo, japanese particle ka, japanese particle ne, japanese particle yo, n5 grammar particles, basic japanese particles, japanese topic marker wa, japanese subject marker ga, japanese location particle ni, japanese time particle ni, japanese instrument particle de, japanese object marker wo, japanese direction particle he, japanese and particle to, japanese also particle mo, japanese question particle ka, japanese confirmation particle ne, japanese emphasis particle yo`",2025-04-24T04:57:45Z,PT6S,34835,344,1
-RRBp2XRjlvA,Jlpt N5 kanji test: Challenge Yourself and Level Up Your Japanese!,"Jlpt N5 kanji test: Challenge Yourself and Level Up Your Japanese!
-#japanesetest, #jlptn5kanji #kanji #japaneselanguage",2024-03-17T06:39:20Z,PT12S,598484,11395,114
-6p9Il_j0zjc,Learn ALL Hiragana in 1 Hour - How to Write and Read Japanese,"This is your ultimate compilation to easily master Japanese Hiragana in 1 hour! Learn Katakana fast as well here https://goo.gl/wv3C6W to be able to read Japanese! ↓Check how below↓
-
-Step 1: Go to https://goo.gl/wv3C6W
-Step 2: Sign up for a Free Lifetime Account - No money, No credit card required
-Step 3: Master Katakana characters with writing focus and interactive practice sections with Risa
-
-In this video, you’ll learn how to be able to perfectly WRITE and READ all Hiragana, characters of the Japanese alphabet. We will teach you those Japanese Kana using simple steps, showing you the correct stroke order, helpful tricks for memorization, and proper usage in common Japanese words. If you want to get started reading and writing Japanese, this is THE place to start. 
-
-To learn more about Japanese writing system: https://goo.gl/WkRUU5 
-
-Follow and write to us using hashtag #JapanesePod101 
-- Facebook : https://www.facebook.com/JapanesePod101 
-- Google Plus : https://plus.google.com/+JapanesePod101 
-- Twitter : https://twitter.com/JapanesePod101 
-- Pinterest : https://www.pinterest.com/JapanesePod",2016-11-04T08:30:00Z,PT1H4M31S,16678175,471834,24659
-8EU8CFXXBFQ,Japanese Kanji | N5 Japanese Kanji Lessons 😱😲 #japaneselanguage #kanjilearning #kanji #shorts,Japanese Kanji | N5 Japanese Kanji Lessons 😱😲 #japaneselanguage #kanjilearning #kanji #shorts,2023-03-13T14:10:00Z,PT7S,1167799,23508,185
-mTIWMBfo2o8,[Lesson1 ] I am/ I am not | Basic Japanese Grammar,"In this lesson, you will learn the most fundamental & important Japanese grammar, including 
-
-1) N1 wa N2 desu. (N1 is N2.)
-2) N1 wa N2 ja arimasen. (N1 is not N2.)
-3) Making a question sentence with the particle “ka”  
-4) Answering to the question with “hai (Yes)” & “iie (no)”
-
-You’ll also learn the aspects of Japanese culture through the usage of ‘Anata (you)’ in Japanese. 
-
-Please leave a comment below if you like this video! I’ll be happy to make more videos like this if you like it😊
-Thank you! 
----------------------------------------------------------------------------------------------------------------------------
-Click on the timestamps below to jump to different categories:
-
-0:00 Story : The First Day Of Japanese School
-1:00 Grammar Points
-1:04 (1) watashi wa N desu. (I am N.)
-1:28 (2) desuka (Question sentence)
-1:59 Why the word “Anata (you)” isn’t commonly used 
-2:33 (3) Hai (yes) & Iie (no)
-2:50 Making a negative sentence with “ja arimasen (I’m not)”
-3:02 Quick note about “iie (no)”
-
-#anime #日本語 #japanese",2023-06-07T15:28:27Z,PT4M9S,429266,25561,297
-kHwY4PV-YFU,How To Start Learning Japanese For Beginners | Self Study Resources,"Speak Japanese with Native Japanese teachers on italki!: 
-https://italki.pxf.io/c/5617415/2102220/25256
-
-Hello everybody! It's me, Maddie! And in today's video I give the ultimate guide to studying japanese as a beginner. Many of you may be wondering how i learned japanese, or how to study japanese, so in this video I'm giving you a lot of tips and tricks to help you out. If you want to become fluent in Japanese or just know how to start learning Japanese and be able to understand things like manga and anime, make sure to follow these tips and check out the resouces I recommend!
-
-⭐️MY OTHER SOCIALS:
-Instagram: https://www.instagram.com/maddiesdaysyt/
-Tiktok: https://www.tiktok.com/@maddiesdaysyt
-Website: COMING SOON
-
-🍿WATCH NEXT:
-Become FLUENT in JAPANESE in 2024 https://youtu.be/YX_B4OrKIZo
-My Experience Studying at a JAPANESE Language School https://youtu.be/pbe9bJn-SHE
-
-🎁RESOURCES
-🗣️Speaking Resources:
-Italki (Buy 10$, Get 5$): https://italki.pxf.io/c/5617415/2102220/25256
-
-📖Reading Resources:
-Rikaikun Download: https://chromewebstore.google.com/detail/rikaikun/jipdnfibhldikgcjhfnomkfpcebammhp?pli=1
-Remembering The Kanji 1: https://amzn.to/3LODOWU 
-Remembering The Kanji 2: https://amzn.to/3ycqt7P 
-
-📓Vocabulary Resources:
-JLPT N5 Tango: https://amzn.to/46CyeR8
-JLPT N4 Tango: https://amzn.to/3Syq4U6
-Anki Download: https://apps.ankiweb.net/
-Memrise: https://www.memrise.com/en/learn-japanese
-
-📝Grammar Resources:
-JapaneseTest4U N5 Grammar: https://japanesetest4you.com/jlpt-n5-grammar-list/
-Genki 1 Textbook and Workbook: https://amzn.to/4cbljqi
-
-🎧  MUSIC CREDIT: none
-
-💌 TIMESTAMPS:
-00:00-1:01 Intro
-1:01-5:50 Japanese Writing Systems
-5:50-8:32 Vocabulary and Grammar
-8:32-10:14 Listening and Speaking
-10:14-11:53 Reading
-11:53-12:41 Keep a Schedule
-12:41-13:07 Surprise
-
-DISCLAIMER: I have included affiliate links in this description box. These are my true and honest recommendations that I have personally used in my Japanese journey, and by clicking the links there is no extra cost to you. If you purchase through the links I may receive a small commission which really helps me run this channel.",2024-08-06T00:46:03Z,PT13M7S,633073,41958,695
-LYOoYlLVF8I,✅Japanese Language N5 Level in [Nepali] 2020: Lesson 1,"If you are a beginner in Japanese and want to get started with the Japanese language, this is the perfect place for you! 
-However, this video includes grammatical information only. 
-We strongly suggest you to take proper Japanese Language classes in your nearby institutions. 
-
-The official name of our institution is 
-★★★★★★★★★★★★★★★★★★★★★★★★
-Special Japanese Language And Computer Institute
-★★★★★★★★★★★★★★★★★★★★★★★★ 
-Situated at   https://goo.gl/maps/DBU8X2CJWa82
-
-We are approved by the Ministry of Education.  
-We also provide student VISA services for those who are willing to study in Japan. 
-Click here https://www.facebook.com/pg/specialjapanese/services/?ref=page_internal to know about our other services. 
-Like and follow us 
-■ Facebook:   https://www.facebook.com/specialjapanese
-■ Website:- http://www.specialjapan.edu.np/
-■ Call us on 01-4301205 for further information. 
-
-Also, please LIKE, SHARE and COMMENT on our videos! We really appreciate it. Thanks!
-#JapaneseLanguageForBeginners #learnjapaneseinnepali #specialjapaneselanguageacademy #JLPT #NAT #N5 #minnanonihongo #waparticle",2019-02-05T13:06:53Z,PT23M32S,940122,27398,552
-rhlhTsKUv8M,How to pass the JLPT N5,,2025-09-08T08:20:04Z,PT57S,7739,238,7
-HMI_oAnjtmY,How to learn Japanese FAST | 100% Self taught (Exact Steps) 🇯🇵,"FluentU: https://link.fluentu.com/watashi_yoje
-
-My number 1 advice is to just get started. Set yourself an achievable goal eg: 1 hour a day of studies in total and stick to that no matter what. Soon enough you'll be enjoying the journey and just consuming Japanese content for fun!
-
-JOIN THE COMMUNITY: https://www.skool.com/polyglot-academy-2622/about
-
-Summary:
-
-1. Decide your reason for learning Japanese, this will help you stay consistent when it gets hard
-
-2. Learn Hiragana and Katakana - this is non negotiable. Use the read cover write method. You can learn how to read this in 2 days.
-
-3. Do at least 10 Anki flashcards everyday. This will help you learn kanji as the hiragana will be on top, allowing you to read it.
-
-4. Do a couple lessons on an audio course everyday for the first month or so. (JapanesePod101.com or Innovative Language Learning App)
-
-5. Spend the majority of your time immersing yourself in Japanese by watching loads of Japanese content with Japanese subtitles. Do this from DAY 1 even if you don’t understand anything. Remember this is the most important step. Use an extension like FluentU to make this process easier.
-
-6. For speaking, talk to yourself whenever you have time, practice shadowing to improve your pronunciation and use the resources I mentioned in the video to speak in a more interactive environment. (Beginners should focus on shadowing and talking to themselves, intermediates should focus on that as well as talking to natives)
-
-7. STAY CONSISTENT!!!
-
-
-Resources for Immersion: 18:22
-
-Anki Download: https://apps.ankiweb.net
-
-Anki Deck: 
-I used: https://ankiweb.net/shared/info/2141233552
-Also recommended: https://ankiweb.net/shared/info/1196762551
-
-TikTok: @watashiyoje
-
-0:00 - 1:15 Intro
-1:16 - 4:08 1. Expectations
-4:09 - 7:01 2. Hiragana + Katakana
-7:02 - 9:37 3. Vocabulary
-9:38 - 12:57 4. Audio Course
-12:58 - 18:34 5. Immersion
-18:35 - 21:41 6. Speaking
-21:42 7. Tips",2025-01-15T19:54:12Z,PT24M51S,462285,23291,931
-NqLV08BCt2I,"1. If you understand this, you are JLPT N5 level!","🌟Would you like to take Mochi sensei's group lesson?🌟
-Join my team❣️
-https://nihongo-study-squad.com/ 
-
-
-
-🌸Mochi's ONLINE store🌸
- Please get Mochi's hand written original t-shirts!
-https://suzuri.jp/mochisensei
-
-How to order:
-https://youtube.com/shorts/_YyXmeXK_-w?si=dzNvzvEZk-L2MGt4
-
-
-
-
-I really appreciate your support🔥
-【kofi】https://ko-fi.com/mochisensei820#linkModal
-
-
-
-
-
-
-Do you want more of daily lesson?
-【Mochi sensei instagram】https://www.instagram.com/mochi.sensei.japanese/
-
-
-★Top 10 Anime for learning Japanese!【PART1】
-https://youtu.be/lktcZc9dYSI
-
-
-★For abusolute beginners! Let's learn how to introduce yourself first😊
-https://youtu.be/2sBsUbLiUkU
-
-
-★Things I dislike about foreign guys & How to date Japanese girls?
-https://youtu.be/JOqhiu3vm0I
-
-
-#Japaneselesson #jlpt #japaneselistening #jlptn5",2024-04-23T03:00:11Z,PT9M17S,521436,29472,1857
-yOo9VbcEmMw,🎧 JLPT N5 Listening Practice | Simple Japanese Conversation for Beginners 🇯🇵 #jlptn5 #listening,"🎧 JLPT N5 Listening Practice | Simple Japanese Conversation for Beginners 🇯🇵 #jlptn5 #listening
-
-🎧 Practice your Japanese listening skills with this short and easy JLPT N5 level conversation!
-Perfect for beginners who want to improve their Japanese vocabulary, pronunciation, and conversation skills.
-Listen carefully and try to understand the meaning before reading the subtitles.
-
-✅ What’s included:
-
-Simple Japanese dialogue for beginners
-
-JLPT N5 level vocabulary and grammar
-
-Real conversation used in daily life
-
-Subtitles with Romaji and English
-
-
-💡 Use this video for daily Japanese study, JLPT preparation, or listening practice.
-Don’t forget to like 👍, comment 💬, and subscribe 🔔 for more Japanese lessons!
-
-JLPT N5 listening practice
-
-Japanese conversation short
-
-learn Japanese for beginners
-
-Japanese listening test N5
-
-simple Japanese dialogue
-
-nihongo conversation
-
-daily Japanese practice
-
-JLPT N5 audio
-
-Japanese language learning
-
-JLPT N5 preparation
-
-jlpt n5, japanese culture, japanese for beginners, learn japanese while you sleep, beginner japanese, japanese practice, japanese listening, japan language, simple conversation, japanese podcast, japanese, jlpt n1, simple conversations, learn japanese, listening skills, easy japanese, jlpt practice, daily japanese, how to study japanese, にほんご, japanese conversation, japanese listening practice, #beginnersjapanese, #jlpt, #speakjapanese, #japanese, japanese textbooks
-
-#JLPTN5 #JapaneseConversation #JapaneseListening #LearnJapanese #Nihongo #JLPTPractice #JLPTN5Listening #JapaneseForBeginners #Shorts #LanguageLearning #日本語 #JapaneseStudy #DailyJapanese #JLPTListening #JapaneseShort",2025-09-24T20:23:39Z,PT11S,21364,453,1
--hOBJpfgXsU,JLPT N5 Kanji  📝 | Learn 100 Basic Kanji Easily! 💡 #JLPTN5 #LearnKanji #JLPTN5 #Japanese #KanjiChart,"🈶 Want to learn all JLPT N5 Kanji in one place?
-This video shows a clear and complete Kanji chart for N5 level learners!
-Perfect for beginners who want to memorize and understand the most common 100 Kanji used in daily Japanese.
-
-🧠 What you’ll get in this video:
-✅ JLPT N5 Kanji with English meaning
-✅ Simple and clean Kanji chart
-✅ Easy explanation for beginners
-
-📺 Watch, pause, and practice with the chart at your own pace!
-
-🔔 Don’t forget to subscribe for daily Japanese lessons!
-
-#JLPTN5 #KanjiChart #LearnKanji #JapaneseForBeginners #Nihongo #KanjiLearning #JLPT #JapaneseLanguage",2025-06-15T17:47:38Z,PT15S,129889,1649,6
-LRUuAs1E6us,Japanese Language N5 all Vocabulary in One Video (Lesson 1 to 25) Basic Level नेपालीमा,"Japanese Language N5 all Vocabulary in One Video (Lesson 1 to 25) Basic Level नेपालीमा
-https://youtu.be/LRUuAs1E6us
-
-Japanese Language N4 all Vocabulary in One Video (Lesson 26 to 50) नेपालीमा
-https://youtu.be/QiVtICsMbm4
-
-This video consists of all word meaning section of Japanese Language n4 level from lesson 26 to 50
-
-
-यो भिडियो लाई सुन्दै आफ्नो काम गर्नु होस् र भाषा लाई पनि राम्रो बनाउनु होस् ! 
-
-Part 1 | N3 Vocabulary: https://youtu.be/PtFCDunPExI
-Part 2 | N3 Vocabulary: https://youtu.be/LRAjIRpM9ws
-Part 3 | N3 Vocabulary: https://youtu.be/9hjjH6dquK8
-Part 4 | N3 Vocabulary: https://youtu.be/TCXuKpVgyjI
-Part 5 | N3 Vocabulary: https://youtu.be/slnQksOYEMM
-
-JAPAN Immigration INQUIRY CALL: https://youtu.be/E5O4-hutS2k
-Emergency Contacts and Communication: https://youtu.be/0jnr3iDzfiQ
-
-N3 DAY 5 | LESSONS:  https://www.youtube.com/watch?v=Q_MMusL3rEg&list=PLSig2rnlR8MEfivZf720r-1Xg3MF-eDhS
-
-जापानी भाषामा Feelings | भावनाहरु: https://youtu.be/KFY9n5Qcd48
-Visiting a Doctor: https://youtu.be/1m58nVzWiR0
-Japan Part Time Job Interview Questions: https://youtu.be/WZG1M1xHt38
-
-For interview videos please click here.
-1. https://youtu.be/lO5nAmQ9fH8
-2. https://youtu.be/KK__NANjjOQ
-3. https://youtu.be/mdVShysq1Sk
-4. https://youtu.be/ckWTBUMomI0
-
-N4 Lessons: https://www.youtube.com/playlist?list=PLSig2rnlR8MGlmrO20IOjWJf5EqzrAO0N
-
-Japanese Particles: https://youtube.com/playlist?list=PLSig2rnlR8MH7CHk9rpBPatCzD2EMeEcQ
-
-N5 Kanji - https://www.youtube.com/watch?v=xKY8G7-TNMs&list=PLSig2rnlR8MGiQIGrU6NnMYIC_edu7L9i
-
-Japanese Language N3 all Grammar in One Video (N3 Lesson 1 to 12): https://youtu.be/ATmLiHYlSwg
-
-N5 Lessons: https://www.youtube.com/playlist?list=PLSig2rnlR8MGQN4X8J0zKy5_tRNj67zNb
-
-Japanese Language N5 all Vocabulary in One Video (Lesson 1 to 25) Basic Level नेपालीमा
-https://youtu.be/LRUuAs1E6us
-
-Japanese Language N4 all Vocabulary in One Video (Lesson 26 to 50) नेपालीमा
-https://youtu.be/QiVtICsMbm4
-
-Japanese Language N5 all Grammar in One Video
-https://youtu.be/gROIvqc5yv8
-
-Katakana in 27 minutes | Japanese in Nepali | All in One with rules
-https://youtu.be/tIyySJ6htHQ
-
-Hiragana in 30 minutes | Japanese in Nepali | All in One with rules
-https://youtu.be/BIoUYIojpbA
-
-Rules in Katakana Nepal || सजिलो काताकाना  || カタカナ Japanese Language in Nepali  [[Day-11]]
-https://youtu.be/crCWF3Xh_DM
-
-
-पहिलो दिन | जापानी भाषाको परिचय for Beginners   Japanese Alphabets
-https://youtu.be/rpatEKQvpwM
-
-Hiragana | Katakana: https://www.youtube.com/playlist?list=PLSig2rnlR8MFIhaazzQGAbit_ikcMItzK
-
-JAPAN Interview Questions Practice | नेपालीमा | School | Embassy 面接
-https://youtu.be/gN_o_kr4GeM
-
-Japanese Language N4 all Grammar in One Video (Lesson 26 to 50)
-https://youtu.be/ueJxolNmQvQ
-
-Voice-Over/Editing: Saras Mani Rai
-
-Email: maxnepalscoop2@gmail.com
-sarasmanirai@gmail.com
-
-#maxnepalscoop #japaneselanguage #n5Vocabulary
- ©2020",2020-12-29T10:45:01Z,PT1H18M31S,835018,10178,114
-1FdjVHZi9Rk,"【Preparing for JLPT】N5 (Vocabulary, Grammar) in 25min / 日本語能力試験 N5","N5 (Vocabulary, Grammar) in 21min
-https://youtu.be/kpR9lZKWWp0
-
-JLPT N2 💙 I LOVE KANJI
-https://www.amazon.co.jp/dp/4910337180/
-
-Who wants to study Japanese more?
-▷ Basic Japanese N5：https://nihongonomori.com/course/level_N5_english/course_basic_english_n5/2131
-▷ Basic Japanese N4：https://nihongonomori.com/course/level_N4_english/course_basic_english_n4/2292
-
-
-『JLPTこの一冊で合格する』本屋さん＆Amazonで発売中！
-📕 N1：https://www.amazon.co.jp/dp/4910337156/
-📘 N2：https://www.amazon.co.jp/dp/4910337164/
-📗 N3：https://www.amazon.co.jp/dp/4910337172
-
-🌱 日本語の森（WEB）
-　  https://nihongonomori.com/
-
-🌱 日本語の森（APP）
-　  iPhone：https://apps.apple.com/jp/app/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%81%AE%E6%A3%AE/id1542940653#?platform=iphone
-　  Android：https://play.google.com/store/apps/details?id=com.nihongonomori.app
-
-🌱 SNS
-　  facebook：https://www.facebook.com/Nihongonomori
-　  instagram：https://www.instagram.com/nihongono_mori
-　  twitter：https://twitter.com/nihongono_mori
-
-🌱 お問合せ
-　  info@nihongonomori.com
-
-🌱 ゆか先生の本
-📖『教えて！ゆか先生 日本語会話表現60』
-amazon：https://www.amazon.co.jp/dp/B09NKRFVVF/ref=tmm_kin_swatch_0?_encoding=UTF8&qid=1639385150&sr=1-2
-
-📖『教えて！ゆか先生 気持ちが伝わる日本語敬語 』
-amazon：https://www.amazon.co.jp/dp/486639708X/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=&sr=
-
-📖『日本語の森的60個會話筆記 ゆか老師，這樣說可以嗎？』
-博客來：https://www.books.com.tw/products/0010941083?srsltid=AfmBOop37vfBcFfSxkUCYr9-3oen2Ey0agyvbdMkt2mJ32o6vvabtGOH
-
-📖『유카쌤이 알려주는 진짜 일본어 대표 문장 390』
-yes24：https://www.yes24.com/Product/Goods/132757636🌱 Nihongonomori Basic Japanese course ( JLPT N5 / N4 )
-Basic Japanese N5：https://nihongonomori.com/course/level_N5_english/course_basic_english_n5/2131
-Basic Japanese N4：https://nihongonomori.com/course/level_N4_english/course_basic_english_n4/2292
-
-
-#jlpt #N5 #N4 #basicjapanesegrammar #nihongonomori",2022-12-02T09:00:01Z,PT26M32S,554088,24636,422
-YF2aiAbZ4As,N5 Japanese language verb list. #japaneselanguage #japanesewords #japanesevocabulary #japanvlog .,,2025-08-06T04:56:30Z,PT11S,137619,1663,5
-F-3APbBoqd0,#minna n5 lesson1 kaiwa #foryou #education #learnjapanese #public,,2024-06-15T15:50:51Z,PT24S,98906,3517,4
-bn_kztScgfE,जापानीज भाषा कक्षा prat 1 Japanese language start from zero,"Hello brother and sister यस channel मा जापान सम्बन्धी थुप्रै video हरु upload गरेको छु हेर्नु होला र यस channel लाई subscribe गरेर म संग जोडिनु होला
-
-Fb :- https://www.facebook.com/dip.win.71
-(Dipwin ) 
-
-For good cunsaltancy ktm Bagbazer
-
-+977 9856081034 ( easy way consultancy )
-
-*12 pass पास गर्नु भयको छ धेरै gap छैन भने *
-तपाईको age अनुसार student visa मा आऊदा ठिक होला चाहेको पढ्दै कमाऊन सकिन्छ । 
-
-*Bachelor pass *
-तपाईको age अनुसार तपाईलाई पढ्नु भन्दा पैसा कमाऊनु छ  so  student visa ma आयर 1/2 बर्षमा working मा change गर्न मिल्छ यो best होला नत्र  SSW visa or bachelor pass wala direct working मा आऊना पनि मिल्छ 
-
-*8/10 class  pass *
-तपाई पढ्नु भयोको छैन but जापान आऊन मन छ  तपाईको लागि best option SSW visa TITP नै हो भासा चै N4 ( basic level ) पढ्नै पर्छ  6/7 month पढेर pass हुन सकिन्छ ! अरु visa को बारेमा जानकारि छैन  बुझ्न चाहेमा माथि दियको number मा call गर्नु होला 
-My Facebook :: https://www.facebook.com/dip.win.71
-
-Online class छैन YouTube मा N4 samma all lessons हरु छ  thank you 🥰
-
-Hamro easy way consultancy ktm putalisadak ma xa. +977 9856081034 call garnus",2022-12-28T08:31:43Z,PT33M3S,2535076,110989,2434
-4TuJtqLNYBc,How to Learn Japanese Vocabulary FAST & EASY (JLPT N5 & N4) 🇯🇵✨,"Welcome to our New Vlog Series: Japanese Learning Tips! ଘ(੭ˊ꒳ˋ)੭✧
-
-In this video, you’ll discover how it’s possible to learn 1,000 Japanese words in just 1 month! 
-
-一緒に頑張りましょう！ ৻(  •̀ ᗜ •́  ৻)
-Let’s do our best together!
-
-=====================================
-
-🍡𝙇𝙞𝙣𝙠𝙨:
-
-About the MochiMochi App:
-- Download link for iOS, Android, and trial in desktop: https://kanji.mochidemy.com/
-- Join MochiMochi facebook group: https://www.facebook.com/groups/mochimochi.learnkanji
-
-=====================================
-
-🍡𝙏𝙞𝙢𝙚𝙨𝙩𝙖𝙢𝙥:
-00:00 Intro
-00:56 Mnemonics
-01:47 Bite-sized Learning
-02:40 Contextual Learning
-03:20 Active Recall & Spaced Repetition
-08:15 Output-based Learning
-08:58 Outro
-
-=====================================
-
-🍡 𝘼𝙗𝙤𝙪𝙩 𝙢𝙚:
-你好! ¡Hola! 안녕하세요! こんにちは。Hi! It’s Miejie.
-I love studying foreign languages. My dream is to become a polyglot. (◍•ᴗ•◍)
-
-🗣️: 🇵🇭🇺🇸 & a bit of 🇯🇵
-📚: 🇯🇵🇰🇷🇨🇳🇪🇸 
-💭: 🇫🇷🇷🇺🇩🇪🇮🇹 
-
-=====================================
-
-🍡𝙔𝙤𝙪𝙏𝙪𝙗𝙚 𝙈𝙞𝙡𝙚𝙨𝙩𝙤𝙣𝙚𝙨:
-Started: 05/31/22
-100 Subs: 06/05/22
-1k Subs: 08/17/22
-
-➡️ Next Goal: 10k Subs. Let’s go! (｡-ᴗ•)✧
-Total Sub Count as of 10/07/23 07:00PM: 5,086
-Happy 5k subs! (*ˊᗜˋ*)/ᵗᑋᵃᐢᵏ ᵞᵒᵘ♡✧*。
-
-Thanks for supporting small content creators like me. Hope you like & subscribe! ଘ(੭*ˊᵕˋ)੭* ੈ♡‧₊˚
-
-To God be all the glory! 😊🤍🙏🏻
-
-=====================================
-
-🍡 𝘿𝙞𝙨𝙘𝙡𝙖𝙞𝙢𝙚𝙧:
-This video is sponsored by MochiMochi.
-
-#japanese #japaneselanguage #日本語 #jlpt",2023-10-07T11:30:02Z,PT9M36S,72535,2604,102
-Ls5GjT_Hkhg,Fastest Way To Learn Japanese,"Unfortunately, it becomes easier to do this as you get better at Japanese, but it doesn't hurt to start as a beginner!
-
-
-
-
-
-
-
-
-
-
-
-Stock footage provided by Videvo, downloaded from www.videvo.net",2023-07-15T13:00:15Z,PT22S,789878,19979,321
-tcg8KZHuDsY,JLPT N5 Listening Practice with Mochi Sensei | N5聴解 | Japanese Lesson,"🌸Mochi's ONLINE store🌸
- Please get Mochi's hand written original t-shirts!
-https://suzuri.jp/mochisensei
-
-How to order:
-https://youtube.com/shorts/_YyXmeXK_-w?si=dzNvzvEZk-L2MGt4
-
-
-
-
-
-
-🌟Would you like to take Mochi sensei's class?🌟
-Online Japanese course from only $4.99 / month! https://www.patreon.com/user/membership?u=49978610
-Please join!🥰
-
-I really appreciate your support🔥
-【kofi】https://ko-fi.com/mochisensei820#linkModal
-
-
-
-
-
-
-Do you want more of daily lesson?
-【Mochi sensei instagram】https://www.instagram.com/mochi.sensei.japanese/
-
-
-★Top 10 Anime for learning Japanese!【PART1】
-https://youtu.be/lktcZc9dYSI
-
-
-★For abusolute beginners! Let's learn how to introduce yourself first😊
-https://youtu.be/2sBsUbLiUkU
-
-
-★Things I dislike about foreign guys & How to date Japanese girls?
-https://youtu.be/JOqhiu3vm0I
-
-
-#Japaneselesson #jlpt #japaneselistening #jlptn5",2023-12-24T07:20:00Z,PT15M21S,57879,2763,120
-sbw5IDYyoF0,Learn Japanese Grammar in 3 Hours - ALL the Basics Beginners Need [Grammar],"https://tinyurl.com/4a7wn9py Click here to download your free ebook with 2000 essential Japanese words.
-↓ More details below ↓
-
-Step 1: Go to https://tinyurl.com/4a7wn9py
-Step 2: Sign up for a Free Lifetime Account - No money, No credit card required 
-Step 3: Start speaking Japanese the fast, fun and easy way! 
-
-If you don't understand much Japanese and want to be able to understand and speak it, this video is made for you because we will help you improving your Japanese skills and progress in your Japanese studies.
-
-This is the fastest, easiest way to pick up basic Japanese!
-
-Click here to get started with the Japanese language: https://tinyurl.com/4a7wn9py
-
-Follow us here:
-■ Facebook: https://www.facebook.com/JapanesePod101
-■ Instagram: https://www.instagram.com/JapanesePod101
-■ Twitter: https://twitter.com/JapanesePod101
-
-Also, please LIKE, SHARE and COMMENT on our videos! We really appreciate it. Thanks!
-
-#JapanesePod101 #Speaking #Basics #Japanese #LearnJapanese",2024-08-13T09:30:15Z,PT3H20M21S,178101,4320,131
-1JephUxTHxg,Minna no Nihongo | Lesson 1,"- PDF files 🦔 -
-https://www.patreon.com/posts/lesson-1-minna-93439373?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=postshare_creator&utm_content=join_link
-
-- みんなの日本語 初級Ⅰ Lesson 1 -
-- N1 は N2 です
-- N1 は N2 じゃ（では）ありません
-- N1 は N2 ですか
-- N1 も N2 です
-- N1 の N2
-- How to count 0 to 99
-
-- I teach Japanese on italki -
- https://www.italki.com/ja/i/reft/DDBae6/HEaeeb/japanese?hl=ja&utm_medium=share_teacher&utm_source=copylink_share
-
-- Contents of this video  -
-0:00 - Vocabulary
-8:06 - Grammar
-14:15 - Practice
-
-- Buy Minna no Nihongo online -
-Amazon.jp
-https://amzn.asia/d/7UAo4bz",2023-03-23T14:43:33Z,PT16M4S,1215807,39830,569
-Y6s1UeAeh0c,Japanese language N5 particle #japan #education #japenesestudy #asianlanguage #japanclass,,2025-02-17T02:33:47Z,PT16S,11898,96,0
-EQehN1HpD8o,JLPT N5 Kanji .1 (#026),"PDF& Exel study material: 
-http://mayo-life.site/jlpt-n5-kanji-material-001/
-
-Hello, I am Mayo, a Japanese YouTuber who loves India.
-On this channel, I will teach Japanese in Hindi.
-
-I have another YouTube channel in which I upload videos about Japan and India.
-Please check this out as well!
-https://www.youtube.com/channel/UCBjmXe4le5EH7gKrq2UswAQ
-
-Follow me on SNS!
-Facebook: https://www.facebook.com/MayoJapan
-Instagram: https://www.instagram.com/mayojapan
-Twitter: https://twitter.com/mayo_hindi",2020-04-09T07:50:46Z,PT12M33S,228181,8612,812
-ZYVV0a3dApY,Minna no nihongo chapter 1| JLPT N5 |Minna no nihongo all grammar pattern |NAT N5 Course.,"Learn Minna no Nihongo first chapter JLPT N5 |Minna no Nihongo all grammar pattern |JLPT N5|NAT N5 Course| N5 grammar all pattern in Hindi | Japanese grammar pattern yad karne ka simple tarika .
-
-Solved queries
-1.Minna no nihongo grammar pattern in hindi .
-2.How to learn n5 grammar easily ?
-3.NAT exam nikalne ke liye grammar padne ka shi tarika  ?
-4.grammar pattern yad kese rakhe in simple way?
-5.N1 wa N2 desu pattern .
-6.desu pattern .
-7.n1 wa n2 jaarimasen/dewaarimasen .
-8.anokata wa donata desuka pattern ?
-9. ka pattern in hindi .
-10.mo pattern use .
-11. n1 no n2 pattern use .
-12 san pattern use .
-How to clear JLPT N5 grammar in exam ?how to memorize grammar pattern ?n5 grammar pattern easily kese yad kare?NAT ko first attempt me kese nikale?jlpt first attempt m kese nikale ?
-
------------------------------------------------------------------------------------------------------------------------
-Please follow me on other social media .
-☞https://instagram.com/tarunchauhan98765
-
-
-⁕ video banane me use equipments 
-。Mic ( Boya  BYM1 )=https://amzn.eu/d/auV7K6e
-
-。Tripoad =https://amzn.eu/d/auV7K6e
------------------------------------------------------------------------------------------------------------------------
-My previous video Hiragana and katakana link
-https://youtu.be/U8ojd6NRkJY
-My upcoming video link 
-https://youtu.be/ZgY5eA_p8Ng
-
-============================================================
-If you liked the video please do subscribe my channel .
-kindly support me so that I could provide you all course related videos  
-free of cost on every weekend.😇🙏
--------------------------------------------------------------------------------------------
-For Business Contact : Tarunchauhan28021997@gmail.com
-=============================================
-Thank you for watching !",2022-07-29T18:30:29Z,PT17M6S,35374,1186,100
-tMYZS0DMvC0,JLPT N5 Listening Practice | Simple Japanese Conversation for Beginners #jlptn5 #jlptn5listening,"JLPT N5 Listening Practice | Simple Japanese Conversation for Beginners #jlptn5 #jlptn5listening #listening #jlpt #shorts 
-
-Welcome to this JLPT N5 Listening Practice video! 🎧
-In this short Japanese conversation, you can practice listening and understanding simple daily Japanese that often appears in the JLPT N5 exam.
-
-👂 Improve your listening skills
-🗣️ Learn basic Japanese conversation
-📖 Practice for the JLPT N5 test
-
-This short video is perfect for:
-✅ JLPT N5 learners
-✅ Beginners in Japanese conversation
-✅ Anyone who wants to improve Japanese listening
-
-👉 Watch carefully, repeat aloud, and improve your Japanese step by step!
-If you like this video, don’t forget to like 👍, share 🔁, and subscribe 🔔 for more JLPT N5 listening & speaking practice.
-
-JLPT N5 listening
-
-JLPT N5 practice
-
-Japanese conversation beginner
-
-JLPT N5 listening short
-
-Learn Japanese for beginners
-
-JLPT N5 listening practice
-
-Japanese language learning
-
-JLPT N5 speaking practice
-
-Simple Japanese conversation
-
-JLPT N5 listening test
-
-japanese conversation, how to speak japanese, jlpt listening, jlpt study, beginner japanese, japanese listening practice, simple japanese, japanese listening, n5 practice, easy japanese listening, jlpt n5, learn japanese, jlpt n5 exam, listening skills, nihongo practice, jlpt n5 listening, jlpt practice, how i learn japanese, how to learn japanese, language learning, japanese pronunciation, japanese study, simple conversations, japanese for beginners, n5
-
-#JLPTN5 #JapaneseConversation #JLPTListening #LearnJapanese #JLPTN5Practice #JapaneseForBeginners #JLPTN5Listening #StudyJapanese #JLPTExam #JapaneseLanguage",2025-09-23T14:42:50Z,PT12S,43001,864,1
-gROIvqc5yv8,Japanese Language N5 all Grammar in One Video (Lesson 1 to 25) Basic Level नेपालीमा,"Japanese Language N5 all Grammar in One Video
-This video consists of all grammar section of Japanese Language n5 level from lesson 1 to 25
-
-यो भिडियो लाई सुन्दै आफ्नो काम गर्नु होस् र भाषा लाई पनि राम्रो बनाउनु होस् ! 
-
-✿ＰＤＦ- ALL N5 Verbs list: https://drive.google.com/open?id=1T-1Ub8f1xO4d35pWi-8XmGLo7wyQ6k3B
-
-यो भिडियो लाई सुन्दै आफ्नो काम गर्नु होस् र भाषा लाई पनि बनाउनु होस् ! 
-
-Part 1 | N3 Vocabulary: https://youtu.be/PtFCDunPExI
-Part 2 | N3 Vocabulary: https://youtu.be/LRAjIRpM9ws
-Part 3 | N3 Vocabulary: https://youtu.be/9hjjH6dquK8
-Part 4 | N3 Vocabulary: https://youtu.be/TCXuKpVgyjI
-Part 5 | N3 Vocabulary: https://youtu.be/slnQksOYEMM
-
-JAPAN Immigration INQUIRY CALL: https://youtu.be/E5O4-hutS2k
-Emergency Contacts and Communication: https://youtu.be/0jnr3iDzfiQ
-
-N3 DAY 5 | LESSONS:  https://www.youtube.com/watch?v=Q_MMusL3rEg&list=PLSig2rnlR8MEfivZf720r-1Xg3MF-eDhS
-
-जापानी भाषामा Feelings | भावनाहरु: https://youtu.be/KFY9n5Qcd48
-Visiting a Doctor: https://youtu.be/1m58nVzWiR0
-Japan Part Time Job Interview Questions: https://youtu.be/WZG1M1xHt38
-
-For interview videos please click here.
-1. https://youtu.be/lO5nAmQ9fH8
-2. https://youtu.be/KK__NANjjOQ
-3. https://youtu.be/mdVShysq1Sk
-4. https://youtu.be/ckWTBUMomI0
-
-N4 Lessons: https://www.youtube.com/playlist?list=PLSig2rnlR8MGlmrO20IOjWJf5EqzrAO0N
-
-Japanese Particles: https://youtube.com/playlist?list=PLSig2rnlR8MH7CHk9rpBPatCzD2EMeEcQ
-
-N5 Kanji - https://www.youtube.com/watch?v=xKY8G7-TNMs&list=PLSig2rnlR8MGiQIGrU6NnMYIC_edu7L9i
-
-Japanese Language N3 all Grammar in One Video (N3 Lesson 1 to 12): https://youtu.be/ATmLiHYlSwg
-
-N5 Lessons: https://www.youtube.com/playlist?list=PLSig2rnlR8MGQN4X8J0zKy5_tRNj67zNb
-
-Japanese Language N5 all Vocabulary in One Video (Lesson 1 to 25) Basic Level नेपालीमा
-https://youtu.be/LRUuAs1E6us
-
-Japanese Language N4 all Vocabulary in One Video (Lesson 26 to 50) नेपालीमा
-https://youtu.be/QiVtICsMbm4
-
-Japanese Language N5 all Grammar in One Video
-https://youtu.be/gROIvqc5yv8
-
-Katakana in 27 minutes | Japanese in Nepali | All in One with rules
-https://youtu.be/tIyySJ6htHQ
-
-Hiragana in 30 minutes | Japanese in Nepali | All in One with rules
-https://youtu.be/BIoUYIojpbA
-
-Rules in Katakana Nepal || सजिलो काताकाना  || カタカナ Japanese Language in Nepali  [[Day-11]]
-https://youtu.be/crCWF3Xh_DM
-
-
-पहिलो दिन | जापानी भाषाको परिचय for Beginners   Japanese Alphabets
-https://youtu.be/rpatEKQvpwM
-
-Hiragana | Katakana: https://www.youtube.com/playlist?list=PLSig2rnlR8MFIhaazzQGAbit_ikcMItzK
-
-JAPAN Interview Questions Practice | नेपालीमा | School | Embassy 面接
-https://youtu.be/gN_o_kr4GeM
-
-Japanese Language N4 all Grammar in One Video (Lesson 26 to 50)
-https://youtu.be/ueJxolNmQvQ
-
-Voice-Over/Editing: Saras Mani Rai
-
-Email: maxnepalscoop2@gmail.com
-sarasmanirai@gmail.com
-
-#maxnepalscoop #japaneselanguage #n5grammar
- ©2020",2020-12-26T03:15:00Z,PT5H25M7S,981327,17543,337
-QWcSO2rrhys,Japanese Language N5 Full Revision  सबै important ✊,"Are you preparing for the JLPT N5 or just starting your journey to learn Japanese? This video is a complete revision of all the topics covered at the N5 level, including:
-
-Hiragana, Katakana, and Kanji basics
-Essential grammar rules
-Common vocabulary
-Useful expressions for daily life
-Sentence structure and particles",2024-11-19T12:35:10Z,PT31M10S,269904,9290,221
+Timestamps:
+0:00 Networking in Ethical Hacking  
+0:26 Why YouTube Limits What I Can Show  
+0:49 How Networking Exposes Vulnerabilities  
+1:28 IP Addresses and Subnetting Basics  
+2:00 MAC Address and Spoofing  
+2:24 Understanding TCP, UDP, and Other Protocols  
+3:00 OSI Model and Security Weaknesses  
+3:27 Role of Routers, Switches, and Firewalls  
+3:54 NAT, Port Forwarding, and Security Risks  
+4:16 Essential Tools for Network Hacking
+
+
+→ Email: cyberflow10@gmail.com  
+
+
+I believe in you. You can do it. 🖤
+======================
+.▀█▀.█▄█.█▀█.█▄.█.█▄▀　█▄█.█▀█.█─█
+─.█.─█▀█.█▀█.█.▀█.█▀▄　─█.─█▄█.█▄█",2025-02-22T11:15:03Z,PT6M10S,25792,1170,19

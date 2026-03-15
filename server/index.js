@@ -39,6 +39,7 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
+    'https://roadmap-generator-v2.vercel.app/',
     'https://flowniq.netlify.app',
     'https://flowniq.onrender.com',// Your Netlify frontend
     // Add your Render backend URL here once you get it
