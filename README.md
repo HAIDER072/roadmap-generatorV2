@@ -1,16 +1,25 @@
 # 🚀 SmartLearn.io - AI-Powered Learning Platform
+### Web + GenAI + ML
 
 <div align="center">
   <img src="public/chartly_logo.png" alt="SmartLearn.io Logo" width="120" height="120">
 
   **Transform your learning journey with AI-generated roadmaps, mock interviews, and personalized quizzes**
 
-  [![Live Demo](https://img.shields.io/badge/Live%20Demo-smartlearn.io-blue?style=for-the-badge)](https://flowniq.netlify.app)
+  [![Live Demo](https://img.shields.io/badge/Live%20Demo-roadmap--generator--v2.vercel.app-blue?style=for-the-badge)](https://roadmap-generator-v2.vercel.app/)
   [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
   [![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-5.5.3-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
   [![Supabase](https://img.shields.io/badge/Supabase-Database-green?style=for-the-badge&logo=supabase)](https://supabase.com/)
 </div>
+
+## 🧠 Machine Learning Model & Training
+
+SmartLearn.io incorporates a robust Python-based Machine Learning pipeline to curate and rank the best educational YouTube videos for your roadmaps:
+- **Topic Extraction & Data Collection**: The system NLP automatically determines the main subjects from your roadmap phase and fetches related video data sequentially through the YouTube Data API.
+- **Feature Engineering**: Extensive sentiment analysis and engagement tracking are extracted from the metadata, analyzing likes, comment sentiment, and views-to-duration ratios to quantify the quality of instruction.
+- **Random Forest Ranking**: A trained Random Forest model predicts the learning value and engagement potential for each video. The videos are then ranked, ensuring learners get the highest quality content.
+- **Seamless Delivery**: Results are relayed directly to the sidebar of your roadmap interface, providing instant access to optimally selected resources alongside a localized fallback system.
 
 ## 📋 Table of Contents
 
@@ -84,7 +93,7 @@
 
 ## 🎯 Demo
 
-🌐 **Live Demo**: [https://flowniq.netlify.app](https://flowniq.netlify.app)
+🌐 **Live Demo**: [https://roadmap-generator-v2.vercel.app/](https://roadmap-generator-v2.vercel.app/)
 
 ### Example Use Cases
 - **Learning React**: Complete roadmap from basics to advanced concepts with video tutorials
@@ -469,7 +478,7 @@ graph TD
 
 The frontend is deployed to Netlify with automatic builds:
 
-🌐 **Live URL**: [https://flowniq.netlify.app](https://flowniq.netlify.app)
+🌐 **Live URL**: [https://roadmap-generator-v2.vercel.app/](https://roadmap-generator-v2.vercel.app/)
 
 For manual deployment:
 
@@ -815,14 +824,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Issues**: [GitHub Issues](https://github.com/HAIDER072/roadmap-generatorV2/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/HAIDER072/roadmap-generatorV2/discussions)
-- **Live Demo**: [https://roadmap-generator-v2.vercel.app](https://flowniq.netlify.app)
+- **Live Demo**: [https://roadmap-generator-v2.vercel.app/](https://roadmap-generator-v2.vercel.app/)
 
 ---
 
 <div align="center">
   <p>Made with ❤️ by the SmartLearn Team</p>
   <p>
-    <a href="https://roadmap-generator-v2.vercel.app">Live Demo</a> •
+    <a href="https://roadmap-generator-v2.vercel.app/">Live Demo</a> •
     <a href="#-features">Features</a> •
     <a href="#-quick-start">Quick Start</a> •
     <a href="#-deployment">Deployment</a>

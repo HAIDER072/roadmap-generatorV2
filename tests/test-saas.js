@@ -1,5 +1,5 @@
 // SaaS System Test Script
-// Run this with: node test-saas.js
+// Run this with: node tests/test-saas.js
 
 const API_BASE_URL = 'http://localhost:3001';
 
