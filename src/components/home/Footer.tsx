@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { 
   Github, 
   Twitter, 
@@ -51,10 +50,10 @@ const Footer: React.FC = () => {
   };
 
   const socialLinks = [
-    { name: 'GitHub', icon: Github, href: 'https://github.com/anuragpatki/Flowniq.ai', color: 'hover:text-gray-900' },
+    { name: 'GitHub', icon: Github, href: 'https://github.com/HAIDER072/roadmap-generatorV2', color: 'hover:text-gray-900' },
     { name: 'Twitter', icon: Twitter, href: '', color: 'hover:text-blue-400' },
     { name: 'LinkedIn', icon: Linkedin, href: '', color: 'hover:text-blue-600' },
-    { name: 'Email', icon: Mail, href: 'mailto:flowniqai@gmail.com', color: 'hover:text-purple-600' }
+    { name: 'Email', icon: Mail, href: 'mailto:contact@smartlearn.io', color: 'hover:text-purple-600' }
   ];
 
   return (
@@ -76,7 +75,7 @@ const Footer: React.FC = () => {
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
                   <Sparkles className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold">Flowniq</h3>
+                <h3 className="text-2xl font-bold">SmartLearn.io</h3>
               </div>
               
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
@@ -213,7 +212,7 @@ const Footer: React.FC = () => {
                 <Mail className="w-5 h-5 text-blue-400" />
               </div>
               <div>
-                <p className="font-medium">flowniqai@gmail.com</p>
+                <p className="font-medium">contact@smartlearn.io</p>
                 <p className="text-gray-400 text-sm">General inquiries</p>
               </div>
             </div>
@@ -235,7 +234,7 @@ const Footer: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
               <div className="flex items-center space-x-2 text-gray-400">
-                <span>© {currentYear} Flowniq. All rights reserved.</span>
+                <span>© {currentYear} SmartLearn.io. All rights reserved.</span>
                 <span>•</span>
                 <span className="flex items-center space-x-1">
                   <span>Made with</span>
@@ -264,7 +263,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .animation-delay-1000 {
           animation-delay: 1s;
         }

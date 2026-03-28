@@ -101,7 +101,7 @@ const HowItWorks: React.FC = () => {
                   <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
                   <div className="w-3 h-3 bg-green-400 rounded-full"></div>
                 </div>
-                <span className="text-gray-500 text-sm">Flowniq AI Roadmap Generator</span>
+                <span className="text-gray-500 text-sm">SmartLearn.io AI Roadmap Generator</span>
               </div>
 
               {/* Step 1: Category Selection */}

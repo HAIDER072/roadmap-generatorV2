@@ -41,14 +41,14 @@ const LoginForm: React.FC = () => {
           <div className="w-20 h-20 mx-auto mb-4 bg-white rounded-2xl flex items-center justify-center shadow-lg border border-indigo-100 overflow-hidden">
             <img 
               src="/chartly_logo.png" 
-              alt="Flowniq Logo" 
+              alt="SmartLearn.io Logo" 
               className="w-12 h-12 object-contain"
             />
           </div>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
             Welcome Back
           </h1>
-          <p className="text-slate-600 mt-2">Sign in to your Flowniq account</p>
+          <p className="text-slate-600 mt-2">Sign in to your SmartLearn.io account</p>
         </div>
 
         {/* Login Form */}

@@ -1,4 +1,4 @@
--- Flowniq.ai Database Setup Script
+-- SmartLearn.io Database Setup Script
 -- Run this script in your Supabase SQL Editor to create the roadmaps table
 
 -- Create roadmaps table

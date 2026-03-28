@@ -1,6 +1,6 @@
 # 🚀 SaaS Token System Setup Guide
 
-Your Flowniq.ai application has been successfully transformed into a SaaS application with a token-based system and Razorpay payment integration! 🎉
+Your SmartLearn.io application has been successfully transformed into a SaaS application with a token-based system and Razorpay payment integration! 🎉
 
 ## 📋 What's Been Implemented
 

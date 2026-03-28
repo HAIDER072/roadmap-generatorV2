@@ -20,12 +20,12 @@ const LandingPage: React.FC = () => {
           <div className="w-32 h-32 mx-auto mb-8 bg-white rounded-3xl flex items-center justify-center shadow-xl border border-indigo-100 overflow-hidden animate-bounce">
             <img 
               src="/chartly_logo.png" 
-              alt="Flowniq Logo" 
+              alt="SmartLearn.io Logo" 
               className="w-20 h-20 object-contain"
             />
           </div>
           <h1 className="text-6xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-6 animate-in slide-in-from-bottom-4 duration-1000">
-            Welcome to Flowniq
+            Welcome to SmartLearn.io
           </h1>
           <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto animate-in slide-in-from-bottom-4 duration-1000 delay-200">
             Transform your goals into clear, visual learning roadmaps with AI assistance
@@ -139,9 +139,9 @@ const LandingPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Why Choose Flowniq Section */}
+          {/* Why Choose SmartLearn.io Section */}
           <div className="mt-24 animate-in slide-in-from-bottom-4 duration-1000 delay-1400">
-            <h2 className="text-4xl font-bold text-slate-800 mb-4">Why Choose Flowniq?</h2>
+            <h2 className="text-4xl font-bold text-slate-800 mb-4">Why Choose SmartLearn.io?</h2>
             <p className="text-xl text-slate-600 mb-12 max-w-3xl mx-auto">
               Experience the future of goal planning with our cutting-edge AI technology
             </p>
@@ -265,7 +265,7 @@ const LandingPage: React.FC = () => {
                     <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
                   ))}
                 </div>
-                <p className="text-slate-700 italic leading-relaxed">"Flowniq transformed how I plan my learning goals. The AI-generated roadmaps are incredibly detailed and practical. I've completed 3 major skill upgrades this year!"</p>
+                <p className="text-slate-700 italic leading-relaxed">"SmartLearn.io transformed how I plan my learning goals. The AI-generated roadmaps are incredibly detailed and practical. I've completed 3 major skill upgrades this year!"</p>
               </div>
               
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/20 hover:scale-105 transition-all duration-300 group">
@@ -301,7 +301,7 @@ const LandingPage: React.FC = () => {
                     <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
                   ))}
                 </div>
-                <p className="text-slate-700 italic leading-relaxed">"I use Flowniq to create workout plans for my clients. The visual roadmaps make it easy for them to track progress and stay motivated. Game changer!"</p>
+                <p className="text-slate-700 italic leading-relaxed">"I use SmartLearn.io to create workout plans for my clients. The visual roadmaps make it easy for them to track progress and stay motivated. Game changer!"</p>
               </div>
             </div>
           </div>
@@ -341,7 +341,7 @@ const LandingPage: React.FC = () => {
           <div className="mt-24 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-3xl p-12 text-white animate-in slide-in-from-bottom-4 duration-1000 delay-1800">
             <h2 className="text-4xl font-bold mb-6">Ready to Transform Your Goals?</h2>
             <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-              Join thousands of users who've already achieved their dreams with Flowniq. Start your journey today!
+              Join thousands of users who've already achieved their dreams with SmartLearn.io. Start your journey today!
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">

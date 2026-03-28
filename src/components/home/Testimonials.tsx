@@ -12,7 +12,7 @@ const Testimonials: React.FC = () => {
       company: 'Google',
       avatar: 'SC',
       rating: 5,
-      text: "Flowniq transformed how I plan my learning goals. The AI-generated roadmaps are incredibly detailed and practical. I've completed 3 major skill upgrades this year using their platform!",
+      text: "SmartLearn.io transformed how I plan my learning goals. The AI-generated roadmaps are incredibly detailed and practical. I've completed 3 major skill upgrades this year using their platform!",
       color: 'from-purple-500 to-pink-500'
     },
     {
@@ -32,7 +32,7 @@ const Testimonials: React.FC = () => {
       company: 'FitLife Studio',
       avatar: 'AT',
       rating: 5,
-      text: "I use Flowniq to create workout plans for my clients. The visual roadmaps make it easy for them to track progress and stay motivated. It's been a game changer for my business!",
+      text: "I use SmartLearn.io to create workout plans for my clients. The visual roadmaps make it easy for them to track progress and stay motivated. It's been a game changer for my business!",
       color: 'from-green-500 to-emerald-500'
     },
     {
@@ -42,7 +42,7 @@ const Testimonials: React.FC = () => {
       company: 'Microsoft',
       avatar: 'ED',
       rating: 5,
-      text: "As a developer, I appreciate how Flowniq breaks down complex learning paths into manageable steps. The AI suggestions are spot-on and the progress tracking keeps me accountable.",
+      text: "As a developer, I appreciate how SmartLearn.io breaks down complex learning paths into manageable steps. The AI suggestions are spot-on and the progress tracking keeps me accountable.",
       color: 'from-orange-500 to-red-500'
     },
     {
@@ -52,7 +52,7 @@ const Testimonials: React.FC = () => {
       company: 'TechVenture',
       avatar: 'DK',
       rating: 5,
-      text: "Building a startup is overwhelming, but Flowniq helped me create a clear roadmap from idea to launch. The project planning features are incredibly comprehensive and intuitive.",
+      text: "Building a startup is overwhelming, but SmartLearn.io helped me create a clear roadmap from idea to launch. The project planning features are incredibly comprehensive and intuitive.",
       color: 'from-indigo-500 to-purple-500'
     },
     {
@@ -62,7 +62,7 @@ const Testimonials: React.FC = () => {
       company: 'Creative Agency',
       avatar: 'LW',
       rating: 5,
-      text: "The team collaboration features are fantastic. We use Flowniq to plan our marketing campaigns and everyone can see their role in the bigger picture. Highly recommended!",
+      text: "The team collaboration features are fantastic. We use SmartLearn.io to plan our marketing campaigns and everyone can see their role in the bigger picture. Highly recommended!",
       color: 'from-teal-500 to-blue-500'
     }
   ];

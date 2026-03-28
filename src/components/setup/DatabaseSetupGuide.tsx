@@ -9,7 +9,7 @@ interface DatabaseSetupGuideProps {
 const DatabaseSetupGuide: React.FC<DatabaseSetupGuideProps> = ({ isOpen, onClose }) => {
   const [copied, setCopied] = useState(false);
 
-  const sqlSchema = `-- SaaS Features Database Schema for Flowniq.ai
+  const sqlSchema = `-- SaaS Features Database Schema for SmartLearn.io
 -- Execute this in your Supabase SQL editor
 
 -- Enable UUID extension
