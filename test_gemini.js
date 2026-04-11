@@ -1,8 +1,8 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 async function test() {
   try {
-    const key = 'AIzaSyCkgmpnEn4GwIJxFhiuqx3Iy2XsZs2Achw';
+    const key = GEMINI_API_KEY;
     const genAI = new GoogleGenerativeAI(key);
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     const result = await model.generateContent("Hello!");
