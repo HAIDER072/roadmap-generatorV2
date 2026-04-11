@@ -67,7 +67,7 @@ const SignupForm: React.FC = () => {
               <div className="flex-1">
                 <h3 className="text-lg font-bold text-slate-800 mb-2">Account Created!</h3>
                 <p className="text-slate-600 text-sm mb-3">
-                  Welcome to Flowniq! You're being redirected to your dashboard.
+                  Welcome to SmartLearn.io! You're being redirected to your dashboard.
                 </p>
                 
                 {/* Email Confirmation Notice */}
@@ -78,7 +78,7 @@ const SignupForm: React.FC = () => {
                     <p className="text-blue-700 text-xs mt-1">
                       We've sent a confirmation email to <strong>{email}</strong>. 
                       Please check your inbox and click the confirmation link to verify your account.
-                      You'll be redirected to <strong>flowniq.netlify.app/dashboard</strong> after confirmation.
+                      You'll be redirected to <strong>smartlearn.io/dashboard</strong> after confirmation.
                     </p>
                   </div>
                 </div>
@@ -99,12 +99,12 @@ const SignupForm: React.FC = () => {
               <div className="w-20 h-20 mx-auto mb-4 bg-white rounded-2xl flex items-center justify-center shadow-lg border border-indigo-100 overflow-hidden">
                 <img 
                   src="/chartly_logo.png" 
-                  alt="Flowniq Logo" 
+                  alt="SmartLearn.io Logo" 
                   className="w-12 h-12 object-contain"
                 />
               </div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4">
-                Welcome to Flowniq!
+                Welcome to SmartLearn.io!
               </h1>
               <p className="text-slate-600">
                 Your account has been created successfully. You can now start creating amazing roadmaps!
@@ -124,12 +124,12 @@ const SignupForm: React.FC = () => {
           <div className="w-20 h-20 mx-auto mb-4 bg-white rounded-2xl flex items-center justify-center shadow-lg border border-indigo-100 overflow-hidden">
             <img 
               src="/chartly_logo.png" 
-              alt="Flowniq Logo" 
+              alt="SmartLearn.io Logo" 
               className="w-12 h-12 object-contain"
             />
           </div>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-            Join Flowniq
+            Join SmartLearn.io
           </h1>
           <p className="text-slate-600 mt-2">Create your account and start building roadmaps</p>
         </div>

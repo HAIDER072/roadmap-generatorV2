@@ -199,7 +199,7 @@ const Navbar: React.FC = () => {
 
               {/* GitHub Link */}
               <a
-                href="https://github.com/anuragpatki/Flowniq-AI"
+                href="https://github.com/HAIDER072/roadmap-generatorV2"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`flex items-center space-x-2 transition-colors duration-200 hover:scale-105 transform ${darkMode

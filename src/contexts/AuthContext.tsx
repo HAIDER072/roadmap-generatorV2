@@ -61,7 +61,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         email,
         password,
         options: {
-          emailRedirectTo: `https://flowniq.netlify.app/dashboard`
+          emailRedirectTo: `https://roadmap-generator-v2.vercel.app/dashboard`
         },
       });
       return { error };

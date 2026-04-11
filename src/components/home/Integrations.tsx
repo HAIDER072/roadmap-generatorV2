@@ -116,7 +116,7 @@ const Integrations: React.FC = () => {
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Connect Flowniq with your favorite tools and streamline your workflow
+            Connect SmartLearn.io with your favorite tools and streamline your workflow
           </p>
         </div>
 

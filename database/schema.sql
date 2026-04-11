@@ -1,4 +1,4 @@
--- SaaS Features Database Schema for Flowniq.ai
+-- SaaS Features Database Schema for SmartLearn.io
 -- Execute this in your Supabase SQL editor
 
 -- Enable UUID extension

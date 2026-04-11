@@ -387,11 +387,11 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
             <div className="w-32 h-32 mx-auto mb-8 bg-white rounded-3xl flex items-center justify-center shadow-xl border border-slate-200 overflow-hidden">
               <img 
                 src="/chartly_logo.png" 
-                alt="Flowniq Logo" 
+                alt="SmartLearn.io Logo" 
                 className="w-20 h-20 object-contain"
               />
             </div>
-            <h3 className="text-4xl font-bold text-slate-800 mb-6">Welcome to Flowniq</h3>
+            <h3 className="text-4xl font-bold text-slate-800 mb-6">Welcome to SmartLearn.io</h3>
             <p className="text-slate-600 text-xl mb-4">Your AI-powered roadmap generator</p>
             <p className="text-slate-500 text-lg mb-8">Transform your goals into clear, tree-structured visual roadmaps</p>
             </div>

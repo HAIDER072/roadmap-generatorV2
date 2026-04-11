@@ -50,7 +50,7 @@ const DemoPreview: React.FC = () => {
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Watch how Flowniq transforms a simple goal into a comprehensive, actionable roadmap
+            Watch how SmartLearn.io transforms a simple goal into a comprehensive, actionable roadmap
           </p>
         </div>
 
@@ -73,7 +73,7 @@ const DemoPreview: React.FC = () => {
                         <div className="w-3 h-3 bg-green-400 rounded-full"></div>
                       </div>
                       <div className="flex-1 bg-white rounded-lg px-4 py-2 text-sm text-gray-600">
-                        flowniq.ai/create
+                        smartlearn.io/create
                       </div>
                     </div>
 
@@ -282,7 +282,7 @@ const DemoPreview: React.FC = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes fade-in {
           from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }

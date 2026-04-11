@@ -87,7 +87,7 @@ export class RazorpayService {
   static async createOrder(orderData: CreateOrderRequest): Promise<CreateOrderResponse | null> {
     try {
       const API_BASE_URL = process.env.NODE_ENV === 'production'
-        ? 'https://flowniq.onrender.com'
+        ? 'https://smartlearn-backend.onrender.com'
         : 'http://localhost:3001';
 
       const response = await fetch(`${API_BASE_URL}/api/create-razorpay-order`, {
@@ -135,7 +135,7 @@ export class RazorpayService {
       });
 
       const API_BASE_URL = process.env.NODE_ENV === 'production'
-        ? 'https://flowniq.onrender.com'
+        ? 'https://smartlearn-backend.onrender.com'
         : 'http://localhost:3001';
 
       const response = await fetch(`${API_BASE_URL}/api/verify-razorpay-payment`, {
@@ -203,7 +203,7 @@ export class RazorpayService {
         key: this.razorpayKeyId,
         amount: order.amount,
         currency: order.currency,
-        name: 'Flowniq.ai',
+        name: 'SmartLearn.io',
         description: `Purchase ${plan.name} - ${plan.tokens_included} tokens`,
         order_id: order.id,
         handler: onSuccess,

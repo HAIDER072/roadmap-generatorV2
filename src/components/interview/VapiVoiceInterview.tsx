@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Vapi from '@vapi-ai/web';
-import { Mic, MicOff, Phone, PhoneOff, Volume2, VolumeX } from 'lucide-react';
+import { Mic, MicOff, Phone, PhoneOff, Volume2, VolumeX, AlertCircle } from 'lucide-react';
 
 interface VapiVoiceInterviewProps {
   position: string;
@@ -25,6 +25,7 @@ const VapiVoiceInterview: React.FC<VapiVoiceInterviewProps> = ({
     content: string;
   }>>([]);
   const [callDuration, setCallDuration] = useState(0);
+  const [localError, setLocalError] = useState<string | null>(null);
   const vapiRef = useRef<any>(null);
   const timerRef = useRef<any>(null);
 
@@ -33,7 +34,9 @@ const VapiVoiceInterview: React.FC<VapiVoiceInterviewProps> = ({
     const vapiApiKey = import.meta.env.VITE_VAPI_API_KEY;
     
     if (!vapiApiKey) {
-      onError('Vapi API key not configured. Please add VITE_VAPI_API_KEY to your .env file.');
+      const errMsg = 'Vapi API key not configured. Please add VITE_VAPI_API_KEY to your .env file.';
+      setLocalError(errMsg);
+      onError(errMsg);
       return;
     }
 
@@ -114,7 +117,12 @@ const VapiVoiceInterview: React.FC<VapiVoiceInterviewProps> = ({
   };
 
   const startCall = async () => {
-    if (!vapiRef.current) return;
+    if (!vapiRef.current) {
+      const errMsg = 'Cannot start call: Vapi API key is missing from environment variables.';
+      setLocalError(errMsg);
+      onError(errMsg);
+      return;
+    }
 
     try {
       // Create assistant configuration with free/cheaper models
@@ -206,6 +214,14 @@ Start by greeting the candidate and asking them to introduce themselves briefly.
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-blue-900 p-6">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl p-8 border-2 border-slate-200 dark:border-slate-700">
+          {/* Error Banner */}
+          {localError && (
+            <div className="mb-6 bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800 rounded-xl p-5 flex items-start space-x-3 animate-shake">
+              <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0" />
+              <p className="text-base text-red-800 dark:text-red-400 font-medium">{localError}</p>
+            </div>
+          )}
+
           {/* Header */}
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-2">
