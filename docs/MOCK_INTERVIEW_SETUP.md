@@ -17,7 +17,7 @@ The AI Mock Interview feature provides users with a realistic interview practice
 ### Gemini AI (Google) - **FREE**
 The Mock Interview feature uses **Google Gemini AI** which is already configured in your `.env` file:
 ```
-GEMINI_API_KEY="AIzaSyBEob_NX8h3sLN64qG5lNyK_vkJ6A2AIGI"
+GEMINI_API_KEY="YOUR_GEMINI_API_KEY_HERE"
 ```
 
 **Gemini AI is FREE** with generous usage limits:
@@ -194,7 +194,7 @@ SKILLS:
 Required in `.env`:
 ```bash
 # Already configured - FREE Gemini AI
-GEMINI_API_KEY="AIzaSyBEob_NX8h3sLN64qG5lNyK_vkJ6A2AIGI"
+GEMINI_API_KEY="YOUR_GEMINI_API_KEY_HERE"
 
 # Token configuration
 TOKENS_PER_INTERVIEW=5
