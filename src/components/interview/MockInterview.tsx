@@ -92,7 +92,7 @@ const MockInterview: React.FC = () => {
             // Analyze speech patterns
             const fillerWords = ['um', 'uh', 'like', 'you know', 'actually', 'basically', 'literally'];
             const words = transcript.toLowerCase().split(' ');
-            const fillerCount = words.filter(w => fillerWords.includes(w.trim())).length;
+            const fillerCount = words.filter((w: string) => fillerWords.includes(w.trim())).length;
 
             setSpeechAnalysis(prev => ({
               ...prev,
@@ -220,14 +220,43 @@ const MockInterview: React.FC = () => {
       return;
     }
 
+    let shouldUseVapi = useVapi;
+
+    // Check API keys for voice interview
+    if (interviewMode === 'voice-only') {
+      const geminiKey = import.meta.env.VITE_GEMINI_API_KEY || import.meta.env.VITE_GEMINI_KEY;
+      const vapiKey = import.meta.env.VITE_VAPI_API_KEY;
+
+      if (!geminiKey && !vapiKey) {
+        setError('No API keys found. Please configure VITE_GEMINI_API_KEY or VITE_VAPI_API_KEY in your .env file to use the Voice Interview.');
+        return;
+      }
+
+      // Check Gemini first, as requested
+      if (geminiKey) {
+        shouldUseVapi = false;
+        setUseVapi(false);
+      } else if (vapiKey) {
+        shouldUseVapi = true;
+        setUseVapi(true);
+      }
+    }
+
+    if (interviewMode === 'voice-only') {
+      if (shouldUseVapi) {
+        // Switch to interview step to show Vapi component without starting old web speech logic
+        setStep('interview');
+      } else {
+        // Voice-only mode: Start old web speech conversation immediately
+        startVoiceConversation(); // don't await, let UI run immediately
+      }
+      return; // Return immediately to avoid blocking UI with `setLoading` flash
+    }
+
     setLoading(true);
     setError('');
 
     try {
-      if (interviewMode === 'voice-only') {
-        // Voice-only mode: Start conversation immediately
-        await startVoiceConversation();
-      } else {
         // Standard mode: Generate questions
         const response = await fetch('http://localhost:3001/api/mock-interview/start', {
           method: 'POST',
@@ -255,7 +284,6 @@ const MockInterview: React.FC = () => {
 
         // Speak the first question
         speakQuestion(data.questions[0]);
-      }
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -456,12 +484,12 @@ const MockInterview: React.FC = () => {
       }
     }
 
-    // Add user message to conversation
-    const updatedHistory = [
-      ...conversationHistory,
-      { role: 'user', content: userResponse }
-    ];
-    setConversationHistory(updatedHistory);
+    // Add user message to conversation using functional update to avoid stale closures
+    let currentHistory: any[] = [];
+    setConversationHistory(prev => {
+      currentHistory = [...prev, { role: 'user', content: userResponse }];
+      return currentHistory;
+    });
 
     try {
       // Get AI response from Gemini
@@ -469,7 +497,7 @@ const MockInterview: React.FC = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          conversationHistory: updatedHistory,
+          conversationHistory: currentHistory,
           position,
           resumeText
         })
@@ -477,38 +505,49 @@ const MockInterview: React.FC = () => {
 
       const data = await response.json();
 
-      if (data.success && data.aiResponse) {
-        // Add AI response to conversation
-        const newHistory = [
-          ...updatedHistory,
-          { role: 'assistant', content: data.aiResponse }
-        ];
-        setConversationHistory(newHistory);
-
-        console.log(`Conversation progress: ${newHistory.length} messages`);
-
-        // Speak the AI response
-        await speakAIResponse(data.aiResponse);
-
-        // Check if interview should end using the UPDATED history length
-        if (data.shouldEnd || newHistory.length >= 20) {
-          console.log('Interview ending condition met');
-          await finishVoiceInterview();
-        } else {
-          // Add a small delay before resuming listening (your 5-second timer idea)
-          console.log('Waiting 2 seconds before listening for next response...');
-          setTimeout(() => {
-            if (conversationActiveRef.current) {
-              console.log('Resuming listening for user response');
-              startContinuousListening();
-            }
-          }, 2000);
-        }
+      if (!response.ok || !data.success || !data.aiResponse) {
+        throw new Error(data.error || 'Failed to get valid AI response');
       }
-    } catch (error) {
+
+      // Add AI response to conversation
+      let newHistory: any[] = [];
+      setConversationHistory(prev => {
+        newHistory = [...prev, { role: 'assistant', content: data.aiResponse }];
+        return newHistory;
+      });
+
+      console.log(`Conversation progress: ${newHistory.length} messages`);
+
+      // Speak the AI response
+      await speakAIResponse(data.aiResponse);
+
+      // Check if interview should end using the UPDATED history length
+      if (data.shouldEnd || newHistory.length >= 20) {
+        console.log('Interview ending condition met');
+        await finishVoiceInterview();
+      } else {
+        console.log('Waiting 2 seconds before listening for next response...');
+        setTimeout(() => {
+          if (conversationActiveRef.current) {
+            console.log('Resuming listening for user response');
+            startContinuousListening();
+          }
+        }, 2000);
+      }
+    } catch (error: any) {
       console.error('Error getting AI response:', error);
-      // Resume listening even on error
-      startContinuousListening();
+      
+      // Let the user know visually and verbally that the backend failed!
+      const errorMsg = error instanceof Error ? error.message : "Failed to connect to AI backend.";
+      setError(`AI Audio Error: ${errorMsg} (Did you restart your server/terminal after adding the API key?)`);
+      
+      // Wait a moment before restarting recognition so we don't spam errors
+      setTimeout(() => {
+        if (conversationActiveRef.current) {
+          console.log('Error recovered: resuming listening');
+          startContinuousListening();
+        }
+      }, 5000);
     }
   };
 
@@ -784,22 +823,22 @@ const MockInterview: React.FC = () => {
           <button
             onClick={() => setInterviewMode('standard')}
             className={`p-6 rounded-xl border-2 transition-all duration-200 text-left ${interviewMode === 'standard'
-                ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-lg'
-                : 'border-slate-300 dark:border-slate-600 hover:border-blue-300 dark:hover:border-blue-700'
+              ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-lg'
+              : 'border-slate-300 dark:border-slate-600 hover:border-blue-300 dark:hover:border-blue-700'
               }`}
           >
             <div className="flex items-start space-x-3">
               <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${interviewMode === 'standard'
-                  ? 'bg-blue-500'
-                  : 'bg-slate-200 dark:bg-slate-700'
+                ? 'bg-blue-500'
+                : 'bg-slate-200 dark:bg-slate-700'
                 }`}>
                 <FileText className={`w-6 h-6 ${interviewMode === 'standard' ? 'text-white' : 'text-slate-600 dark:text-slate-400'
                   }`} />
               </div>
               <div className="flex-1">
                 <h3 className={`font-bold text-lg mb-1 ${interviewMode === 'standard'
-                    ? 'text-blue-600 dark:text-blue-400'
-                    : 'text-slate-800 dark:text-slate-200'
+                  ? 'text-blue-600 dark:text-blue-400'
+                  : 'text-slate-800 dark:text-slate-200'
                   }`}>
                   Standard Mode
                 </h3>
@@ -813,8 +852,8 @@ const MockInterview: React.FC = () => {
           <button
             onClick={() => setInterviewMode('voice-only')}
             className={`p-6 rounded-xl border-2 transition-all duration-200 text-left relative overflow-hidden ${interviewMode === 'voice-only'
-                ? 'border-green-500 bg-green-50 dark:bg-green-900/20 shadow-lg'
-                : 'border-slate-300 dark:border-slate-600 hover:border-green-300 dark:hover:border-green-700'
+              ? 'border-green-500 bg-green-50 dark:bg-green-900/20 shadow-lg'
+              : 'border-slate-300 dark:border-slate-600 hover:border-green-300 dark:hover:border-green-700'
               }`}
           >
             <div className="absolute top-2 right-2">
@@ -824,16 +863,16 @@ const MockInterview: React.FC = () => {
             </div>
             <div className="flex items-start space-x-3">
               <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${interviewMode === 'voice-only'
-                  ? 'bg-green-500'
-                  : 'bg-slate-200 dark:bg-slate-700'
+                ? 'bg-green-500'
+                : 'bg-slate-200 dark:bg-slate-700'
                 }`}>
                 <Mic className={`w-6 h-6 ${interviewMode === 'voice-only' ? 'text-white' : 'text-slate-600 dark:text-slate-400'
                   }`} />
               </div>
               <div className="flex-1">
                 <h3 className={`font-bold text-lg mb-1 ${interviewMode === 'voice-only'
-                    ? 'text-green-600 dark:text-green-400'
-                    : 'text-slate-800 dark:text-slate-200'
+                  ? 'text-green-600 dark:text-green-400'
+                  : 'text-slate-800 dark:text-slate-200'
                   }`}>
                   Voice-Only Mode 🎙️
                 </h3>
@@ -858,8 +897,8 @@ const MockInterview: React.FC = () => {
                 key={count}
                 onClick={() => setQuestionCount(count)}
                 className={`py-4 px-6 rounded-xl font-bold text-lg transition-all duration-200 ${questionCount === count
-                    ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg scale-105'
-                    : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 border-2 border-slate-300 dark:border-slate-600'
+                  ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg scale-105'
+                  : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 border-2 border-slate-300 dark:border-slate-600'
                   }`}
               >
                 {count}
@@ -884,8 +923,8 @@ const MockInterview: React.FC = () => {
                 key={duration}
                 onClick={() => setInterviewDuration(duration)}
                 className={`py-4 px-6 rounded-xl font-bold text-lg transition-all duration-200 ${interviewDuration === duration
-                    ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg scale-105'
-                    : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 border-2 border-slate-300 dark:border-slate-600'
+                  ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg scale-105'
+                  : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 border-2 border-slate-300 dark:border-slate-600'
                   }`}
               >
                 {duration} min
@@ -1063,8 +1102,8 @@ const MockInterview: React.FC = () => {
             {/* AI Circle - Visual Indicator */}
             <div className="relative">
               <div className={`w-64 h-64 rounded-full flex items-center justify-center border-8 shadow-2xl transition-all duration-300 ${isAISpeaking
-                  ? 'border-green-500 bg-gradient-to-br from-green-400 to-emerald-500 scale-110'
-                  : 'border-slate-400 bg-gradient-to-br from-slate-600 to-slate-700'
+                ? 'border-green-500 bg-gradient-to-br from-green-400 to-emerald-500 scale-110'
+                : 'border-slate-400 bg-gradient-to-br from-slate-600 to-slate-700'
                 }`}>
                 <div className="text-center">
                   {isAISpeaking ? (
@@ -1109,8 +1148,8 @@ const MockInterview: React.FC = () => {
             <button
               onClick={toggleCamera}
               className={`px-8 py-4 rounded-xl font-bold text-lg transition-all duration-200 shadow-lg flex items-center space-x-3 ${cameraEnabled
-                  ? 'bg-red-500 hover:bg-red-600 text-white'
-                  : 'bg-green-500 hover:bg-green-600 text-white'
+                ? 'bg-red-500 hover:bg-red-600 text-white'
+                : 'bg-green-500 hover:bg-green-600 text-white'
                 }`}
             >
               {cameraEnabled ? <VideoOff className="w-5 h-5" /> : <Video className="w-5 h-5" />}
@@ -1203,8 +1242,8 @@ const MockInterview: React.FC = () => {
                   <button
                     onClick={toggleCamera}
                     className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-lg ${cameraEnabled
-                        ? 'bg-red-500 hover:bg-red-600 text-white'
-                        : 'bg-green-500 hover:bg-green-600 text-white'
+                      ? 'bg-red-500 hover:bg-red-600 text-white'
+                      : 'bg-green-500 hover:bg-green-600 text-white'
                       }`}
                   >
                     {cameraEnabled ? (
@@ -1291,8 +1330,8 @@ const MockInterview: React.FC = () => {
                 <button
                   onClick={toggleListening}
                   className={`flex items-center space-x-3 px-8 py-4 rounded-xl font-bold text-base transition-all duration-200 shadow-lg ${isListening
-                      ? 'bg-red-500 hover:bg-red-600 text-white scale-105'
-                      : 'bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white'
+                    ? 'bg-red-500 hover:bg-red-600 text-white scale-105'
+                    : 'bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white'
                     }`}
                 >
                   {isListening ? (
