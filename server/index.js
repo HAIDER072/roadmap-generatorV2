@@ -627,11 +627,22 @@ app.post('/api/generate-quiz', upload.single('file'), async (req, res) => {
 
       try {
         if (mimeType === 'application/pdf' || originalName.endsWith('.pdf')) {
-          if (!pdfParse) {
-            return res.status(500).json({ error: 'PDF parsing is not available on the server' });
+          const tempPath = path.join(ML_MODEL_DIR, `temp_quiz_doc_${Date.now()}.pdf`);
+          await fs.writeFile(tempPath, file.buffer);
+          try {
+            console.log('📄 Parsing PDF for quiz via Python CLI...');
+            const output = await runPythonScript('mock_interview_cli.py', ['parse_resume', '--file', tempPath]);
+            const result = JSON.parse(output);
+            if (result.error || !result.success) {
+              throw new Error(result.error || 'Failed to parse PDF using Python');
+            }
+            extractedText = result.text;
+          } catch (pyErr) {
+            console.error('Python output parse error:', pyErr);
+            throw new Error('Failed to extract text from the PDF document.');
+          } finally {
+            await fs.unlink(tempPath).catch(err => console.error('Failed to delete temp PDF:', err));
           }
-          const pdfData = await pdfParse(file.buffer);
-          extractedText = pdfData.text;
         } else if (mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || originalName.endsWith('.docx')) {
           const result = await mammoth.extractRawText({ buffer: file.buffer });
           extractedText = result.value;
@@ -1947,6 +1958,13 @@ app.post('/api/mock-interview/voice-response', async (req, res) => {
 
     const { conversationHistory, position, resumeText } = req.body;
 
+    console.log('\n--- NEW VOICE INTERACTION ---');
+    console.log(`Current History length: ${conversationHistory?.length || 0}`);
+    if (conversationHistory && conversationHistory.length > 0) {
+      const lastMsg = conversationHistory[conversationHistory.length - 1];
+      console.log(`Last User Message: "${lastMsg.content}"`);
+    }
+
     if (!conversationHistory || !position) {
       return res.status(400).json({
         success: false,
@@ -2004,7 +2022,8 @@ Provide ONLY your next response as the interviewer, nothing else.`;
     // Check if interview should end (after 10-12 exchanges)
     const shouldEnd = conversationHistory.length >= 20;
 
-    console.log('✅ Generated AI interviewer response');
+    console.log(`✅ Generated AI interviewer response: "${aiResponse}"`);
+    console.log('-----------------------------\n');
 
     res.json({
       success: true,
@@ -2389,162 +2408,7 @@ app.post('/api/parse-resume', upload.single('resume'), async (req, res) => {
   }
 });
 
-// 2. Start Interview (Generate Questions)
-app.post('/api/mock-interview/start', async (req, res) => {
-  try {
-    const { resumeText, position, questionCount = 5 } = req.body;
 
-    if (!resumeText || !position) {
-      return res.status(400).json({ error: 'Missing resume text or position' });
-    }
-
-    console.log(`🎤 Generating ${questionCount} questions for ${position}...`);
-
-    // Call Python CLI
-    // Pass text as argument (be careful with length/escaping in real CLI, sending via file or stdin is safer for large text)
-    // For simplicity here, we'll try passing as arg but truncating if too massive, or better: use a temp file for the text input
-
-    const tempTextPath = path.join(ML_MODEL_DIR, `temp_text_${Date.now()}.txt`);
-    await fs.writeFile(tempTextPath, resumeText);
-
-    // Modified to read from file in CLI if we updated it, but current CLI takes arg. 
-    // Let's rely on standard 'features.py' pattern or just pass limited text.
-    // Actually, passing huge text in args is risky. 
-    // Optimization: Let's assume the CLI can read the text from the temp file if we implement it.
-    // simpler for now: Pass truncated text in args (CLI supports --text)
-
-    const output = await runPythonScript('mock_interview_cli.py', [
-      'generate_questions',
-      '--text', resumeText.substring(0, 5000), // Safety truncation
-      '--position', position,
-      '--count', questionCount.toString()
-    ]);
-
-    try {
-      const result = JSON.parse(output);
-      if (result.error) {
-        throw new Error(result.error);
-      }
-      res.json({ success: true, questions: result.questions, skills: result.skills });
-    } catch (parseErr) {
-      console.error('Python output parse error:', output);
-      res.status(500).json({ error: 'Failed to generate questions' });
-    }
-
-  } catch (error) {
-    console.error('❌ Interview start failed:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// 3. Voice Response (Chat) - Uses Node SDK directly for speed
-app.post('/api/mock-interview/voice-response', async (req, res) => {
-  try {
-    const { conversationHistory, position, resumeText } = req.body;
-
-    if (!genAI) {
-      return res.status(500).json({ error: 'Gemini API not configured' });
-    }
-
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
-    // Construct chat history
-    // content needs to be string parts
-    const history = conversationHistory.map(msg => ({
-      role: msg.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: msg.content }]
-    }));
-
-    // Add context if it's the start (handled in frontend usually, but we can enforce system instruction via history or fresh prompt)
-    // Gemini Pro doesn't support 'system' role in chat history directly in all versions, 
-    // so we usually prepend it to the first user message or use system_instruction if supported.
-    // For now we assume the conversationHistory is sufficient context-wise or we wrap the last message.
-
-    const lastMsg = history.pop(); // Remove last user message to send as prompt
-    const chat = model.startChat({
-      history: history
-    });
-
-    const result = await chat.sendMessage(lastMsg.parts[0].text);
-    const response = await result.response;
-    const text = response.text();
-
-    // Heuristic Check for Interview End
-    const shouldEnd = conversationHistory.length > 15 || text.toLowerCase().includes("interview is over") || text.toLowerCase().includes("thank you for your time");
-
-    res.json({
-      success: true,
-      aiResponse: text,
-      shouldEnd: shouldEnd
-    });
-
-  } catch (error) {
-    console.error('❌ Voice response failed:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// 4. Generate Report
-app.post('/api/mock-interview/report', async (req, res) => {
-  try {
-    const { questions, position, speechAnalysis } = req.body;
-
-    if (!genAI) {
-      return res.status(500).json({ error: 'Gemini API not configured' });
-    }
-
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
-    const prompt = `
-    Generate a detailed interview feedback report for a ${position} candidate.
-    
-    **Interview Data:**
-    ${JSON.stringify(questions, null, 2)}
-    
-    **Speech Analysis (Voice Mode):**
-    ${JSON.stringify(speechAnalysis)}
-    
-    **Task:**
-    Evaluate the candidate's performance based strictly on their provided answers to the interview questions.
-    
-    **Instructions:**
-    1.  **Analyze each Answer**: Compare the candidate's response against the technical requirements of the question.
-    2.  **Scoring**: Assign an overall score (0-100) reflecting the accuracy, depth, and clarity of their answers.
-        -   90-100: Exceptional, deep understanding, perfect technical accuracy.
-        -   70-89: Good, solid understanding, minor missing details.
-        -   50-69: Average, some correct points but lacks depth or has errors.
-        -   <50: Poor, incorrect or irrelevant answers.
-    3.  **Feedback**: Provide specific, constructive feedback for *each* question explaining what was good and what was missing.
-    4.  **Strengths/Improvements**: distinct patterns observed in their answers.
-    
-    Analyze the following:
-    
-    **Output (Strict JSON)**:
-    {
-       "overallScore": 85,
-       "strengths": ["...", "...", "..."],
-       "improvements": ["...", "...", "..."],
-       "detailedFeedback": [
-          { "id": 1, "question": "...", "feedback": "..." }
-       ],
-       "recommendation": "Hire / No Hire / Strong Hire"
-    }
-    `;
-
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
-
-    // Clean JSON
-    const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
-    const reportData = JSON.parse(cleanText);
-
-    res.json({ success: true, report: reportData });
-
-  } catch (error) {
-    console.error('❌ Report generation failed:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
 
 // Start server
 app.listen(PORT, '127.0.0.1', () => {

@@ -33,9 +33,9 @@ interface RoadmapCanvasProps {
   isViewMode?: boolean;
 }
 
-const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({ 
-  nodes: roadmapNodes, 
-  category, 
+const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
+  nodes: roadmapNodes,
+  category,
   isGenerating = false,
   hasGenerated = false,
   isViewMode = false
@@ -50,7 +50,7 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
   const prevRoadmapNodesRef = useRef<RoadmapNodeType[]>([]);
 
   // Get all phases and steps for navigation
-  const allPhases = useMemo(() => 
+  const allPhases = useMemo(() =>
     roadmapNodes.filter(node => node.isPhase).sort((a, b) => (a.phaseNumber || 0) - (b.phaseNumber || 0)),
     [roadmapNodes]
   );
@@ -61,11 +61,11 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
       const firstPhase = roadmapNodes.find(node => node.isPhase && node.phaseNumber === 1);
       if (firstPhase) {
         // Animate to center with zoom
-        reactFlowInstance.setCenter(firstPhase.x, firstPhase.y, { 
+        reactFlowInstance.setCenter(firstPhase.x, firstPhase.y, {
           zoom: 0.7,
           duration: 200 // Faster animation
         });
-        
+
         setShowToast(true);
         setTimeout(() => setShowToast(false), 4000);
       }
@@ -81,10 +81,10 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
       setShowToast(false);
       setIsBlocked(false);
       setHasInitialCentered(false);
-      
+
       setNodes([]);
       setEdges([]);
-      
+
       prevRoadmapNodesRef.current = [];
     };
 
@@ -98,10 +98,10 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (!selectedNode && !selectedPhase) return;
-      
+
       if (['ArrowLeft', 'ArrowRight'].includes(event.key)) {
         event.preventDefault();
-        
+
         if (selectedPhase) {
           if (event.key === 'ArrowLeft') {
             handlePhaseNavigation('prev');
@@ -149,16 +149,16 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
   // Convert connections to React Flow edges
   const convertToFlowEdges = useCallback((roadmapNodes: RoadmapNodeType[]): Edge[] => {
     const edges: Edge[] = [];
-    
+
     roadmapNodes.forEach((node) => {
       if (node.isPhase && node.connections) {
         node.connections.forEach((connectionId, connectionIndex) => {
           const targetStep = roadmapNodes.find(n => n.id === connectionId);
-          
+
           if (targetStep) {
             const isLeftBranch = targetStep.isLeft;
             const sourceHandleId = isLeftBranch ? 'left' : 'right';
-            
+
             edges.push({
               id: `${node.id}-${connectionId}`,
               source: node.id,
@@ -178,8 +178,8 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
                 stroke: theme.secondary,
                 strokeWidth: 4,
               },
-              data: { 
-                theme, 
+              data: {
+                theme,
                 isBranch: true,
                 isLeftBranch: isLeftBranch
               },
@@ -187,12 +187,12 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
           }
         });
       }
-      
+
       if (node.isPhase) {
-        const nextPhase = roadmapNodes.find(n => 
+        const nextPhase = roadmapNodes.find(n =>
           n.isPhase && n.phaseNumber === (node.phaseNumber || 0) + 1
         );
-        
+
         if (nextPhase) {
           edges.push({
             id: `phase-${node.phaseNumber}-${nextPhase.phaseNumber}`,
@@ -242,7 +242,7 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
   // Update nodes and edges when roadmapNodes change
   useEffect(() => {
     const hasChanged = JSON.stringify(roadmapNodes) !== JSON.stringify(prevRoadmapNodesRef.current);
-    
+
     if (hasChanged) {
       if (roadmapNodes.length === 0) {
         console.log('🧹 Roadmap nodes cleared, clearing canvas');
@@ -255,15 +255,15 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
         prevRoadmapNodesRef.current = [];
       } else {
         console.log('Roadmap nodes changed, updating flow:', roadmapNodes.length);
-        
+
         const newNodes = convertToFlowNodes(roadmapNodes);
         const newEdges = convertToFlowEdges(roadmapNodes);
-        
+
         setNodes(newNodes);
         setEdges(newEdges);
-        
+
         prevRoadmapNodesRef.current = [...roadmapNodes];
-        
+
         // Auto-center immediately when nodes are ready
         if (reactFlowInstance && newNodes.length > 0 && !hasInitialCentered) {
           // Use requestAnimationFrame to ensure DOM is updated
@@ -300,10 +300,10 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
   // Navigation handlers
   const handlePhaseNavigation = useCallback((direction: 'prev' | 'next') => {
     if (!selectedPhase) return;
-    
+
     const currentIndex = allPhases.findIndex(p => p.phaseNumber === selectedPhase.phaseNumber);
     let newIndex;
-    
+
     if (direction === 'prev' && currentIndex > 0) {
       newIndex = currentIndex - 1;
     } else if (direction === 'next' && currentIndex < allPhases.length - 1) {
@@ -311,20 +311,20 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
     } else {
       return;
     }
-    
+
     setSelectedPhase(allPhases[newIndex]);
   }, [selectedPhase, allPhases]);
 
   const handleStepNavigation = useCallback((direction: 'prev' | 'next') => {
     if (!selectedNode || !selectedNode.isStep) return;
-    
-    const phaseSteps = roadmapNodes.filter(n => 
+
+    const phaseSteps = roadmapNodes.filter(n =>
       n.isStep && n.phaseNumber === selectedNode.phaseNumber
     ).sort((a, b) => (a.stepNumber || 0) - (b.stepNumber || 0));
-    
+
     const currentIndex = phaseSteps.findIndex(step => step.id === selectedNode.id);
     let newIndex;
-    
+
     if (direction === 'prev' && currentIndex > 0) {
       newIndex = currentIndex - 1;
     } else if (direction === 'next' && currentIndex < phaseSteps.length - 1) {
@@ -332,7 +332,7 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
     } else {
       return;
     }
-    
+
     setSelectedNode(phaseSteps[newIndex]);
   }, [selectedNode, roadmapNodes]);
 
@@ -348,14 +348,14 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
 
   const nodeTypes: NodeTypes = useMemo(
     () => ({
-      customRoadmap: CustomRoadmapNode,
+      customRoadmap: CustomRoadmapNode as any,
     }),
     []
   );
 
   const edgeTypes: EdgeTypes = useMemo(
     () => ({
-      customEdge: CustomEdge,
+      customEdge: CustomEdge as any,
     }),
     []
   );
@@ -385,16 +385,16 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
         <div className="absolute inset-0 flex items-center justify-center z-10">
           <div className="text-center max-w-2xl px-8">
             <div className="w-32 h-32 mx-auto mb-8 bg-white rounded-3xl flex items-center justify-center shadow-xl border border-slate-200 overflow-hidden">
-              <img 
-                src="/chartly_logo.png" 
-                alt="SmartLearn.io Logo" 
+              <img
+                src="/chartly_logo.png"
+                alt="SmartLearn.io Logo"
                 className="w-20 h-20 object-contain"
               />
             </div>
             <h3 className="text-4xl font-bold text-slate-800 mb-6">Welcome to SmartLearn.io</h3>
             <p className="text-slate-600 text-xl mb-4">Your AI-powered roadmap generator</p>
             <p className="text-slate-500 text-lg mb-8">Transform your goals into clear, tree-structured visual roadmaps</p>
-            </div>
+          </div>
         </div>
       );
     }
@@ -410,7 +410,7 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
           <button
             onClick={centerToPhaseOne}
             className="flex items-center justify-center space-x-2 px-4 py-3 bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-slate-200 hover:bg-white hover:shadow-xl transition-all duration-200 text-sm font-medium hover:scale-105"
-            style={{ 
+            style={{
               color: theme.primary,
               borderColor: `${theme.primary}40`,
             }}
@@ -440,14 +440,14 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
 
       {/* Toast Message */}
       {showToast && (
-        <div 
+        <div
           className="absolute top-32 left-1/2 transform -translate-x-1/2 z-40 px-6 py-3 rounded-xl shadow-xl backdrop-blur-md text-white font-medium animate-pulse"
           style={{
             background: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.secondary} 100%)`,
           }}
         >
           <div className="flex items-center space-x-2">
-            <div 
+            <div
               className="w-2 h-2 rounded-full animate-ping"
               style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
             ></div>
@@ -478,14 +478,14 @@ const RoadmapCanvas: React.FC<RoadmapCanvasProps> = ({
         nodesConnectable={false}
         elementsSelectable={true}
       >
-        <Background 
-          variant={BackgroundVariant.Dots} 
-          gap={32} 
-          size={2} 
+        <Background
+          variant={BackgroundVariant.Dots}
+          gap={32}
+          size={2}
           color={theme.primary + '15'}
         />
-        
-        <Controls 
+
+        <Controls
           position="bottom-right"
           style={{
             bottom: 32,

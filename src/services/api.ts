@@ -32,9 +32,9 @@ export interface GenerateRoadmapResponse {
   videoRecommendations?: any[];
 }
 
-const API_BASE_URL = process.env.NODE_ENV === 'production'
+const API_BASE_URL = import.meta.env.VITE_API_URL || (process.env.NODE_ENV === 'production'
   ? 'https://smartlearn-backend.onrender.com'
-  : 'http://localhost:3001';
+  : 'http://localhost:3001');
 
 export class ApiService {
   static async generateRoadmap(request: GenerateRoadmapRequest): Promise<GenerateRoadmapResponse> {

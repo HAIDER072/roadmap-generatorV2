@@ -66,8 +66,10 @@ const MockInterview: React.FC = () => {
   const conversationTimeoutRef = useRef<any>(null);
   const conversationActiveRef = useRef<boolean>(false);
   const isAISpeakingRef = useRef<boolean>(false);
+  const conversationHistoryRef = useRef<Array<{ role: string; content: string }>>([]);
   const noSpeechTimeoutRef = useRef<any>(null);
   const timerIntervalRef = useRef<any>(null);
+  const isProcessingResponseRef = useRef<boolean>(false);
 
   // Initialize Speech Recognition
   useEffect(() => {
@@ -317,7 +319,9 @@ const MockInterview: React.FC = () => {
     const greeting = `Hello! I'm your AI interviewer today. I've reviewed your resume for the ${position} position. We have ${interviewDuration} minutes for this conversation. Let's begin. Tell me about yourself and why you're interested in this role.`;
 
     // Add greeting to conversation history
-    setConversationHistory([{ role: 'assistant', content: greeting }]);
+    const initHistory = [{ role: 'assistant', content: greeting }];
+    setConversationHistory(initHistory);
+    conversationHistoryRef.current = initHistory;
 
     await speakAIResponse(greeting);
 
@@ -366,26 +370,27 @@ const MockInterview: React.FC = () => {
       return;
     }
 
+    // Don't start if we're currently processing a response
+    if (isProcessingResponseRef.current) {
+      console.log('Skipping startContinuousListening - currently processing response');
+      return;
+    }
+
     // Reset transcript accumulator
     let accumulatedTranscript = '';
-    let hasSpoken = false;
 
     recognitionRef.current.continuous = true;
     recognitionRef.current.interimResults = true;
 
-    // Clear any existing no-speech timeout
+    // Clear any existing timeouts
     if (noSpeechTimeoutRef.current) {
       clearTimeout(noSpeechTimeoutRef.current);
+      noSpeechTimeoutRef.current = null;
     }
-
-    // Set 8-second timeout for no speech - if user doesn't speak, move to next question
-    noSpeechTimeoutRef.current = setTimeout(() => {
-      if (!hasSpoken && conversationActiveRef.current) {
-        console.log('No speech detected for 8 seconds, moving to next question');
-        // Send a default response to move to next question
-        handleVoiceResponse('I prefer not to answer this question.');
-      }
-    }, 8000);
+    if (conversationTimeoutRef.current) {
+      clearTimeout(conversationTimeoutRef.current);
+      conversationTimeoutRef.current = null;
+    }
 
     recognitionRef.current.onresult = (event: any) => {
       let finalTranscript = '';
@@ -398,14 +403,8 @@ const MockInterview: React.FC = () => {
       }
 
       if (finalTranscript) {
-        hasSpoken = true;
         accumulatedTranscript += finalTranscript;
         setVoiceTranscript(accumulatedTranscript);
-
-        // Clear the no-speech timeout since user has spoken
-        if (noSpeechTimeoutRef.current) {
-          clearTimeout(noSpeechTimeoutRef.current);
-        }
 
         // Clear previous conversation timeout
         if (conversationTimeoutRef.current) {
@@ -414,7 +413,7 @@ const MockInterview: React.FC = () => {
 
         // Wait for user to finish speaking (2.5 seconds of silence)
         conversationTimeoutRef.current = setTimeout(() => {
-          if (accumulatedTranscript.trim()) {
+          if (accumulatedTranscript.trim() && !isProcessingResponseRef.current) {
             const userInput = accumulatedTranscript.trim();
             accumulatedTranscript = ''; // Reset for next turn
             setVoiceTranscript('');
@@ -427,12 +426,12 @@ const MockInterview: React.FC = () => {
     recognitionRef.current.onerror = (event: any) => {
       console.error('Speech recognition error:', event.error);
       if (event.error === 'no-speech') {
-        // Restart if no speech detected
+        // No-speech is normal, just keep listening
         console.log('No speech detected, continuing to listen...');
       } else if (event.error !== 'aborted') {
-        // Try to restart unless deliberately aborted
+        // Try to restart unless deliberately aborted or processing
         setTimeout(() => {
-          if (recognitionRef.current && conversationActive) {
+          if (recognitionRef.current && conversationActiveRef.current && !isProcessingResponseRef.current) {
             try {
               recognitionRef.current.start();
             } catch (e) {
@@ -444,12 +443,12 @@ const MockInterview: React.FC = () => {
     };
 
     recognitionRef.current.onend = () => {
-      // Auto-restart if conversation is still active and AI is not speaking
-      console.log('Recognition ended. Active:', conversationActiveRef.current, 'AI Speaking:', isAISpeakingRef.current);
-      if (conversationActiveRef.current && !isAISpeakingRef.current) {
+      // Auto-restart ONLY if conversation is active, AI is not speaking, and we're not processing
+      console.log('Recognition ended. Active:', conversationActiveRef.current, 'AI Speaking:', isAISpeakingRef.current, 'Processing:', isProcessingResponseRef.current);
+      if (conversationActiveRef.current && !isAISpeakingRef.current && !isProcessingResponseRef.current) {
         console.log('Restarting recognition...');
         setTimeout(() => {
-          if (recognitionRef.current && conversationActiveRef.current && !isAISpeakingRef.current) {
+          if (recognitionRef.current && conversationActiveRef.current && !isAISpeakingRef.current && !isProcessingResponseRef.current) {
             try {
               recognitionRef.current.start();
               console.log('Recognition restarted successfully');
@@ -471,9 +470,26 @@ const MockInterview: React.FC = () => {
 
   // Handle user voice response and get AI reply
   const handleVoiceResponse = async (userResponse: string) => {
-    if (!userResponse.trim() || !conversationActive) return;
+    if (!userResponse.trim() || !conversationActiveRef.current) return;
+
+    // Prevent duplicate processing
+    if (isProcessingResponseRef.current) {
+      console.log('Already processing a response, ignoring duplicate call');
+      return;
+    }
 
     console.log('User said:', userResponse);
+    isProcessingResponseRef.current = true;
+
+    // Clear all pending timeouts
+    if (noSpeechTimeoutRef.current) {
+      clearTimeout(noSpeechTimeoutRef.current);
+      noSpeechTimeoutRef.current = null;
+    }
+    if (conversationTimeoutRef.current) {
+      clearTimeout(conversationTimeoutRef.current);
+      conversationTimeoutRef.current = null;
+    }
 
     // Stop listening while AI responds
     if (recognitionRef.current) {
@@ -484,12 +500,10 @@ const MockInterview: React.FC = () => {
       }
     }
 
-    // Add user message to conversation using functional update to avoid stale closures
-    let currentHistory: any[] = [];
-    setConversationHistory(prev => {
-      currentHistory = [...prev, { role: 'user', content: userResponse }];
-      return currentHistory;
-    });
+    // Add user message to conversation history synchronously using a ref
+    const currentHistory = [...conversationHistoryRef.current, { role: 'user', content: userResponse }];
+    setConversationHistory(currentHistory);
+    conversationHistoryRef.current = currentHistory;
 
     try {
       // Get AI response from Gemini
@@ -510,11 +524,9 @@ const MockInterview: React.FC = () => {
       }
 
       // Add AI response to conversation
-      let newHistory: any[] = [];
-      setConversationHistory(prev => {
-        newHistory = [...prev, { role: 'assistant', content: data.aiResponse }];
-        return newHistory;
-      });
+      const newHistory = [...currentHistory, { role: 'assistant', content: data.aiResponse }];
+      setConversationHistory(newHistory);
+      conversationHistoryRef.current = newHistory;
 
       console.log(`Conversation progress: ${newHistory.length} messages`);
 
@@ -524,15 +536,17 @@ const MockInterview: React.FC = () => {
       // Check if interview should end using the UPDATED history length
       if (data.shouldEnd || newHistory.length >= 20) {
         console.log('Interview ending condition met');
+        isProcessingResponseRef.current = false;
         await finishVoiceInterview();
       } else {
-        console.log('Waiting 2 seconds before listening for next response...');
+        console.log('Waiting 1 second before listening for next response...');
         setTimeout(() => {
+          isProcessingResponseRef.current = false;
           if (conversationActiveRef.current) {
             console.log('Resuming listening for user response');
             startContinuousListening();
           }
-        }, 2000);
+        }, 1000);
       }
     } catch (error: any) {
       console.error('Error getting AI response:', error);
@@ -543,6 +557,7 @@ const MockInterview: React.FC = () => {
       
       // Wait a moment before restarting recognition so we don't spam errors
       setTimeout(() => {
+        isProcessingResponseRef.current = false;
         if (conversationActiveRef.current) {
           console.log('Error recovered: resuming listening');
           startContinuousListening();
@@ -580,13 +595,14 @@ const MockInterview: React.FC = () => {
 
     // Convert conversation to questions/answers format for report
     console.log('Converting conversation history to Q&A format...');
-    console.log('Total conversation messages:', conversationHistory.length);
+    const history = conversationHistoryRef.current;
+    console.log('Total conversation messages:', history.length);
 
     const formattedQA: Question[] = [];
     // Start from 0 and pair assistant questions with user answers
-    for (let i = 0; i < conversationHistory.length - 1; i += 2) {
-      const currentMsg = conversationHistory[i];
-      const nextMsg = conversationHistory[i + 1];
+    for (let i = 0; i < history.length - 1; i += 2) {
+      const currentMsg = history[i];
+      const nextMsg = history[i + 1];
 
       console.log(`Pair ${i / 2 + 1}: [${currentMsg?.role}] -> [${nextMsg?.role}]`);
 
@@ -602,7 +618,7 @@ const MockInterview: React.FC = () => {
     console.log(`Formatted ${formattedQA.length} Q&A pairs`);
 
     setQuestions(formattedQA);
-    generateReport();
+    generateReport(formattedQA);
   };
 
   // Text-to-Speech for questions
@@ -675,7 +691,8 @@ const MockInterview: React.FC = () => {
   };
 
   // Generate interview report
-  const generateReport = async () => {
+  const generateReport = async (questionsOverride?: Question[]) => {
+    const questionsToSend = questionsOverride || questions;
     setLoading(true);
     setError('');
 
@@ -685,7 +702,7 @@ const MockInterview: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: user?.id,
-          questions: questions,
+          questions: questionsToSend,
           position,
           resumeText,
           speechAnalysis
