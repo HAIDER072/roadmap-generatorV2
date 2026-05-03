@@ -83,7 +83,8 @@ const TokenRechargeModal: React.FC<TokenRechargeModalProps> = ({
               console.log('🧪 Using test payment verification...');
               
               try {
-                const testVerificationResult = await fetch('http://localhost:3001/api/test-verify-payment', {
+                const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+                const testVerificationResult = await fetch(`${API_BASE_URL}/api/test-verify-payment`, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
