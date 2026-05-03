@@ -143,7 +143,7 @@ async function retryWithBackoff(fn, retries = 3, delay = 2000) {
   try {
     return await fn();
   } catch (error) {
-    // Check for 429 or "Too Many Requests" or "Quota Exceeded"
+    // Check for 429 (rate limit) OR 503 (service unavailable)
     const isRateLimit = error.status === 429 ||
       (error.message && (
         error.message.includes('429') ||
@@ -152,13 +152,50 @@ async function retryWithBackoff(fn, retries = 3, delay = 2000) {
         error.message.includes('resource exhausted')
       ));
 
-    if (retries === 0 || !isRateLimit) {
+    const isServiceUnavailable = error.status === 503 ||
+      (error.message && (
+        error.message.includes('503') ||
+        error.message.includes('Service Unavailable') ||
+        error.message.includes('high demand') ||
+        error.message.includes('overloaded')
+      ));
+
+    const shouldRetry = isRateLimit || isServiceUnavailable;
+
+    if (retries === 0 || !shouldRetry) {
       throw error;
     }
 
-    console.log(`⚠️ Rate limit hit. Retrying in ${delay / 1000}s... (Attempts left: ${retries})`);
+    const reason = isServiceUnavailable ? 'Service unavailable (503)' : 'Rate limit (429)';
+    console.log(`⚠️ ${reason}. Retrying in ${delay / 1000}s... (Attempts left: ${retries})`);
     await new Promise(resolve => setTimeout(resolve, delay));
     return retryWithBackoff(fn, retries - 1, delay * 2);
+  }
+}
+
+// Helper to get Gemini model with automatic fallback
+// Tries gemini-2.5-flash first, falls back to gemini-1.5-flash if unavailable
+async function getGeminiModelWithFallback(prompt) {
+  if (!genAI) throw new Error('Gemini API not configured');
+
+  const primaryModel = 'gemini-2.5-flash';
+  const fallbackModel = 'gemini-1.5-flash';
+
+  try {
+    const model = genAI.getGenerativeModel({ model: primaryModel });
+    return await retryWithBackoff(() => model.generateContent(prompt), 2, 2000);
+  } catch (error) {
+    const is503 = error.message && (
+      error.message.includes('503') ||
+      error.message.includes('high demand') ||
+      error.message.includes('Service Unavailable')
+    );
+    if (is503) {
+      console.log(`⚠️ ${primaryModel} unavailable. Falling back to ${fallbackModel}...`);
+      const model = genAI.getGenerativeModel({ model: fallbackModel });
+      return await retryWithBackoff(() => model.generateContent(prompt), 3, 2000);
+    }
+    throw error;
   }
 }
 
