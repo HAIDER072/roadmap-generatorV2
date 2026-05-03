@@ -108,9 +108,9 @@ const TokenRechargeModal: React.FC<TokenRechargeModalProps> = ({
                   console.error('❌ Test verification failed:', testResult);
                   setError('Payment verification failed: ' + (testResult.error || 'Unknown error'));
                 }
-              } catch (testError) {
+              } catch (testError: any) {
                 console.error('❌ Verification request failed:', testError);
-                setError('Failed to verify payment: ' + testError.message);
+                setError('Failed to verify payment: ' + (testError.message || 'Unknown error'));
               }
               setProcessingPayment(false);
               return;
