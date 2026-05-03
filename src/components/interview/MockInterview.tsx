@@ -188,7 +188,8 @@ const MockInterview: React.FC = () => {
       formData.append('resume', file);
 
       // Send to backend for parsing
-      const response = await fetch('http://localhost:3001/api/parse-resume', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const response = await fetch(`${API_BASE_URL}/api/parse-resume`, {
         method: 'POST',
         body: formData
       });
@@ -260,7 +261,8 @@ const MockInterview: React.FC = () => {
 
     try {
         // Standard mode: Generate questions
-        const response = await fetch('http://localhost:3001/api/mock-interview/start', {
+        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+        const response = await fetch(`${API_BASE_URL}/api/mock-interview/start`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -507,7 +509,8 @@ const MockInterview: React.FC = () => {
 
     try {
       // Get AI response from Gemini
-      const response = await fetch('http://localhost:3001/api/mock-interview/voice-response', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const response = await fetch(`${API_BASE_URL}/api/mock-interview/voice-response`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -697,7 +700,8 @@ const MockInterview: React.FC = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:3001/api/mock-interview/report', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const response = await fetch(`${API_BASE_URL}/api/mock-interview/report`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1018,7 +1022,8 @@ const MockInterview: React.FC = () => {
           feedback: ''
         }));
 
-      const response = await fetch('http://localhost:3001/api/mock-interview/report', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const response = await fetch(`${API_BASE_URL}/api/mock-interview/report`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

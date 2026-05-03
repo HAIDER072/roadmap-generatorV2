@@ -69,7 +69,8 @@ const RoadmapViewerPage: React.FC = () => {
       console.log(`🎥 ${forceRefresh ? 'Refreshing' : 'Fetching'} FILTERED videos for: ${topic}`);
       console.log('📏 Applying filters: >= 2 hours, no YouTube Shorts, quality tutorials only');
 
-      const response = await fetch('/api/get-video-recommendations', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const response = await fetch(`${API_BASE_URL}/api/get-video-recommendations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -118,7 +119,8 @@ const RoadmapViewerPage: React.FC = () => {
 
         try {
           console.log('🔄 Polling for background ML video results...');
-          const response = await fetch('/api/get-video-recommendations', {
+          const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+          const response = await fetch(`${API_BASE_URL}/api/get-video-recommendations`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

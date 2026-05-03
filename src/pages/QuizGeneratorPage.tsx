@@ -70,8 +70,10 @@ const QuizGeneratorPage: React.FC = () => {
             formData.append('topic', topicInput.trim());
         }
 
+        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
         try {
-            const response = await fetch('http://localhost:3001/api/generate-quiz', {
+            const response = await fetch(`${API_BASE_URL}/api/generate-quiz`, {
                 method: 'POST',
                 body: formData,
             });
