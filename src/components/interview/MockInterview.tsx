@@ -413,7 +413,7 @@ const MockInterview: React.FC = () => {
           clearTimeout(conversationTimeoutRef.current);
         }
 
-        // Wait for user to finish speaking (2.5 seconds of silence)
+        // Wait for user to finish speaking (1.2 seconds of silence)
         conversationTimeoutRef.current = setTimeout(() => {
           if (accumulatedTranscript.trim() && !isProcessingResponseRef.current) {
             const userInput = accumulatedTranscript.trim();
@@ -421,7 +421,7 @@ const MockInterview: React.FC = () => {
             setVoiceTranscript('');
             handleVoiceResponse(userInput);
           }
-        }, 2500);
+        }, 1200);
       }
     };
 
